@@ -8,26 +8,26 @@ import {
   StatusBar,
   Image
 } from 'react-native';
-import { colors } from './envStyles';
+import { createStore, StoreProvider } from 'easy-peasy';
+
+import Splash from './screens/Splash';
+
+const storeModel = {
+  auth_token: null
+};
+
+const store = createStore(storeModel);
 
 const App: () => React$Node = () => {
   return (
-    <View style={styles.container}>
-      <Image
-        source={require('./assets/gifs/welcome.gif')}
-        style={{height: 400, width: 400}}
-      />
-    </View>
+    <StoreProvider store={store}>
+      <Splash />
+    </StoreProvider>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: colors.yellow,
-  },
+
 });
 
 export default App;
