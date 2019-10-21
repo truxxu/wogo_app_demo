@@ -11,8 +11,14 @@ const storeModel = {
     verificationCode: null
   },
 
+  currentVehicle: null,
+
   writeAuthState: action((state, payload) => {
     state.auth[payload.name] = payload.value
+  }),
+
+  writeCurrentVehicle: action((state, payload) => {
+    state.currentVehicle = payload
   }),
 };
 

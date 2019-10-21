@@ -23,6 +23,28 @@ const Login = ({navigation}) => {
   const auth = useStoreState(state => state.auth);
   const writeAuthState = useStoreActions(actions => actions.writeAuthState);
 
+  onSubmit = e => {
+    writeAuthState({name: 'waitingForApi', value: true})
+
+    const payload = {
+      phone_number: auth.areaCode + auth.telephone,
+      verification_code: auth.verificationCode
+    };
+
+    axios.post(env.apiServer + '/auth/login_customer', payload)
+      .then(response => {
+        writeAuthState({name: 'verificationCode', value: ''});
+        const { token, user } = response.data;
+        writeAuthState({name: 'token', value: `Token ${token}`})
+        axios.defaults.headers.common.Authorization = `Token ${token}`;
+        navigation.navigate('VehicleSelection');
+        writeAuthState({name: 'waitingForApi', value: false})
+      })
+      .catch(error => {
+        writeAuthState({name: 'verificationCode', value: ''});
+      });
+  }
+
   return(
     <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps={'never'}>
       <Text
@@ -55,8 +77,7 @@ const Login = ({navigation}) => {
         <TouchableOpacity
           onPress={() => {
             if (auth.checked === true && auth.verificationCode !== null && auth.verificationCode !== '') {
-              // this.onSubmit()
-              console.log(auth)
+              this.onSubmit()
             } else {
               Alert.alert('Error','Acepta las condiciones e introduce el código de verificación');            }}
           }
