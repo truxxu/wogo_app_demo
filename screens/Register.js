@@ -1,14 +1,13 @@
 import React from 'react';
 import {
-  SafeAreaView,
   StyleSheet,
   ScrollView,
   View,
   Text,
-  StatusBar,
   Image,
   TextInput,
-  TouchableOpacity
+  TouchableOpacity,
+  Alert,
 } from 'react-native';
 import { useStoreState, useStoreActions } from 'easy-peasy';
 import ModalSelector from 'react-native-modal-selector';
@@ -29,6 +28,23 @@ const Register = ({navigation}) => {
       { key: 4, label: '+57', component:<Text style={styles.item}>(+57) Colombia</Text> },
       { key: 5, label: '+58', component:<Text style={styles.item}>(+58) Venezuela</Text> },
   ];
+
+  onSubmit = e => {
+    writeAuthState({name: 'waitingForApi', value: true})
+    const payload = {
+      phone_number: auth.areaCode + auth.telephone
+    };
+    console.log(payload);
+    // axios.post( env.localserver + '/auth/register_customer', payload)
+    //   .then(response => {
+    //     setActiveAddress(address);
+    //     navigation.navigate('Verificación', {data: eText});
+    //   })
+    //   .catch(error => {
+    //     displayToastWrite(true);
+    //     write('');
+    //   });
+  };
 
   return(
     <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps={'never'}>
@@ -59,18 +75,26 @@ const Register = ({navigation}) => {
           />
         </View>
       </View>
-      <TouchableOpacity
-        // onPress={() => {
-        //   if (eText === null || eText === "") {
-        //     Alert.alert('Debes introducir el código de área y número de teléfono');
-        //   } else {
-        //     this.onSubmit()
-        //   }}
-        // }
-        style={styles.button}
-      >
-        <Text style={styles.buttonText}>Enviar Código</Text>
-      </TouchableOpacity>
+      {auth.waitingForApi &&
+        <Image
+          source={require('../assets/gifs/spinner.gif')}
+          style={styles.stretch}
+        />
+      }
+      {!auth.waitingForApi &&
+        <TouchableOpacity
+          onPress={() => {
+            if (auth.telephone === null || auth.telephone === "") {
+              Alert.alert('Completa tus datos');
+            } else {
+              this.onSubmit()
+            }}
+          }
+          style={styles.button}
+        >
+          <Text style={styles.buttonText}>Enviar</Text>
+        </TouchableOpacity>
+      }
     </ScrollView>
   );
 }
@@ -156,7 +180,13 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontFamily: 'Montserrat-SemiBold',
     color: 'black'
-  }
+  },
+  stretch: {
+    height: 50,
+    resizeMode: 'contain',
+    marginTop: 20,
+    marginBottom: 20,
+  },
 });
 
 export default Register;

@@ -7,6 +7,7 @@ const storeModel = {
     areaCode: '+57',
     telephone: null,
     checked: true,
+    waitingForApi: false,
   },
 
   writeAuthState: action((state, payload) => {
