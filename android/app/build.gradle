@@ -128,7 +128,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.wogo_app"
+        applicationId "co.wogoapp.mobile"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

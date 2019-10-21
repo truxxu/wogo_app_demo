@@ -1,4 +1,4 @@
-package com.wogo_app;
+package co.wogoapp.mobile;
 
 import android.app.Application;
 import android.content.Context;

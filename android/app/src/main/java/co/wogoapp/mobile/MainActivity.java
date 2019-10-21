@@ -1,4 +1,4 @@
-package com.wogo_app;
+package co.wogoapp.mobile;
 
 import com.facebook.react.ReactActivity;
 
