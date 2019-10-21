@@ -38,7 +38,8 @@ const Register = ({navigation}) => {
     };
     axios.post( env.apiServer + '/auth/register_customer', payload)
       .then(response => {
-        writeAuthState({name: 'waitingForApi', value: false})
+        navigation.navigate('Login');
+        writeAuthState({name: 'waitingForApi', value: false});
       })
       .catch(error => {
         Alert.alert('Error', 'Ingresa un número válido');

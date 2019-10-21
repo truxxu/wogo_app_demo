@@ -8,6 +8,7 @@ const storeModel = {
     telephone: null,
     checked: true,
     waitingForApi: false,
+    verificationCode: null
   },
 
   writeAuthState: action((state, payload) => {
