@@ -8,26 +8,44 @@ import {
   StatusBar,
   Image
 } from 'react-native';
-import { colors } from './envStyles';
+import { createStore, StoreProvider } from 'easy-peasy';
+import { createAppContainer } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation-stack';
+
+import Splash from './screens/Splash';
+import Welcome from './screens/Welcome';
+
+const storeModel = {
+  auth_token: null
+};
+
+const store = createStore(storeModel);
+
+const RootStack = createStackNavigator(
+  {
+    Splash: Splash,
+    Welcome: Welcome,
+  },
+  {
+    initialRouteName: 'Splash',
+    headerMode: 'none',
+  }
+);
+
+const AppContainer = createAppContainer(RootStack);
 
 const App: () => React$Node = () => {
   return (
-    <View style={styles.container}>
-      <Image
-        source={require('./assets/gifs/welcome.gif')}
-        style={{height: 400, width: 400}}
-      />
-    </View>
+    <StoreProvider store={store}>
+      <SafeAreaView style={{flex: 1}}>
+        <AppContainer />
+      </SafeAreaView>
+    </StoreProvider>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: colors.yellow,
-  },
+
 });
 
 export default App;
