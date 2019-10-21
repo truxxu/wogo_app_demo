@@ -12,12 +12,10 @@ import { createStore, StoreProvider } from 'easy-peasy';
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 
+import storeModel from './model';
 import Splash from './screens/Splash';
 import Welcome from './screens/Welcome';
-
-const storeModel = {
-  auth_token: null
-};
+import Register from './screens/Register';
 
 const store = createStore(storeModel);
 
@@ -25,6 +23,7 @@ const RootStack = createStackNavigator(
   {
     Splash: Splash,
     Welcome: Welcome,
+    Register: Register,
   },
   {
     initialRouteName: 'Splash',
