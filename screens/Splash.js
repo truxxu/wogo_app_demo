@@ -13,15 +13,16 @@ import { useStoreState, useStoreActions } from 'easy-peasy';
 import { colors } from '../envStyles';
 
 
-const Splash = (props) => {
+const Splash = ({navigation}) => {
 
   const auth_token = useStoreState(state => state.auth_token);
 
   if (auth_token !== null) {
-    console.log('Validar')
   }
   else {
-    console.log('cargar pantallas de bienvenida')
+    const timer = setTimeout(() => {
+      navigation.navigate('Welcome')
+    }, 2000);
   };
 
   return(

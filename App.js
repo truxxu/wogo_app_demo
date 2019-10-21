@@ -9,8 +9,11 @@ import {
   Image
 } from 'react-native';
 import { createStore, StoreProvider } from 'easy-peasy';
+import { createAppContainer } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation-stack';
 
 import Splash from './screens/Splash';
+import Welcome from './screens/Welcome';
 
 const storeModel = {
   auth_token: null
@@ -18,10 +21,25 @@ const storeModel = {
 
 const store = createStore(storeModel);
 
+const RootStack = createStackNavigator(
+  {
+    Splash: Splash,
+    Welcome: Welcome,
+  },
+  {
+    initialRouteName: 'Splash',
+    headerMode: 'none',
+  }
+);
+
+const AppContainer = createAppContainer(RootStack);
+
 const App: () => React$Node = () => {
   return (
     <StoreProvider store={store}>
-      <Splash />
+      <SafeAreaView style={{flex: 1}}>
+        <AppContainer />
+      </SafeAreaView>
     </StoreProvider>
   );
 };
