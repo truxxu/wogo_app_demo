@@ -11,8 +11,10 @@ import {
 } from 'react-native';
 import { useStoreState, useStoreActions } from 'easy-peasy';
 import ModalSelector from 'react-native-modal-selector';
+import axios from 'axios';
 
 import { colors } from '../envStyles';
+import { env } from '../keys';
 import CountryFlag from '../components/CountryFlag';
 
 
@@ -34,16 +36,14 @@ const Register = ({navigation}) => {
     const payload = {
       phone_number: auth.areaCode + auth.telephone
     };
-    console.log(payload);
-    // axios.post( env.localserver + '/auth/register_customer', payload)
-    //   .then(response => {
-    //     setActiveAddress(address);
-    //     navigation.navigate('Verificación', {data: eText});
-    //   })
-    //   .catch(error => {
-    //     displayToastWrite(true);
-    //     write('');
-    //   });
+    axios.post( env.apiServer + '/auth/register_customer', payload)
+      .then(response => {
+        writeAuthState({name: 'waitingForApi', value: false})
+      })
+      .catch(error => {
+        Alert.alert('Error', 'Ingresa un número válido');
+        writeAuthState({name: 'waitingForApi', value: false});
+      });
   };
 
   return(
