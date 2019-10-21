@@ -12,13 +12,10 @@ import { createStore, StoreProvider } from 'easy-peasy';
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 
+import storeModel from './model';
 import Splash from './screens/Splash';
 import Welcome from './screens/Welcome';
 import Register from './screens/Register';
-
-const storeModel = {
-  auth_token: null
-};
 
 const store = createStore(storeModel);
 

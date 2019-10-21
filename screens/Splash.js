@@ -15,7 +15,7 @@ import { colors } from '../envStyles';
 
 const Splash = ({navigation}) => {
 
-  const auth_token = useStoreState(state => state.auth_token);
+  const auth_token = useStoreState(state => state.auth.token);
 
   if (auth_token !== null) {
   }

@@ -1,17 +1,17 @@
-const model = {
+import { action, thunk } from 'easy-peasy';
 
-  user: {
-    auth_token: null,
-    areaCode: null,
+const storeModel = {
+
+  auth: {
+    token: null,
+    areaCode: '+57',
     telephone: null,
     checked: true,
-    verificationCode: null,
-    codeSent: false,
-    name: null,
-    photo: null,
-    avatar_uri: null,
-    avatar_fileName: null,
-    email: null,
-    birth_date: null,
   },
-}
+
+  writeAuthState: action((state, payload) => {
+    state.auth[payload.name] = payload.value
+  }),
+};
+
+export default storeModel;
