@@ -14,6 +14,7 @@ import { createStackNavigator } from 'react-navigation-stack';
 
 import Splash from './screens/Splash';
 import Welcome from './screens/Welcome';
+import Register from './screens/Register';
 
 const storeModel = {
   auth_token: null
@@ -25,6 +26,7 @@ const RootStack = createStackNavigator(
   {
     Splash: Splash,
     Welcome: Welcome,
+    Register: Register,
   },
   {
     initialRouteName: 'Splash',
