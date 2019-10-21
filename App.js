@@ -16,6 +16,8 @@ import storeModel from './model';
 import Splash from './screens/Splash';
 import Welcome from './screens/Welcome';
 import Register from './screens/Register';
+import Login from './screens/Login';
+import VehicleSelection from './screens/VehicleSelection';
 
 const store = createStore(storeModel);
 
@@ -24,6 +26,8 @@ const RootStack = createStackNavigator(
     Splash: Splash,
     Welcome: Welcome,
     Register: Register,
+    Login: Login,
+    VehicleSelection: VehicleSelection,
   },
   {
     initialRouteName: 'Splash',
