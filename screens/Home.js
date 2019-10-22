@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   StyleSheet,
   ScrollView,
@@ -9,8 +9,22 @@ import {
   TouchableOpacity,
   Alert,
 } from 'react-native';
+import { useStoreState, useStoreActions } from 'easy-peasy';
 
 const Home = ({navigation}) => {
+
+  const properties = useStoreState(state => state.properties);
+  const getServices = useStoreActions(actions => actions.getServices);
+  const getUserInfo = useStoreActions(actions => actions.getUserInfo);
+
+  useEffect(() => {
+    getServices(properties.currentVehicle);
+  }, []);
+
+  useEffect(() => {
+    getUserInfo()
+  }, []);
+
   return(
     <TouchableOpacity
       onPress={() => navigation.toggleDrawer()}
