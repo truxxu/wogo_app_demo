@@ -57,9 +57,9 @@ const CountryFlag = (props) => {
 
 const styles = StyleSheet.create({
   flag: {
-    marginRight: 10,
-    height: 50,
-    width: 50,
+    resizeMode: 'stretch',
+    height: 28,
+    marginRight: 8,
   }
 });
 
