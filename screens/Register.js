@@ -48,8 +48,8 @@ const Register = ({navigation}) => {
   };
 
   return(
-    <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps={'never'}>
-      <View style={styles.chilContainer}>
+    <ScrollView keyboardShouldPersistTaps={'never'}>
+      <View style={styles.container}>
         <Text
           style={styles.boldText}>
           Ingresa tu número de celular
@@ -76,26 +76,29 @@ const Register = ({navigation}) => {
           />
         </View>
       </View>
-      {auth.waitingForApi &&
-        <Image
-          source={require('../assets/gifs/spinner.gif')}
-          style={styles.stretch}
-        />
-      }
-      {!auth.waitingForApi &&
-        <TouchableOpacity
-          onPress={() => {
-            if (auth.telephone === null || auth.telephone === "") {
-              Alert.alert('Completa tus datos');
-            } else {
-              this.onSubmit()
-            }}
-          }
-          style={styles.button}
-        >
-          <Text style={styles.buttonText}>Enviar</Text>
-        </TouchableOpacity>
-      }
+      <View style={styles.footer}>
+          <TouchableOpacity
+            onPress={() => {
+              if (auth.telephone === null || auth.telephone === "") {
+                Alert.alert('Completa tus datos');
+              } else {
+                this.onSubmit()
+              }}
+            }
+            style={styles.button}
+          >
+            {!auth.waitingForApi &&
+              <Text style={styles.buttonText}>Enviar</Text>
+            }
+            {auth.waitingForApi &&
+              <Image
+              source={require('../assets/gifs/spinner.gif')}
+              style={styles.stretch}
+              />
+            }
+          </TouchableOpacity>
+        
+      </View>      
     </ScrollView>
   );
 }
@@ -103,20 +106,13 @@ const Register = ({navigation}) => {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.gray,
+    marginTop: 230,
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'space-between',
     padding: 20,
   },
-  chilContainer: {
-    marginTop: 200,
+  footer: {
     alignItems: 'center',
-  },
-  overlay: {
-    flex: 1,
-    padding: '5%',
-    justifyContent: 'center',
-    backgroundColor: 'rgba(0,0,0,0.9)'
   },
   boldText: {
     textAlign: 'center',
@@ -155,13 +151,13 @@ const styles = StyleSheet.create({
   },
   phone: {
     flexDirection: "row",
-    justifyContent: "center",
     marginTop: 10,
   },
   button: {
-    marginBottom: 60,
+    marginTop: 170,
     borderColor: colors.yellow,
     justifyContent: 'center',
+    alignItems: 'center',
     width: 200,
     height: 45,
     borderWidth: 1,
@@ -184,9 +180,8 @@ const styles = StyleSheet.create({
   },
   stretch: {
     height: 50,
+    width: 60,
     resizeMode: 'contain',
-    marginTop: 20,
-    marginBottom: 20,
   },
 });
 
