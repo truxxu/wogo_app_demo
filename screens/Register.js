@@ -48,7 +48,7 @@ const Register = ({navigation}) => {
   };
 
   return(
-    <ScrollView keyboardShouldPersistTaps={'never'}>
+    <ScrollView keyboardShouldPersistTaps={'never'} contentContainerStyle={styles.contentContainer}>
       <View style={styles.container}>
         <Text
           style={styles.boldText}>
@@ -97,13 +97,16 @@ const Register = ({navigation}) => {
               />
             }
           </TouchableOpacity>
-        
-      </View>      
+      </View>
     </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
+  contentContainer: {
+    backgroundColor: colors.gray,
+    flex: 1,
+  },
   container: {
     backgroundColor: colors.gray,
     marginTop: 230,
@@ -142,6 +145,7 @@ const styles = StyleSheet.create({
     height: 28,
     width: 60,
     justifyContent: 'center',
+    padding: 0,
   },
   item: {
     fontSize: 16,
@@ -154,7 +158,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   button: {
-    marginTop: 170,
+    marginBottom: 70,
     borderColor: colors.yellow,
     justifyContent: 'center',
     alignItems: 'center',
