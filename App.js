@@ -62,7 +62,7 @@ const RootStack = createStackNavigator(
     DrawerNavigator: DrawerNavigator,
   },
   {
-    initialRouteName: 'DrawerNavigator',
+    initialRouteName: 'Splash',
     headerMode: 'none',
   }
 );
