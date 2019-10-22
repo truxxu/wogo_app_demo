@@ -6,11 +6,13 @@ import {
   View,
   Text,
   StatusBar,
-  Image
+  Image,
+  Dimensions
 } from 'react-native';
 import { createStore, StoreProvider } from 'easy-peasy';
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
+import { createDrawerNavigator } from 'react-navigation-drawer';
 
 import storeModel from './model';
 import Splash from './screens/Splash';
@@ -18,8 +20,26 @@ import Welcome from './screens/Welcome';
 import Register from './screens/Register';
 import Login from './screens/Login';
 import VehicleSelection from './screens/VehicleSelection';
+import Home from './screens/Home';
 
+import MenuDrawer from './components/MenuDrawer';
+
+const WIDTH = Dimensions.get('window').width;
 const store = createStore(storeModel);
+
+const DrawerNavigator = createDrawerNavigator(
+  {
+    Home: Home,
+  },
+  {
+    drawerWidth: WIDTH*0.72,
+    contentComponent: ({ navigation }) => {
+      return(<MenuDrawer navigation={navigation} />)
+    },
+    initialRouteName: 'Home',
+    headerMode: 'none'
+  }
+);
 
 const RootStack = createStackNavigator(
   {
@@ -28,14 +48,16 @@ const RootStack = createStackNavigator(
     Register: Register,
     Login: Login,
     VehicleSelection: VehicleSelection,
+    DrawerNavigator: DrawerNavigator,
   },
   {
-    initialRouteName: 'Splash',
+    initialRouteName: 'DrawerNavigator',
     headerMode: 'none',
   }
 );
 
 const AppContainer = createAppContainer(RootStack);
+
 
 const App: () => React$Node = () => {
   return (

@@ -31,7 +31,7 @@ const VehicleSelection = ({navigation}) => {
             onPress={() => {
               writeCurrentVehicle('carro')
               // getServices('carro')
-              // navigation.navigate('Drawer')
+              navigation.navigate('Home')
             }}
           >
             <Image
@@ -46,7 +46,7 @@ const VehicleSelection = ({navigation}) => {
             onPress={() => {
               writeCurrentVehicle('moto')
               // getServices('moto')
-              // navigation.navigate('Drawer')
+              navigation.navigate('Home')
             }}
           >
             <Image
