@@ -13,6 +13,14 @@ const storeModel = {
 
   currentVehicle: null,
 
+  user: {
+    name: null,
+  },
+
+  properties: {
+    displayModal: false,
+  },
+
   writeAuthState: action((state, payload) => {
     state.auth[payload.name] = payload.value
   }),
@@ -20,6 +28,12 @@ const storeModel = {
   writeCurrentVehicle: action((state, payload) => {
     state.currentVehicle = payload
   }),
+
+  toggleProperties: action((state, payload) => {
+    state.properties[payload] = !state.properties[payload]
+  }),
+
+
 };
 
 export default storeModel;

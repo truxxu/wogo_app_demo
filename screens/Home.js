@@ -10,11 +10,16 @@ import {
   Alert,
 } from 'react-native';
 
-const Home = (props) => {
+const Home = ({navigation}) => {
   return(
-    <Text>
-      Home
-    </Text>
+    <TouchableOpacity
+      onPress={() => navigation.toggleDrawer()}
+    >
+      <Image
+        source={require('../assets/icons/usuario.png')}
+        style={{height: 28, width: 28}}
+      />
+    </TouchableOpacity>
   );
 }
 

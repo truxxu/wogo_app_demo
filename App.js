@@ -32,6 +32,7 @@ const DrawerNavigator = createDrawerNavigator(
     Home: Home,
   },
   {
+    unmountInactiveRoutes: true,
     drawerWidth: WIDTH*0.72,
     contentComponent: ({ navigation }) => {
       return(<MenuDrawer navigation={navigation} />)
