@@ -53,7 +53,7 @@ const Login = ({navigation}) => {
       </Text>
       <Text style={styles.boldText}>{auth.areaCode + auth.telephone}</Text>
       <TouchableOpacity
-        onPress={() => navigation.navigate('Register')}
+        onPress={() => navigation.replace('Register')}
       >
         <Text style={styles.link}>¿Número incorrecto?</Text>
       </TouchableOpacity>
