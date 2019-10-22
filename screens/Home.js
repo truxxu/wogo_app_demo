@@ -12,6 +12,7 @@ import {
 import { useStoreState, useStoreActions } from 'easy-peasy';
 
 import MenuBar from '../components/MenuBar';
+import ServiceTabs from '../components/ServiceTabs';
 
 
 const Home = ({navigation}) => {
@@ -31,6 +32,7 @@ const Home = ({navigation}) => {
   return(
     <View>
       <MenuBar navigation={navigation}/>
+      <ServiceTabs navigation={navigation}/>
     </View>
   );
 }

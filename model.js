@@ -37,6 +37,7 @@ const storeModel = {
     isLoading: false,
     displayModal: false,
     activeAddress: null,
+    activeServiceTab: null,
   },
 
   writeAuthState: action((state, payload) => {
