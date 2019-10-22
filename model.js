@@ -36,6 +36,7 @@ const storeModel = {
     currentVehicle: null,
     isLoading: false,
     displayModal: false,
+    activeAddress: null,
   },
 
   writeAuthState: action((state, payload) => {

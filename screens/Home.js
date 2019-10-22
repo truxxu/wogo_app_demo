@@ -11,6 +11,9 @@ import {
 } from 'react-native';
 import { useStoreState, useStoreActions } from 'easy-peasy';
 
+import MenuBar from '../components/MenuBar';
+
+
 const Home = ({navigation}) => {
 
   const properties = useStoreState(state => state.properties);
@@ -26,14 +29,9 @@ const Home = ({navigation}) => {
   }, []);
 
   return(
-    <TouchableOpacity
-      onPress={() => navigation.toggleDrawer()}
-    >
-      <Image
-        source={require('../assets/icons/usuario.png')}
-        style={{height: 28, width: 28}}
-      />
-    </TouchableOpacity>
+    <View>
+      <MenuBar navigation={navigation}/>
+    </View>
   );
 }
 
