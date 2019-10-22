@@ -158,7 +158,8 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   button: {
-    marginBottom: 70,
+    position: 'absolute',
+    bottom: 20,
     borderColor: colors.yellow,
     justifyContent: 'center',
     alignItems: 'center',
