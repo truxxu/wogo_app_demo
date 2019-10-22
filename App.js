@@ -21,6 +21,11 @@ import Register from './screens/Register';
 import Login from './screens/Login';
 import VehicleSelection from './screens/VehicleSelection';
 import Home from './screens/Home';
+import OrderHistory from './screens/OrderHistory';
+import PaymentMethods from './screens/PaymentMethods';
+import AddressList from './screens/AddressList';
+import Terms from './screens/Terms';
+import UserProfile from './screens/UserProfile';
 
 import MenuDrawer from './components/MenuDrawer';
 
@@ -30,6 +35,11 @@ const store = createStore(storeModel);
 const DrawerNavigator = createDrawerNavigator(
   {
     Home: Home,
+    OrderHistory: OrderHistory,
+    PaymentMethods: PaymentMethods,
+    AddressList: AddressList,
+    Terms: Terms,
+    UserProfile: UserProfile
   },
   {
     unmountInactiveRoutes: true,

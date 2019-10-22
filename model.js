@@ -11,11 +11,11 @@ const storeModel = {
     verificationCode: null
   },
 
-  currentVehicle: null,
-
   user: {
-    name: null,
+    name: '',
   },
+
+  currentVehicle: null,
 
   properties: {
     displayModal: false,

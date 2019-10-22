@@ -35,7 +35,7 @@ const MenuDrawer = ({navigation}) => {
   };
 
   userName = (name) => {
-    if (name === null || name === '') { return 'Usuario'}
+    if (name === '') { return 'Usuario'}
     else { return name }
   };
 
@@ -91,7 +91,7 @@ const MenuDrawer = ({navigation}) => {
       <View style={styles.bottomLinks}>
         <TouchableOpacity
           style={styles.button}
-          // onPress={() => navigation.navigate('Historial')}
+          onPress={() => navigation.navigate('OrderHistory')}
         >
           <View style={styles.linkcontainer}>
             <View style={styles.iconbox}>
@@ -105,7 +105,7 @@ const MenuDrawer = ({navigation}) => {
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.button}
-          // onPress={() => navigation.navigate('Medios')}
+          onPress={() => navigation.navigate('PaymentMethods')}
         >
           <View style={styles.linkcontainer}>
             <View style={styles.iconbox}>
@@ -119,7 +119,7 @@ const MenuDrawer = ({navigation}) => {
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.button}
-          // onPress={() => navigation.navigate('Direcciones')}
+          onPress={() => navigation.navigate('AddressList')}
         >
           <View style={styles.linkcontainer}>
             <View style={styles.iconbox}>
@@ -135,7 +135,7 @@ const MenuDrawer = ({navigation}) => {
           style={styles.button}
           onPress={() =>
             {
-              // navigation.navigate('Vehículos')
+              navigation.navigate('VehicleSelection')
               navigation.toggleDrawer();
             }
           }
@@ -152,7 +152,7 @@ const MenuDrawer = ({navigation}) => {
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.button}
-          // onPress={() => navigation.navigate('Perfil')}
+          onPress={() => navigation.navigate('UserProfile')}
         >
           <View style={styles.linkcontainer}>
             <View style={styles.iconbox}>
@@ -185,7 +185,7 @@ const MenuDrawer = ({navigation}) => {
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.button}
-          // onPress={() => navigation.navigate('')}
+          onPress={() => navigation.navigate('Terms')}
         >
           <View style={styles.linkcontainer}>
             <View style={styles.iconbox}>
