@@ -5,7 +5,6 @@
 	};
 	objectVersion = 46;
 	objects = {
-
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* wogo_appTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* wogo_appTests.m */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
@@ -20,6 +19,9 @@
 		33819B5E1206AE5A2E1A0177 /* libPods-wogo_app-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F0E9DC010DCE1D39258D844D /* libPods-wogo_app-tvOSTests.a */; };
 		442C4B6FCAC7775C36DC4A3F /* libPods-wogo_app-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F316ABA55BE13C607EA59C31 /* libPods-wogo_app-tvOS.a */; };
 		BDD16C6BF8B6E974A13B6C0E /* libPods-wogo_appTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E5738DEF002C239E89EF9F02 /* libPods-wogo_appTests.a */; };
+		7EA186B66E004CC082E87DB8 /* Montserrat-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5D5EECFEC453467FB0C14AFB /* Montserrat-Bold.otf */; };
+		F5CDF52B73504F7A8C0DD0A3 /* Montserrat-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = C16A678DCDBD42F29D549224 /* Montserrat-Regular.otf */; };
+		F67807572C2F45F7890FDBC4 /* Montserrat-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 79B6235519B24E11ACB4A4CB /* Montserrat-SemiBold.otf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,6 +69,9 @@
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
 		F0E9DC010DCE1D39258D844D /* libPods-wogo_app-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-wogo_app-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F316ABA55BE13C607EA59C31 /* libPods-wogo_app-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-wogo_app-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		5D5EECFEC453467FB0C14AFB /* Montserrat-Bold.otf */ = {isa = PBXFileReference; name = "Montserrat-Bold.otf"; path = "../assets/fonts/Montserrat/Montserrat-Bold.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		C16A678DCDBD42F29D549224 /* Montserrat-Regular.otf */ = {isa = PBXFileReference; name = "Montserrat-Regular.otf"; path = "../assets/fonts/Montserrat/Montserrat-Regular.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		79B6235519B24E11ACB4A4CB /* Montserrat-SemiBold.otf */ = {isa = PBXFileReference; name = "Montserrat-SemiBold.otf"; path = "../assets/fonts/Montserrat/Montserrat-SemiBold.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -165,6 +170,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				FF3ED3617ABA0550633473C8 /* Pods */,
+				A11F81D2F6994D348BA6D1D8 /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -196,6 +202,17 @@
 			);
 			path = Pods;
 			sourceTree = "<group>";
+		};
+		A11F81D2F6994D348BA6D1D8 /* Resources */ = {
+			isa = "PBXGroup";
+			children = (
+				5D5EECFEC453467FB0C14AFB /* Montserrat-Bold.otf */,
+				C16A678DCDBD42F29D549224 /* Montserrat-Regular.otf */,
+				79B6235519B24E11ACB4A4CB /* Montserrat-SemiBold.otf */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+			path = "";
 		};
 /* End PBXGroup section */
 
@@ -284,7 +301,7 @@
 		83CBB9F71A601CBA00E9B192 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0940;
+				LastUpgradeCheck = 940;
 				ORGANIZATIONNAME = Facebook;
 				TargetAttributes = {
 					00E356ED1AD99517003FC87E = {
@@ -338,6 +355,9 @@
 			files = (
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
+				7EA186B66E004CC082E87DB8 /* Montserrat-Bold.otf in Resources */,
+				F5CDF52B73504F7A8C0DD0A3 /* Montserrat-Regular.otf in Resources */,
+				F67807572C2F45F7890FDBC4 /* Montserrat-SemiBold.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
