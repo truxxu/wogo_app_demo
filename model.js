@@ -32,6 +32,8 @@ const storeModel = {
 
   services: [],
 
+  orders: [],
+
   products: {
     our_selection: null,
     top: null,
@@ -53,6 +55,10 @@ const storeModel = {
 
   writeServices: action((state, payload) => {
     state.services = payload
+  }),
+
+  writeOrder: action((state, payload) => {
+    state.orders = payload
   }),
 
   writeUser: action((state, payload) => {
@@ -80,6 +86,17 @@ const storeModel = {
       })
       .catch(error => {
         // Alert.alert('Se ha presentado un error');
+      });
+  }),
+
+  getOrders: thunk(async (actions, payload, { getStoreState }) => {
+    actions.writePropertyState({name: 'isLoading', value: true});
+    axios.get(`${env.apiServer}/orders/`)
+      .then(response => {
+        actions.writeOrder(response.data);
+        actions.writePropertyState({name: 'isLoading', value: false});
+      })
+      .catch(error => {
       });
   }),
 

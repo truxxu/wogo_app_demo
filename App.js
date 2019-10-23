@@ -78,7 +78,7 @@ const RootStack = createStackNavigator(
   },
   {
     initialRouteName: 'Splash',
-    headerMode: 'none',
+    headerMode: 'Splash',
   }
 );
 
