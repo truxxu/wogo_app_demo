@@ -14,12 +14,10 @@ import {
 import axios from 'axios';
 import DatePicker from 'react-native-datepicker';
 import ImagePicker from 'react-native-image-picker';
-import { env } from '../keys';
 import { useStoreState, useStoreActions } from 'easy-peasy';
-import Modal from "react-native-modal";
 
 import { colors } from '../envStyles';
-// import BackBar from '../components/BackBar';
+import { env } from '../keys';
 
 const UserProfile = ({navigation}) => {
 
