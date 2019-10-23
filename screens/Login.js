@@ -54,7 +54,7 @@ const Login = ({navigation}) => {
             style={styles.text}>
             Te enviamos un código de seis dígitos al número
           </Text>
-          <Text style={styles.boldText}>{auth.areaCode + auth.telephone}</Text>
+          <Text style={styles.boldText}>{auth.areaCode+" "+ auth.telephone}</Text>
           <TouchableOpacity
             onPress={() => navigation.navigate('Register')}
           >
@@ -68,7 +68,7 @@ const Login = ({navigation}) => {
               keyboardType='numeric'
               maxLength={6}
             />
-            <Text style={styles.placeholder}>______</Text>
+            <Text style={styles.placeholder}>_ _ _ _ _ _</Text>
           </View>
           {auth.waitingForApi &&
             <Image
@@ -184,9 +184,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderWidth: 1,
     borderRadius: 10,
-    // width: wp('60%'),
-    // height: hp('7%'),
-    // margin: hp('1.4%'),
+    width: 211,
+    height: 51,
+    margin: 10,
     backgroundColor: colors.purple,
     shadowColor: "#000",
     shadowOffset: {
@@ -217,11 +217,12 @@ const styles = StyleSheet.create({
     width: 215,
   },
   code: {
+    paddingLeft: 0,
     width: 211,
     fontSize: 16,
     textAlign: 'center',
     fontFamily: 'Montserrat-Bold',
-    letterSpacing: 10,
+    letterSpacing: 8,
     zIndex: 3
   },
   placeholder: {
@@ -229,7 +230,7 @@ const styles = StyleSheet.create({
     fontSize: 22,
     textAlign: 'center',
     fontFamily:'Montserrat-Bold',
-    letterSpacing: 8,
+    // letterSpacing: 8,
     position: 'absolute',
     top: 7,
     right: 2,
