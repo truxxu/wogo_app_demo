@@ -113,6 +113,7 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   footer: {
+    marginTop: 280,
     alignItems: 'center',
   },
   boldText: {
