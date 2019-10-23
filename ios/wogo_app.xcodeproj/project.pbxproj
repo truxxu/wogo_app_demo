@@ -5,6 +5,7 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* wogo_appTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* wogo_appTests.m */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
@@ -18,8 +19,8 @@
 		2DCD954D1E0B4F2C00145EB5 /* wogo_appTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* wogo_appTests.m */; };
 		33819B5E1206AE5A2E1A0177 /* libPods-wogo_app-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F0E9DC010DCE1D39258D844D /* libPods-wogo_app-tvOSTests.a */; };
 		442C4B6FCAC7775C36DC4A3F /* libPods-wogo_app-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F316ABA55BE13C607EA59C31 /* libPods-wogo_app-tvOS.a */; };
-		BDD16C6BF8B6E974A13B6C0E /* libPods-wogo_appTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E5738DEF002C239E89EF9F02 /* libPods-wogo_appTests.a */; };
 		7EA186B66E004CC082E87DB8 /* Montserrat-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5D5EECFEC453467FB0C14AFB /* Montserrat-Bold.otf */; };
+		BDD16C6BF8B6E974A13B6C0E /* libPods-wogo_appTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E5738DEF002C239E89EF9F02 /* libPods-wogo_appTests.a */; };
 		F5CDF52B73504F7A8C0DD0A3 /* Montserrat-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = C16A678DCDBD42F29D549224 /* Montserrat-Regular.otf */; };
 		F67807572C2F45F7890FDBC4 /* Montserrat-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 79B6235519B24E11ACB4A4CB /* Montserrat-SemiBold.otf */; };
 /* End PBXBuildFile section */
@@ -60,18 +61,18 @@
 		2D02E47B1E0B4A5D006451C7 /* wogo_app-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "wogo_app-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* wogo_app-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "wogo_app-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		510E97B08D802C4A1DED2708 /* Pods-wogo_app.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-wogo_app.release.xcconfig"; path = "Target Support Files/Pods-wogo_app/Pods-wogo_app.release.xcconfig"; sourceTree = "<group>"; };
+		5D5EECFEC453467FB0C14AFB /* Montserrat-Bold.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-Bold.otf"; path = "../assets/fonts/Montserrat/Montserrat-Bold.otf"; sourceTree = "<group>"; };
 		6CEFC170BE016914A60CA36C /* Pods-wogo_app-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-wogo_app-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-wogo_app-tvOSTests/Pods-wogo_app-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		7315C18DFBEB14F5FEB93131 /* libPods-wogo_app.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-wogo_app.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		79B6235519B24E11ACB4A4CB /* Montserrat-SemiBold.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-SemiBold.otf"; path = "../assets/fonts/Montserrat/Montserrat-SemiBold.otf"; sourceTree = "<group>"; };
 		7B48ABBB9C10230B618C5892 /* Pods-wogo_app-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-wogo_app-tvOS.release.xcconfig"; path = "Target Support Files/Pods-wogo_app-tvOS/Pods-wogo_app-tvOS.release.xcconfig"; sourceTree = "<group>"; };
 		95D91A1F324EFEB1327513B0 /* Pods-wogo_app-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-wogo_app-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-wogo_app-tvOS/Pods-wogo_app-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
+		C16A678DCDBD42F29D549224 /* Montserrat-Regular.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-Regular.otf"; path = "../assets/fonts/Montserrat/Montserrat-Regular.otf"; sourceTree = "<group>"; };
 		E5738DEF002C239E89EF9F02 /* libPods-wogo_appTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-wogo_appTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
 		F0E9DC010DCE1D39258D844D /* libPods-wogo_app-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-wogo_app-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F316ABA55BE13C607EA59C31 /* libPods-wogo_app-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-wogo_app-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		5D5EECFEC453467FB0C14AFB /* Montserrat-Bold.otf */ = {isa = PBXFileReference; name = "Montserrat-Bold.otf"; path = "../assets/fonts/Montserrat/Montserrat-Bold.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		C16A678DCDBD42F29D549224 /* Montserrat-Regular.otf */ = {isa = PBXFileReference; name = "Montserrat-Regular.otf"; path = "../assets/fonts/Montserrat/Montserrat-Regular.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		79B6235519B24E11ACB4A4CB /* Montserrat-SemiBold.otf */ = {isa = PBXFileReference; name = "Montserrat-SemiBold.otf"; path = "../assets/fonts/Montserrat/Montserrat-SemiBold.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -188,6 +189,16 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		A11F81D2F6994D348BA6D1D8 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				5D5EECFEC453467FB0C14AFB /* Montserrat-Bold.otf */,
+				C16A678DCDBD42F29D549224 /* Montserrat-Regular.otf */,
+				79B6235519B24E11ACB4A4CB /* Montserrat-SemiBold.otf */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
 		FF3ED3617ABA0550633473C8 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -202,17 +213,6 @@
 			);
 			path = Pods;
 			sourceTree = "<group>";
-		};
-		A11F81D2F6994D348BA6D1D8 /* Resources */ = {
-			isa = "PBXGroup";
-			children = (
-				5D5EECFEC453467FB0C14AFB /* Montserrat-Bold.otf */,
-				C16A678DCDBD42F29D549224 /* Montserrat-Regular.otf */,
-				79B6235519B24E11ACB4A4CB /* Montserrat-SemiBold.otf */,
-			);
-			name = Resources;
-			sourceTree = "<group>";
-			path = "";
 		};
 /* End PBXGroup section */
 
