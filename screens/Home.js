@@ -11,8 +11,10 @@ import {
 } from 'react-native';
 import { useStoreState, useStoreActions } from 'easy-peasy';
 
+import { colors } from '../envStyles';
 import MenuBar from '../components/MenuBar';
 import ServiceTabs from '../components/ServiceTabs';
+import FooterBar from '../components/FooterBar';
 
 
 const Home = ({navigation}) => {
@@ -30,9 +32,16 @@ const Home = ({navigation}) => {
   }, []);
 
   return(
-    <View>
+    <View style={{flex: 1, backgroundColor: colors.gray}}>
       <MenuBar navigation={navigation}/>
       <ServiceTabs navigation={navigation}/>
+      <ScrollView
+      showsVerticalScrollIndicator={false}
+      >
+        <View style={styles.container}>
+        </View>
+      </ScrollView>
+      <FooterBar navigation={navigation} />
     </View>
   );
 }
