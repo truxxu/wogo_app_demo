@@ -31,7 +31,6 @@ const storeModel = {
 
   services: [],
 
-
   properties: {
     currentVehicle: null,
     isLoading: false,

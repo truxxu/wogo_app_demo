@@ -15,6 +15,7 @@ import { colors } from '../envStyles';
 import MenuBar from '../components/MenuBar';
 import ServiceTabs from '../components/ServiceTabs';
 import FooterBar from '../components/FooterBar';
+import ServiceSlider from '../components/ServiceSlider';
 
 
 const Home = ({navigation}) => {
@@ -39,6 +40,8 @@ const Home = ({navigation}) => {
       showsVerticalScrollIndicator={false}
       >
         <View style={styles.container}>
+          <ServiceSlider navigation={navigation}/>
+          <Text style={styles.title}>¿Qué Necesitas?</Text>
         </View>
       </ScrollView>
       <FooterBar navigation={navigation} />
@@ -47,7 +50,18 @@ const Home = ({navigation}) => {
 }
 
 const styles = StyleSheet.create({
-
+  container: {
+    marginTop: 20,
+    marginLeft: 20,
+    marginRight: 20,
+  },
+  title: {
+    marginTop: 20,
+    marginBottom: 10,
+    fontSize: 16,
+    fontFamily: 'Montserrat-SemiBold',
+    color: colors.black,
+  },
 });
 
 export default Home;
