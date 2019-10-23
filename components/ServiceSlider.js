@@ -82,7 +82,7 @@ const ServiceSlider = ({navigation}) => {
                   }
                 >
                   <Image
-                    style={{width: 150, height: 75, zIndex: 1, position: 'absolute'}}
+                    style={{width: 150, height: 75, borderRadius: 7, zIndex: 1, position: 'absolute'}}
                     source={{uri: item.itemA.image}}
                   />
                   <Text style={styles.item}>{item.itemA.name}</Text>

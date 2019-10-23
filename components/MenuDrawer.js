@@ -83,7 +83,7 @@ const MenuDrawer = ({navigation}) => {
         />
         <View>
           <View style={{borderBottomWidth: 0.5, borderColor: 'gray'}}>
-            <Text style={styles.boldText}>{this.userName(user.name)}</Text>
+            <Text style={styles.boldText}>{userName(user.name)}</Text>
           </View>
           <View style={styles.linkcontainer}>
             <Text style={styles.text}></Text>
