@@ -16,6 +16,7 @@ const storeModel = {
   },
 
   user: {
+    waitingForApi: false,
     name: '',
     photo: null,
     avatar_uri: null,
@@ -83,12 +84,14 @@ const storeModel = {
   }),
 
   getUserInfo: thunk(async actions => {
+    actions.writeUser({name: 'waitingForApi', value: true});
     axios.get(env.apiServer + '/profile')
       .then(response => {
         actions.writeUser({name: 'name', value: response.data.name});
         actions.writeUser({name: 'photo', value: response.data.photo});
         actions.writeUser({name: 'email', value: response.data.email});
         actions.writeUser({name: 'birth_date', value: response.data.birth_date});
+        actions.writeUser({name: 'waitingForApi', value: false});
       })
       .catch(error => {
         // Alert.alert('Se ha presentado un error');
