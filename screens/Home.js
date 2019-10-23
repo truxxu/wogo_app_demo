@@ -17,6 +17,8 @@ import ServiceTabs from '../components/ServiceTabs';
 import FooterBar from '../components/FooterBar';
 import ServiceSlider from '../components/ServiceSlider';
 import Carousel from '../components/Carousel';
+import TopProducts from '../components/TopProducts';
+import SelectedProducts from '../components/SelectedProducts';
 
 
 const Home = ({navigation}) => {
@@ -44,6 +46,10 @@ const Home = ({navigation}) => {
           <Carousel navigation={navigation} />
           <Text style={styles.title}>¿Qué Necesitas?</Text>
           <ServiceSlider navigation={navigation}/>
+          <Text style={styles.title}>Productos Más Vendidos</Text>
+          <TopProducts navigation={navigation} type={'top'}/>
+          <Text style={styles.title}>Nuestra Selección Para Ti</Text>
+          <SelectedProducts navigation={navigation} type={'our_selection'}/>
         </View>
       </ScrollView>
       <FooterBar navigation={navigation} />

@@ -31,12 +31,19 @@ const storeModel = {
 
   services: [],
 
+  products: {
+    our_selection: null,
+    top: null,
+  },
+
   properties: {
     currentVehicle: null,
     isLoading: false,
     displayModal: false,
     activeAddress: null,
     activeServiceTab: null,
+    isLoadingOurSelection: false,
+    isLoadingTop: false,
   },
 
   writeAuthState: action((state, payload) => {
@@ -57,6 +64,10 @@ const storeModel = {
 
   toggleProperties: action((state, payload) => {
     state.properties[payload] = !state.properties[payload]
+  }),
+
+  writeProducts: action((state, payload) => {
+    state.products[payload.name] = payload.value
   }),
 
   getServices: thunk(async (actions, payload) => {
@@ -84,6 +95,24 @@ const storeModel = {
     });
   }),
 
+  getProducts: thunk(async (actions, payload) => {
+    actions.writePropertyState({name: 'isLoadingTop', value: true});
+    actions.writePropertyState({name: 'isLoadingOurSelection', value: true});
+    axios.get(`${env.apiServer}/products/?list=${payload}`)
+      .then(response => {
+        if (payload === 'our_selection') {
+          actions.writeProducts({value: response.data, name: 'our_selection'});
+          actions.writePropertyState({name: 'isLoadingOurSelection', value: false});
+        }
+        else if (payload === 'top') {
+          actions.writeProducts({value: response.data, name: 'top'});
+          actions.writePropertyState({name: 'isLoadingTop', value: false});
+        }
+      })
+      .catch(error => {
+        // Alert.alert('Se ha presentado un error');
+      });
+  }),
 };
 
 export default storeModel;
