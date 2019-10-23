@@ -47,7 +47,7 @@ const DrawerNavigator = createDrawerNavigator(
     contentComponent: ({ navigation }) => {
       return(<MenuDrawer navigation={navigation} />)
     },
-    initialRouteName: 'Home',
+    initialRouteName: 'OrderHistory',
     headerMode: 'none'
   }
 );
@@ -62,7 +62,7 @@ const RootStack = createStackNavigator(
     DrawerNavigator: DrawerNavigator,
   },
   {
-    initialRouteName: 'Splash',
+    initialRouteName: 'DrawerNavigator',
     headerMode: 'none',
   }
 );
