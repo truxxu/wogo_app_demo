@@ -35,12 +35,14 @@ const MenuDrawer = ({navigation}) => {
   };
 
   userName = (name) => {
-    if (name === '') { return 'Usuario'}
+    if (name === '' || name === null) { return 'Usuario'}
     else { return name }
   };
 
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView
+      keyboardShouldPersistTaps={'never'}
+      style={styles.container}>
       <Modal isVisible={properties.displayModal}>
         <View style={styles.modalContainer}>
           <Text style={styles.modalText}>Contáctanos</Text>
@@ -81,7 +83,7 @@ const MenuDrawer = ({navigation}) => {
         />
         <View>
           <View style={{borderBottomWidth: 0.5, borderColor: 'gray'}}>
-            <Text style={styles.boldText}>{this.userName(user.name)}</Text>
+            <Text style={styles.boldText}>{userName(user.name)}</Text>
           </View>
           <View style={styles.linkcontainer}>
             <Text style={styles.text}></Text>
