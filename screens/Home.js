@@ -16,6 +16,7 @@ import MenuBar from '../components/MenuBar';
 import ServiceTabs from '../components/ServiceTabs';
 import FooterBar from '../components/FooterBar';
 import ServiceSlider from '../components/ServiceSlider';
+import Carousel from '../components/Carousel';
 
 
 const Home = ({navigation}) => {
@@ -40,8 +41,9 @@ const Home = ({navigation}) => {
       showsVerticalScrollIndicator={false}
       >
         <View style={styles.container}>
-          <ServiceSlider navigation={navigation}/>
+          <Carousel navigation={navigation} />
           <Text style={styles.title}>¿Qué Necesitas?</Text>
+          <ServiceSlider navigation={navigation}/>
         </View>
       </ScrollView>
       <FooterBar navigation={navigation} />

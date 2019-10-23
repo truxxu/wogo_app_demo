@@ -15,8 +15,10 @@ const ServiceSlider = ({navigation}) => {
 
   const services = useStoreState(state => state.services);
   // const getBusinesses = useStoreActions(actions => actions.getBusinesses);
-  const serviceGroups = _.chunk(services, [size=2]);
   const isLoading = useStoreState(state => state.properties.isLoading);
+  const writePropertyState = useStoreActions(actions => actions.writePropertyState);
+
+  const serviceGroups = _.chunk(services, [size=2]);
 
   if (isLoading === true) {
     return(
@@ -50,8 +52,9 @@ const ServiceSlider = ({navigation}) => {
               <TouchableOpacity
                 style={styles.button}
                 onPress={() => {
-                  getBusinesses(item.itemA.name);
-                  navigation.navigate('Categoría', {service: item.itemA.name, types: item.itemA.types});
+                  writePropertyState({name: 'activeServiceTab', value: item.itemA.name});
+                  // getBusinesses(item.itemA.name);
+                  // navigation.navigate('Categoría', {service: item.itemA.name, types: item.itemA.types});
                 }}
               >
                 <View
@@ -90,8 +93,9 @@ const ServiceSlider = ({navigation}) => {
                 <TouchableOpacity
                   style={styles.button}
                   onPress={() => {
-                    getBusinesses(item.itemB.name);
-                    navigation.navigate('Categoría', {service: item.itemB.name, types: item.itemB.types});
+                    writePropertyState({name: 'activeServiceTab', value: item.itemB.name});
+                    // getBusinesses(item.itemB.name);
+                    // navigation.navigate('Categoría', {service: item.itemB.name, types: item.itemB.types});
                   }}
                 >
                   <View
