@@ -46,60 +46,69 @@ const Login = ({navigation}) => {
   }
 
   return(
-    <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps={'never'}>
-      <Text
-        style={styles.text}>
-        Te enviamos un código de seis dígitos al número
-      </Text>
-      <Text style={styles.boldText}>{auth.areaCode + auth.telephone}</Text>
-      <TouchableOpacity
-        onPress={() => navigation.replace('Register')}
-      >
-        <Text style={styles.link}>¿Número incorrecto?</Text>
-      </TouchableOpacity>
-      <View style={{zIndex: 1}}>
-        <TextInput
-          style={styles.code}
-          onChangeText={(verificationCode) => writeAuthState({ name: 'verificationCode', value: verificationCode})}
-          value={auth.verificationCode}
-          keyboardType='numeric'
-          maxLength={6}
-        />
-        <Text style={styles.placeholder}>______</Text>
-      </View>
-      {auth.waitingForApi &&
-        <Image
-          source={require('../assets/gifs/spinner.gif')}
-          style={styles.stretch}
-        />
-      }
-      {!auth.waitingForApi &&
-        <TouchableOpacity
-          onPress={() => {
-            if (auth.checked === true && auth.verificationCode !== null && auth.verificationCode !== '') {
-              this.onSubmit()
-            } else {
-              Alert.alert('Error','Acepta las condiciones e introduce el código de verificación');            }}
-          }
-          style={styles.button}
-        >
-          <Text style={styles.buttonText}>Registrarse</Text>
-        </TouchableOpacity>
-      }
-      <View style={styles.switchcontainer}>
-        <Switch
-          value = {auth.checked}
-          trackColor={{ true: colors.purple, false: Platform.OS=='android'?'#d3d3d3':'#fbfbfb'  }}
-          thumbColor={[Platform.OS=='ios'?'#FFFFFF': (auth.checked ? colors.purple :'#ffffff')]}
-          ios_backgroundColor="#fbfbfb"
-          onValueChange={(checked) => writeAuthState({ name: 'checked', value: checked})}
-        />
-        <View style={{width: 250, paddingLeft: 5}}>
-          <Text style={styles.switchtext}>
-            Mediante el registro acepto los términos y condiciones de uso.
+    <ScrollView keyboardShouldPersistTaps={'always'}>
+      <ScrollView  keyboardShouldPersistTaps={'handled'}>
+        <View style={styles.container}>
+          <Text
+            style={styles.text}>
+            Te enviamos un código de seis dígitos al número
           </Text>
+          <Text style={styles.boldText}>{auth.areaCode+" "+ auth.telephone}</Text>
+          <TouchableOpacity
+            onPress={() => navigation.replace('Register')}
+          >
+            <Text style={styles.link}>¿Número incorrecto?</Text>
+          </TouchableOpacity>
+          <View style={{zIndex: 1}}>
+            <TextInput
+              style={styles.code}
+              onChangeText={(verificationCode) => writeAuthState({ name: 'verificationCode', value: verificationCode})}
+              value={auth.verificationCode}
+              keyboardType='numeric'
+              maxLength={6}
+            />
+            <Text style={styles.placeholder}>_ _ _ _ _ _</Text>
+          </View>
+          {auth.waitingForApi &&
+            <Image
+              source={require('../assets/gifs/spinner.gif')}
+              style={styles.stretch}
+            />
+          }
+          {!auth.waitingForApi &&
+            <TouchableOpacity
+              onPress={() => {
+                if (auth.checked === true && auth.verificationCode !== null && auth.verificationCode !== '') {
+                  this.onSubmit()
+                } else {
+                  Alert.alert('Error','Acepta las condiciones e introduce el código de verificación');            }}
+              }
+              style={styles.button}
+            >
+              <Text style={styles.buttonText}>Registrarse</Text>
+            </TouchableOpacity>
+          }
+           <TouchableOpacity              
+              style={styles.button2}
+            >
+              <Text style={styles.buttonText2}>Reenviar Código</Text>
+            </TouchableOpacity>
+          <View style={styles.switchcontainer}>
+            <Switch
+              value = {auth.checked}
+              trackColor={{ true: colors.purple, false: Platform.OS=='android'?'#d3d3d3':'#fbfbfb'  }}
+              thumbColor={[Platform.OS=='ios'?'#FFFFFF': (auth.checked ? colors.purple :'#ffffff')]}
+              ios_backgroundColor="#fbfbfb"
+              onValueChange={(checked) => writeAuthState({ name: 'checked', value: checked})}
+            />
+            <View style={{width: 250, paddingLeft: 5}}>
+              <Text style={styles.switchtext}>
+                Mediante el registro acepto los términos y condiciones de uso.
+              </Text>
+            </View>
+          </View>
         </View>
-      </View>
+      </ScrollView>
     </ScrollView>
   );
 }
@@ -107,16 +116,15 @@ const Login = ({navigation}) => {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.gray,
+    marginTop: 120,
     flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'center',
     alignItems: 'center',
     padding: 40,
   },
   boldText: {
     textAlign: 'center',
     marginBottom: 10,
-    fontSize: 16,
+    fontSize: 18,
     fontFamily: 'Montserrat-Bold',
     width: 200,
     color: colors.black,
@@ -128,10 +136,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderWidth: 1,
     borderRadius: 10,
-    // width: wp('60%'),
-    // height: hp('7%'),
-    // margin: hp('1.4%'),
-    // marginTop: hp('11%'),
+    width: 211,
+    height: 51,
+    margin: 10,
+    marginTop: 70,
     backgroundColor: colors.yellow,
     shadowColor: "#000",
     shadowOffset: {
@@ -155,9 +163,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderWidth: 1,
     borderRadius: 10,
-    // width: wp('60%'),
-    // height: hp('7%'),
-    // margin: hp('1.4%'),
+    width: 211,
+    height: 51,
+    margin: 10,
     backgroundColor: 'gray',
     shadowColor: "#000",
     shadowOffset: {
@@ -175,9 +183,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderWidth: 1,
     borderRadius: 10,
-    // width: wp('60%'),
-    // height: hp('7%'),
-    // margin: hp('1.4%'),
+    width: 211,
+    height: 51,
+    margin: 10,
     backgroundColor: colors.purple,
     shadowColor: "#000",
     shadowOffset: {
@@ -203,25 +211,27 @@ const styles = StyleSheet.create({
   text: {
     fontFamily: 'Montserrat-Regular',
     color: colors.black,
-    fontSize: 16,
+    fontSize: 17,
     textAlign: 'center',
+    width: 215,
   },
   code: {
-    // width: wp('61%'),
+    paddingLeft: 0,
+    width: 211,
     fontSize: 16,
     textAlign: 'center',
     fontFamily: 'Montserrat-Bold',
-    letterSpacing: 10,
+    letterSpacing: 8,
     zIndex: 3
   },
   placeholder: {
-    // width: wp('61%'),
+    width: 211,
     fontSize: 22,
     textAlign: 'center',
     fontFamily:'Montserrat-Bold',
-    letterSpacing: 10,
+    // letterSpacing: 8,
     position: 'absolute',
-    // top: hp('1.4%'),
+    top: 7,
     right: 2,
     zIndex: 2
   },

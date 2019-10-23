@@ -48,66 +48,64 @@ const Register = ({navigation}) => {
   };
 
   return(
-    <ScrollView keyboardShouldPersistTaps={'never'} contentContainerStyle={styles.contentContainer}>
-      <View style={styles.container}>
-        <Text
-          style={styles.boldText}>
-          Ingresa tu número de celular
-        </Text>
-        <View style={styles.phone}>
-          <CountryFlag data={auth.areaCode}/>
-          <ModalSelector
-            data={data}
-            initValue={`${auth.areaCode} ▼`}
-            cancelText={'Cancelar'}
-            onChange={(option)=> writeAuthState({name: 'areaCode', value: option.label})}
-            selectStyle={styles.picker}
-            initValueTextStyle={styles.item}
-            cancelContainerStyle={{display: 'none'}}
-            optionContainerStyle={{backgroundColor: colors.white}}
-            keyboardShouldPersistTaps={'never'}
-          />
-          <TextInput
-            style={styles.input}
-            keyboardType='numeric'
-            maxLength={10}
-            onChangeText={(text) => writeAuthState({name: 'telephone', value: text})}
-            value={auth.telephone}
-          />
-        </View>
-      </View>
-      <View style={styles.footer}>
-          <TouchableOpacity
-            onPress={() => {
-              if (auth.telephone === null || auth.telephone === "") {
-                Alert.alert('Completa tus datos');
-              } else {
-                this.onSubmit()
-              }}
-            }
-            style={styles.button}
-          >
-            {!auth.waitingForApi &&
-              <Text style={styles.buttonText}>Enviar</Text>
-            }
-            {auth.waitingForApi &&
-              <Image
-              source={require('../assets/gifs/spinner.gif')}
-              style={styles.stretch}
+    <ScrollView keyboardShouldPersistTaps={'always'}>
+      <ScrollView keyboardShouldPersistTaps={'handled'}>
+        <View style={styles.container}>
+          <Text
+            style={styles.boldText}>
+            Ingresa tu número de celular
+          </Text>
+          <View style={styles.phone}>
+            <CountryFlag data={auth.areaCode}/>
+            <ModalSelector
+              data={data}
+              initValue={`${auth.areaCode} ▼`}
+              cancelText={'Cancelar'}
+              onChange={(option)=> writeAuthState({name: 'areaCode', value: option.label})}
+              selectStyle={styles.picker}
+              initValueTextStyle={styles.item}
+              cancelContainerStyle={{display: 'none'}}
+              optionContainerStyle={{backgroundColor: colors.white}}
+              keyboardShouldPersistTaps={'always'}
               />
-            }
-          </TouchableOpacity>
-      </View>
+            <TextInput
+              style={styles.input}
+              keyboardType='numeric'
+              maxLength={10}
+              onChangeText={(text) => writeAuthState({name: 'telephone', value: text})}
+              value={auth.telephone}
+              />
+          </View>
+        </View>
+        <View style={styles.footer}>
+            <TouchableOpacity
+              onPress={() => {
+                if (auth.telephone === null || auth.telephone === "") {
+                  Alert.alert('Completa tus datos');
+                } else {
+                  this.onSubmit()
+                }}
+              }
+              style={styles.button}
+              >
+              {!auth.waitingForApi &&
+                <Text style={styles.buttonText}>Enviar</Text>
+              }
+              {auth.waitingForApi &&
+                <Image
+                source={require('../assets/gifs/spinner.gif')}
+                style={styles.stretch}
+                />
+              }
+            </TouchableOpacity>
+        </View>
+      </ScrollView>
     </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  contentContainer: {
-    backgroundColor: colors.gray,
-    flex: 1,
-  },
-  container: {
+    container: {
     backgroundColor: colors.gray,
     marginTop: 230,
     flex: 1,
@@ -115,6 +113,7 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   footer: {
+    marginTop: 280,
     alignItems: 'center',
   },
   boldText: {
@@ -163,8 +162,8 @@ const styles = StyleSheet.create({
     borderColor: colors.yellow,
     justifyContent: 'center',
     alignItems: 'center',
-    width: 200,
-    height: 45,
+    width: 211,
+    height: 51,
     borderWidth: 1,
     borderRadius: 10,
     backgroundColor: colors.yellow,

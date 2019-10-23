@@ -13,6 +13,9 @@ import { createStore, StoreProvider } from 'easy-peasy';
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createDrawerNavigator } from 'react-navigation-drawer';
+import { persistStore, persistReducer } from "redux-persist";
+import AsyncStorage from '@react-native-community/async-storage';
+import { PersistGate } from "redux-persist/integration/react";
 
 import storeModel from './model';
 import Splash from './screens/Splash';
@@ -30,7 +33,19 @@ import UserProfile from './screens/UserProfile';
 import MenuDrawer from './components/MenuDrawer';
 
 const WIDTH = Dimensions.get('window').width;
-const store = createStore(storeModel);
+
+const store = createStore(storeModel, {
+  reducerEnhancer: reducer =>
+    persistReducer(
+      {
+        key: "easypeasystate",
+        storage: AsyncStorage
+      },
+      reducer
+    )
+});
+
+const persistor = persistStore(store);
 
 const DrawerNavigator = createDrawerNavigator(
   {
@@ -63,7 +78,7 @@ const RootStack = createStackNavigator(
   },
   {
     initialRouteName: 'Splash',
-    headerMode: 'none',
+    headerMode: 'Splash',
   }
 );
 
@@ -72,11 +87,13 @@ const AppContainer = createAppContainer(RootStack);
 
 const App: () => React$Node = () => {
   return (
-    <StoreProvider store={store}>
-      <SafeAreaView style={{flex: 1}}>
-        <AppContainer />
-      </SafeAreaView>
-    </StoreProvider>
+    <PersistGate persistor={persistor}>
+      <StoreProvider store={store}>
+        <SafeAreaView style={{flex: 1}}>
+          <AppContainer />
+        </SafeAreaView>
+      </StoreProvider>
+    </PersistGate>
   );
 };
 

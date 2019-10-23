@@ -18,8 +18,9 @@ import { env } from '../keys';
 
 const VehicleSelection = ({navigation}) => {
 
-  const currentVehicle = useStoreState(state => state.currentVehicle);
-  const writeCurrentVehicle = useStoreActions(actions => actions.writeCurrentVehicle);
+  const properties = useStoreState(state => state.properties);
+  const writePropertyState = useStoreActions(actions => actions.writePropertyState);
+  const getServices = useStoreActions(actions => actions.getServices);
 
   return(
     <View style={{flex: 1, backgroundColor: colors.gray}}>
@@ -29,8 +30,8 @@ const VehicleSelection = ({navigation}) => {
           <TouchableOpacity
             style={styles.button}
             onPress={() => {
-              writeCurrentVehicle('carro')
-              // getServices('carro')
+              writePropertyState({name: 'currentVehicle', value: 'carro'})
+              getServices('carro')
               navigation.navigate('Home')
             }}
           >
@@ -44,8 +45,8 @@ const VehicleSelection = ({navigation}) => {
           <TouchableOpacity
             style={styles.button}
             onPress={() => {
-              writeCurrentVehicle('moto')
-              // getServices('moto')
+              writePropertyState({name: 'currentVehicle', value: 'moto'})
+              getServices('moto')
               navigation.navigate('Home')
             }}
           >
@@ -66,16 +67,15 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.gray,
     flex: 1,
-    flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
   },
   boldText: {
     textAlign: 'left',
-    // marginTop: hp('14%'),
-    // marginLeft: wp('5%'),
-    fontSize: 20,
+    marginTop: 140,
+    marginLeft: 40,
+    fontSize: 21,
     fontFamily: 'Montserrat-Bold',
     color: colors.black,
   },
@@ -87,17 +87,15 @@ const styles = StyleSheet.create({
     color: colors.black,
   },
   iconContainer: {
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
+    marginTop: -80,
   },
   button: {
     borderColor: colors.white,
     borderWidth: 1,
     borderRadius: 10,
-    // height: hp('20%'),
-    // width: hp('20%'),
-    // margin: hp('1.5%'),
+    height: 154,
+    width: 168,
+    margin: 12,
     padding: 10,
     backgroundColor: colors.white,
     shadowColor: "#000",
