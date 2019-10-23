@@ -47,7 +47,6 @@ const Login = ({navigation}) => {
 
   return(
     <ScrollView keyboardShouldPersistTaps={'always'}>
-      {/* contentContainerStyle={styles.container} */}
       <ScrollView  keyboardShouldPersistTaps={'handled'}>
         <View style={styles.container}>
           <Text

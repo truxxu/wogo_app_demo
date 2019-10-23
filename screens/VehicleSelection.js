@@ -18,8 +18,9 @@ import { env } from '../keys';
 
 const VehicleSelection = ({navigation}) => {
 
-  const currentVehicle = useStoreState(state => state.currentVehicle);
-  const writeCurrentVehicle = useStoreActions(actions => actions.writeCurrentVehicle);
+  const properties = useStoreState(state => state.properties);
+  const writePropertyState = useStoreActions(actions => actions.writePropertyState);
+  const getServices = useStoreActions(actions => actions.getServices);
 
   return(
     <View style={{flex: 1, backgroundColor: colors.gray}}>
@@ -29,8 +30,8 @@ const VehicleSelection = ({navigation}) => {
           <TouchableOpacity
             style={styles.button}
             onPress={() => {
-              writeCurrentVehicle('carro')
-              // getServices('carro')
+              writePropertyState({name: 'currentVehicle', value: 'carro'})
+              getServices('carro')
               navigation.navigate('Home')
             }}
           >
@@ -44,8 +45,8 @@ const VehicleSelection = ({navigation}) => {
           <TouchableOpacity
             style={styles.button}
             onPress={() => {
-              writeCurrentVehicle('moto')
-              // getServices('moto')
+              writePropertyState({name: 'currentVehicle', value: 'moto'})
+              getServices('moto')
               navigation.navigate('Home')
             }}
           >
