@@ -2,6 +2,7 @@ import { action, thunk } from 'easy-peasy';
 
 const storeModel = {
 
+  // State
   auth: {
     token: null,
     areaCode: '+57',
@@ -15,12 +16,19 @@ const storeModel = {
     name: '',
   },
 
+  activeAddress: {
+    id: null,
+    latitude: null,
+    longitude: null
+  },
+
   currentVehicle: null,
 
   properties: {
     displayModal: false,
   },
 
+  // Actions
   writeAuthState: action((state, payload) => {
     state.auth[payload.name] = payload.value
   }),
