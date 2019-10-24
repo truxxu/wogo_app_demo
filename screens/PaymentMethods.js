@@ -139,7 +139,7 @@ const PaymentMethods = ({navigation}) => {
           }
         </ScrollView>
         <TouchableOpacity
-          onPress={() => navigation.navigate('AgregarMedio')}
+          onPress={() => navigation.navigate('NewCard')}
           style={styles.button}
         >
           <Text style={styles.buttonText}>Agregar tarjeta</Text>

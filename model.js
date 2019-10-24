@@ -1,6 +1,7 @@
 import { action, thunk } from 'easy-peasy';
 import Geocoder from 'react-native-geocoding';
 import axios from 'axios';
+import moment from 'moment';
 
 import { env, geocoding } from './keys';
 
@@ -60,6 +61,19 @@ const storeModel = {
 
   cards: [],
 
+  newCard: {
+    number: '',
+    name: '',
+    year: '',
+    month: '',
+    expiration_date: '',
+    payment_method: '',
+    cvv: '',
+    error: '',
+    isValid: false,
+    isPristine: true,
+  },
+
   properties: {
     currentVehicle: null,
     isLoading: false,
@@ -101,10 +115,6 @@ const storeModel = {
 
   writeProducts: action((state, payload) => {
     state.products[payload.name] = payload.value
-  }),
-
-  writeCards: action((state, payload) => {
-    state.cards = payload
   }),
 
   getServices: thunk(async (actions, payload) => {
@@ -165,6 +175,7 @@ const storeModel = {
       });
   }),
 
+  // Cards
   getCards: thunk(async actions => {
     actions.writePropertyState({name: 'isLoading', value: true});
     axios.get(env.apiServer + '/credit-cards/')
@@ -175,6 +186,110 @@ const storeModel = {
       .catch(error => {
         actions.writePropertyState({name: 'isLoading', value: false});
     });
+  }),
+
+  writeCards: action((state, payload) => {
+    state.cards = payload
+  }),
+
+  setCardToDelete: action((state, payload) => {
+    state.cardToDelete = payload
+  }),
+
+  removeCardObject: action((state, payload) => {
+    const newArray = _.remove(state.cards, function(card) {
+      return payload.token_id === card.token_id;
+    })
+  }),
+
+  newCardPristine: action((state, payload) => {
+    state.newCard.isPristine = payload
+  }),
+
+  newCardNumber: action((state, payload) => {
+    state.newCard.number = payload
+    state.newCard.isPristine = false
+    if(state.newCard.number.match(/^\d+$/)) {
+      if(state.newCard.number.length <= 16 && state.newCard.number.length >= 13) {
+        state.newCard.isValid = true
+        state.newCard.error = ''
+      } else {
+        state.newCard.isValid = false
+        state.newCard.error = 'Número debe tener entre 13 y 16 dígitos'
+      }
+    } else {
+      state.newCard.isValid = false
+      state.newCard.error = 'Solo caracteres numéricos en el número'
+    }
+  }),
+
+  newCardName: action((state, payload) => {
+    state.newCard.name = payload
+    state.newCard.isPristine = false
+    if(state.newCard.name.match(/^[a-zA-Z\s]+$/)) {
+      state.newCard.isValid = true
+      state.newCard.error = ''
+    } else {
+      state.newCard.isValid = false
+      state.newCard.error = 'Solo caracteres alfanuméricos en el nombre'
+    }
+  }),
+
+  newCardCvv: action((state, payload) => {
+    state.newCard.cvv = payload
+    state.newCard.isPristine = false
+    if(state.newCard.cvv.match(/^\d+$/)) {
+      state.newCard.isValid = true
+      state.newCard.error = ''
+    } else {
+      state.newCard.isValid = false
+      state.newCard.error = 'Solo caracteres numéricos en el cvv'
+    }
+    if(state.newCard.number.match(/^3[47][0-9]{13}$/)) {
+      if(state.newCard.cvv.length !== 4) {
+        state.newCard.isValid = false
+        state.newCard.error = 'cvv deben ser 4 números'
+      } else {
+        state.newCard.isValid = true
+        state.newCard.error = ''
+      }
+    } else {
+      if(state.newCard.cvv.length !== 3) {
+        state.newCard.isValid = false
+        state.newCard.error = 'cvv deben ser 3 números'
+      } else {
+        state.newCard.isValid = true
+        state.newCard.error = ''
+      }
+    }
+  }),
+
+  newCardYear: action((state, payload) => {
+    state.newCard.year = payload
+    state.newCard.isPristine = false
+    if(state.newCard.year.length == 4
+      && state.newCard.month.length >= 1
+      && moment(state.newCard.year + '-' + state.newCard.month, "YYYY-MM").isSameOrAfter(moment(), 'month')) {
+      state.newCard.isValid = true
+      state.newCard.error = ''
+    } else {
+      state.newCard.isValid = false
+      state.newCard.error = 'Fecha de expiración no puede ser antes de hoy'
+    }
+  }),
+
+  newCardMonth: action((state, payload) => {
+    state.newCard.month = payload
+    state.newCard.isPristine = false
+    if(state.newCard.year.length == 4
+      && state.newCard.month.length >= 1
+      && moment(state.newCard.year + '-' + state.newCard.month, "YYYY-MM").isSameOrAfter(moment(), 'month')) {
+      state.newCard.isValid = true
+      state.newCard.error = ''
+    } else {
+      state.newCard.isValid = false
+      state.newCard.error = 'Fecha de expiración no puede ser antes de hoy'
+    }
   }),
 };
 
