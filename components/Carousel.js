@@ -21,7 +21,7 @@ class Carousel extends React.Component {
 
   componentDidMount = () => {
     this.setState({isLoading: true});
-    axios.get(env.apiServer + '/banners')
+    axios.get(env.apiServer + '/banners/')
       .then(response => {
         this.setState({banners: response.data});
         this.carouselInterval = setInterval(() => {

@@ -62,7 +62,7 @@ const OrderHistory = ({navigation}) => {
     return(
       <TouchableOpacity
         key={order.id}
-        // onPress={() => navigation.navigate('Pedido', {data: order})}
+        onPress={() => navigation.navigate('Order', {data: order})}
       >
         <View style={styles.contentA}>
           <View style={styles.contentB}>

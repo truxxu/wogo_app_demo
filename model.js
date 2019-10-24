@@ -69,6 +69,7 @@ const storeModel = {
     isLoadingOurSelection: false,
     isLoadingTop: false,
     displayCloseSession: false,
+    quantity: 1,
   },
 
   // Actions
