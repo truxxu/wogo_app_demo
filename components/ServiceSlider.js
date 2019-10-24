@@ -14,7 +14,6 @@ import * as _ from 'lodash';
 const ServiceSlider = ({navigation}) => {
 
   const services = useStoreState(state => state.services);
-  // const getBusinesses = useStoreActions(actions => actions.getBusinesses);
   const isLoading = useStoreState(state => state.properties.isLoading);
   const writePropertyState = useStoreActions(actions => actions.writePropertyState);
 
@@ -53,9 +52,8 @@ const ServiceSlider = ({navigation}) => {
                 <TouchableOpacity
                   style={styles.button}
                   onPress={() => {
-                    writePropertyState({name: 'activeServiceTab', value: item.itemA.name});
-                    // getBusinesses(item.itemA.name);
-                    // navigation.navigate('Categoría', {service: item.itemA.name, types: item.itemA.types});
+                    writePropertyState({name: 'activeServiceTab', value: item.itemA});
+                    navigation.navigate('Category');
                   }}
                 >
                   <View
@@ -96,9 +94,8 @@ const ServiceSlider = ({navigation}) => {
                 <TouchableOpacity
                   style={styles.button}
                   onPress={() => {
-                    writePropertyState({name: 'activeServiceTab', value: item.itemB.name});
-                    // getBusinesses(item.itemB.name);
-                    // navigation.navigate('Categoría', {service: item.itemB.name, types: item.itemB.types});
+                    writePropertyState({name: 'activeServiceTab', value: item.itemB});
+                    navigation.navigate('Category');
                   }}
                 >
                   <View

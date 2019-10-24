@@ -15,6 +15,8 @@ import axios from 'axios';
 import DatePicker from 'react-native-datepicker';
 import ImagePicker from 'react-native-image-picker';
 import { useStoreState, useStoreActions } from 'easy-peasy';
+import Modal from "react-native-modal";
+import AsyncStorage from '@react-native-community/async-storage';
 
 import { colors } from '../envStyles';
 import { env } from '../keys';
@@ -22,11 +24,12 @@ import { env } from '../keys';
 const UserProfile = ({navigation}) => {
 
   const user = useStoreState(state => state.user);
-  const auth = useStoreState(state => state.auth);
+  const properties = useStoreState(state => state.properties);
 
   // Actions
   const getUserInfo = useStoreActions(actions => actions.getUserInfo);
   const writeUser = useStoreActions(actions => actions.writeUser);
+  const toggleProperties = useStoreActions(actions => actions.toggleProperties);
 
   useEffect(() => {
     getUserInfo();
@@ -71,8 +74,56 @@ const UserProfile = ({navigation}) => {
     )})
   };
 
+  deleteToken = async () => {
+    try {
+      await AsyncStorage.removeItem('authToken');
+    } catch (error) {
+      // Error retrieving data
+      console.log(error.message);
+    }
+  }
+
+  logOut = () => {
+    axios.post(env.apiServer + '/auth/logout')
+    .then(response => {
+      toggleProperties('displayCloseSession');
+      this.deleteToken();
+      navigation.replace('Splash');
+    })
+    .catch(error => {
+    });
+  };
+
   return (
     <ScrollView contentContainerStyle={{flex: 1}} keyboardShouldPersistTaps={'never'}>
+      <Modal
+        isVisible={properties.displayCloseSession}
+        backdropOpacity={0.2}
+      >
+        <View style={styles.modalContainer}>
+          <View style={styles.innercontainer}>
+            <View style={styles.modalContent}>
+              <Image
+                source={require('../assets/icons/Error.png')}
+                style={{width: 75, height: 75, marginRight: 15}}
+              />
+              <Text style={styles.modalText}>¿Deseas cerrar sesión?</Text>
+            </View>
+            <TouchableOpacity
+              style={styles.modalbutton}
+              onPress={() => this.logOut() }
+            >
+              <Text style={styles.modalButtonText}>Si, estoy seguro</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.modalbutton}
+              onPress={() => toggleProperties('displayCloseSession')}
+            >
+              <Text style={styles.modalButtonText}>Cancelar</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
       <View style={styles.container}>
         <View>
           <View>
@@ -145,34 +196,33 @@ const UserProfile = ({navigation}) => {
           <Text style={styles.text}>Celular</Text>
           <Text style={styles.text2}>{user.phone}</Text>
         </View>
-        {user.waitingForApi &&
-          <Image
-            source={require('../assets/gifs/spinner.gif')}
-            style={styles.stretch}
-          />
-        }
-        {!user.waitingForApi &&
+        <View>
+          {user.waitingForApi &&
+            <Image
+              source={require('../assets/gifs/spinner.gif')}
+              style={styles.stretch}
+            />
+          }
+          {!user.waitingForApi &&
+            <TouchableOpacity
+              onPress={() => {
+                if (user.name !== null && user.email !== null && user.birth_date !== null) {
+                  onSubmitProfile()
+                } else {
+                  Alert.alert('Error', 'Completa tus datos');
+                }}
+              }
+              style={styles.button}
+            >
+              <Text style={styles.buttonText}>Guardar</Text>
+            </TouchableOpacity>
+          }
           <TouchableOpacity
-            onPress={() => {
-              if (user.name !== null && user.email !== null && user.birth_date !== null) {
-                onSubmitProfile()
-              } else {
-                console.log(error.data)
-                Alert.alert('Error', 'Completa tus datos');
-              }}
-            }
-            style={styles.button}
+            onPress={() => toggleProperties('displayCloseSession')}
           >
-            <Text style={styles.buttonText}>Guardar</Text>
+            <Text style={styles.link}>Cerrar Sesión</Text>
           </TouchableOpacity>
-        }
-        {/*
-        <TouchableOpacity
-          onPress={() => toggleCloseSession()}
-        >
-          <Text style={styles.link}>Cerrar Sesión</Text>
-        </TouchableOpacity>
-        */}
+        </View>
       </View>
     </ScrollView>
   );
@@ -267,9 +317,10 @@ const styles = StyleSheet.create({
   },
   link: {
     fontFamily: 'Montserrat-Regular',
-    color: colors.pruple,
+    color: colors.purple,
     fontSize: 16,
-    marginBottom: 10
+    marginBottom: 10,
+    textAlign: 'center',
   },
   avatarcontainer: {
     width: 100,
@@ -298,17 +349,19 @@ const styles = StyleSheet.create({
   },
   innercontainer: {
     backgroundColor: colors.white,
-    height: 100,
-    width: 100,
+    // height: 100,
+    // width: 100,
     flexDirection: 'column',
     justifyContent: 'space-around',
     alignItems: 'center',
     borderRadius: 10,
+    padding: 10,
   },
   modalContent: {
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
+    padding: 5,
   },
   modalText: {
     fontSize: 16,
@@ -323,8 +376,8 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    width: 300,
-    height: 50,
+    width: 200,
+    height: 45,
     margin: 10,
     backgroundColor: colors.yellow,
     shadowColor: "#000",
