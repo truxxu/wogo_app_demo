@@ -58,6 +58,8 @@ const storeModel = {
     top: null,
   },
 
+  cards: [],
+
   properties: {
     currentVehicle: null,
     isLoading: false,
@@ -99,6 +101,10 @@ const storeModel = {
 
   writeProducts: action((state, payload) => {
     state.products[payload.name] = payload.value
+  }),
+
+  writeCards: action((state, payload) => {
+    state.cards = payload
   }),
 
   getServices: thunk(async (actions, payload) => {
@@ -157,6 +163,18 @@ const storeModel = {
       .catch(error => {
         // Alert.alert('Se ha presentado un error');
       });
+  }),
+
+  getCards: thunk(async actions => {
+    actions.writePropertyState({name: 'isLoading', value: true});
+    axios.get(env.apiServer + '/credit-cards/')
+      .then(response => {
+        actions.writeCards(response.data);
+        actions.writePropertyState({name: 'isLoading', value: false});
+      })
+      .catch(error => {
+        actions.writePropertyState({name: 'isLoading', value: false});
+    });
   }),
 };
 
