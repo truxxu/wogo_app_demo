@@ -57,7 +57,6 @@ const BackBarTitle = ({navigation, title, route}) => {
       paddingLeft: 20,
       paddingRight: 20,
       paddingTop: 10,
-      paddingBottom: 10,
     },
     boldText: {
       fontSize: 18,
