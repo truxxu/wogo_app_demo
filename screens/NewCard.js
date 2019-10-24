@@ -103,7 +103,7 @@ const NewCard = ({navigation}) => {
 
   return (
     <View style={{flex: 1, backgroundColor: colors.gray}}>
-      <BackBarTitle navigation={navigation} title={'Mis tarjetas'} route={'Medios'} />
+      <BackBarTitle navigation={navigation} title={'Mis tarjetas'} route={'PaymentMethods'} />
       <View style={styles.container}>
         <View>
           <Text style={styles.text}>Número de tarjeta</Text>
