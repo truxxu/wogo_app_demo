@@ -143,7 +143,7 @@ const UserProfile = ({navigation}) => {
         </View>
         <View>
           <Text style={styles.text}>Celular</Text>
-          <Text style={styles.text2}>{auth.areaCode + auth.telephone}</Text>
+          <Text style={styles.text2}>{user.phone}</Text>
         </View>
         {user.waitingForApi &&
           <Image

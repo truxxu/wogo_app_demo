@@ -11,6 +11,8 @@ import {
 import { useStoreState, useStoreActions } from 'easy-peasy';
 import Geolocation from 'react-native-geolocation-service';
 import Geocoder from 'react-native-geocoding';
+import axios from 'axios';
+import AsyncStorage from '@react-native-community/async-storage';
 
 import { colors } from '../envStyles';
 
@@ -22,13 +24,15 @@ const Splash = ({navigation}) => {
 
   // Actions
   const writeActiveAddress = useStoreActions(actions => actions.writeActiveAddress);
+  const writePropertyState = useStoreActions(actions => actions.writePropertyState);
 
   useEffect(() => {
     if(Platform.OS === 'ios') {
       Geolocation.requestAuthorization();
       Geolocation.getCurrentPosition(
         (position) => { locationSuccessful(position) },
-        (error) => { locationPermissionsNotGranted() }
+        (error) => { locationPermissionsNotGranted() },
+        { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
       );
     } else {
       PermissionsAndroid.request(
@@ -37,7 +41,8 @@ const Splash = ({navigation}) => {
         if(response == 'granted') {
           Geolocation.getCurrentPosition(
             (position) => { locationSuccessful(position) },
-            (error) => { locationPermissionsNotGranted() }
+            (error) => { locationPermissionsNotGranted() },
+            { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
           );
         } else {
           locationPermissionsNotGranted();
@@ -101,12 +106,32 @@ const Splash = ({navigation}) => {
     });
   }
 
-  locationSuccessful = (position) => {
-    Geocoder.from(position.coords.latitude, position.coords.longitude).then(json => {
-      setActiveAddress(json, position);
-      if (auth_token !== null) {
+  getActiveVehicle = async () => {
+    try {
+      const activeVehicle = await AsyncStorage.getItem('activeVehicle');
+      if(activeVehicle !== null) {
+        writePropertyState({name: 'currentVehicle', value: activeVehicle});
+        navigation.replace('DrawerNavigator');
+      }
+      else {
+        navigation.replace('VehicleSelection');
+      };
+    } catch(e) {
+      // error reading value
+      navigation.replace('VehicleSelection');
+    }
+  }
+
+  getToken = async () => {
+    try {
+      const authToken = await AsyncStorage.getItem('authToken')
+      if(authToken !== null) {
         // validate token
-        // if valid -> goto home
+        axios.defaults.headers.common.Authorization = authToken;
+        // if valid -> get stored activeVehicle
+        getActiveVehicle();
+        // if valid -> goto drawer navigator
+        //navigation.replac;e('DrawerNavigator')
         // if not -> goto register
       }
       else {
@@ -114,6 +139,18 @@ const Splash = ({navigation}) => {
           navigation.replace('Welcome')
         }, 2000);
       };
+    } catch(e) {
+      // error reading value
+      const timer = setTimeout(() => {
+        navigation.replace('Welcome')
+      }, 2000);
+    }
+  }
+
+  locationSuccessful = (position) => {
+    Geocoder.from(position.coords.latitude, position.coords.longitude).then(json => {
+      setActiveAddress(json, position);
+      getToken();
     }).catch(error => {
       geocodingNotSuccessful();
     });

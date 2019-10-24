@@ -24,6 +24,7 @@ const storeModel = {
     waitingForApi: false,
     name: '',
     photo: null,
+    phone: null,
     avatar_uri: null,
     avatar_fileName: null,
     email: null,
@@ -127,6 +128,7 @@ const storeModel = {
     actions.writeUser({name: 'waitingForApi', value: true});
     axios.get(env.apiServer + '/profile')
       .then(response => {
+        actions.writeUser({name: 'phone', value: response.data.username});
         actions.writeUser({name: 'name', value: response.data.name});
         actions.writeUser({name: 'photo', value: response.data.photo});
         actions.writeUser({name: 'email', value: response.data.email});

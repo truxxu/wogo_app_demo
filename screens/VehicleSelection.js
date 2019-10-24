@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import { useStoreState, useStoreActions } from 'easy-peasy';
 import axios from 'axios';
+import AsyncStorage from '@react-native-community/async-storage';
 
 import { colors } from '../envStyles';
 import { env } from '../keys';
@@ -22,6 +23,15 @@ const VehicleSelection = ({navigation}) => {
   const writePropertyState = useStoreActions(actions => actions.writePropertyState);
   const getServices = useStoreActions(actions => actions.getServices);
 
+  storeVehicle = async (vehicle) => {
+    try {
+      await AsyncStorage.setItem('activeVehicle', vehicle);
+    } catch (e) {
+      Alert('Error', 'No fue posible realizar la operación');
+      navigation.replace('VehicleSelection');
+    }
+  }
+
   return(
     <View style={{flex: 1, backgroundColor: colors.gray}}>
       <Text style={styles.boldText}>Escoge tu Vehículo</Text>
@@ -30,9 +40,9 @@ const VehicleSelection = ({navigation}) => {
           <TouchableOpacity
             style={styles.button}
             onPress={() => {
-              writePropertyState({name: 'currentVehicle', value: 'carro'})
-              getServices('carro')
-              navigation.navigate('Home')
+              storeVehicle('carro');
+              writePropertyState({name: 'currentVehicle', value: 'carro'});
+              navigation.replace('DrawerNavigator');
             }}
           >
             <Image
@@ -45,9 +55,9 @@ const VehicleSelection = ({navigation}) => {
           <TouchableOpacity
             style={styles.button}
             onPress={() => {
-              writePropertyState({name: 'currentVehicle', value: 'moto'})
-              getServices('moto')
-              navigation.navigate('Home')
+              writePropertyState({name: 'currentVehicle', value: 'moto'});
+              storeVehicle('moto');
+              navigation.replace('DrawerNavigator');
             }}
           >
             <Image

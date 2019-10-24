@@ -42,7 +42,7 @@ class Carousel extends React.Component {
           );
         }, 3000);
         this.setState({isLoading: false});
-      });
+      }).catch((error) => this.setState({banners: []}));
   };
 
   componentWillUnmount = () => {

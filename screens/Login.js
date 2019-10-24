@@ -9,10 +9,11 @@ import {
   TouchableOpacity,
   Alert,
   Platform,
-  Switch
+  Switch,
 } from 'react-native';
 import { useStoreState, useStoreActions } from 'easy-peasy';
 import axios from 'axios';
+import AsyncStorage from '@react-native-community/async-storage';
 
 import { colors } from '../envStyles';
 import { env } from '../keys';
@@ -22,6 +23,15 @@ const Login = ({navigation}) => {
 
   const auth = useStoreState(state => state.auth);
   const writeAuthState = useStoreActions(actions => actions.writeAuthState);
+
+  storeToken = async (token) => {
+    try {
+      await AsyncStorage.setItem('authToken', `Token ${token}`);
+    } catch (e) {
+      Alert('Error', 'No fue posible iniciar sesión. Intenta de nuevo');
+      navigation.replace('Register')
+    }
+  }
 
   onSubmit = e => {
     writeAuthState({name: 'waitingForApi', value: true})
@@ -35,12 +45,16 @@ const Login = ({navigation}) => {
       .then(response => {
         writeAuthState({name: 'verificationCode', value: ''});
         const { token, user } = response.data;
-        writeAuthState({name: 'token', value: `Token ${token}`})
+        //writeAuthState({name: 'token', value: `Token ${token}`})
+        // sets axios auth header
         axios.defaults.headers.common.Authorization = `Token ${token}`;
-        navigation.navigate('VehicleSelection');
         writeAuthState({name: 'waitingForApi', value: false})
+        // store token in local storage
+        storeToken(token);
+        navigation.navigate('VehicleSelection');
       })
       .catch(error => {
+        Alert('Error', 'No fue posible iniciar sesión. Intenta de nuevo');
         writeAuthState({name: 'verificationCode', value: ''});
       });
   }
