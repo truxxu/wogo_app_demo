@@ -63,7 +63,7 @@ const Category = ({navigation}) => {
           </View>
         </View>
         <View style={{marginRight: 20, marginLeft: 20}}>
-          <BusinessList />
+          <BusinessList navigation={navigation} />
         </View>
       </ScrollView>
       <FooterBar navigation={navigation} />

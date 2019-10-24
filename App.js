@@ -29,6 +29,7 @@ import Terms from './screens/Terms';
 import UserProfile from './screens/UserProfile';
 import Category from './screens/Category';
 import BusinessesMap from './screens/BusinessesMap';
+import Business from './screens/Business';
 
 import MenuDrawer from './components/MenuDrawer';
 
@@ -46,6 +47,7 @@ const DrawerNavigator = createDrawerNavigator(
     UserProfile: UserProfile,
     Category: Category,
     BusinessesMap: BusinessesMap,
+    Business: Business,
   },
   {
     unmountInactiveRoutes: true,

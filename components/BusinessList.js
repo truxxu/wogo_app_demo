@@ -6,7 +6,6 @@ import {
   StyleSheet,
   FlatList,
   Image,
-  Button,
   TouchableOpacity,
   ScrollView
 } from 'react-native';
@@ -63,15 +62,16 @@ const BusinessList = ({navigation}) => {
           renderItem={({item}) =>
             <View style={styles.cardContainer}>
               <View style={styles.card}>
-                <View style={styles.imageBox}>
-                  <Image
-                    style={{width: 180, height: 85, borderRadius: 3}}
-                    source={{uri: item.business.image}}
-                  />
-                </View>
                 <TouchableOpacity
-                  // onPress={() => {navigation.navigate('Negocio', {business: item.business, service: category, types: types})}}
+                  onPress={() => {navigation.navigate('Business')}}
+                  style={styles.button}
                 >
+                  <View style={styles.imageBox}>
+                    <Image
+                      style={{width: 180, height: 85, borderRadius: 3}}
+                      source={{uri: item.business.image}}
+                    />
+                  </View>
                   <View style={styles.textBox}>
                     <Text style={styles.boldText}>{item.business.name}</Text>
                     <Text
@@ -151,6 +151,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  button: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   messageText: {
     marginTop: 40,
     fontSize: 18,
@@ -212,7 +217,7 @@ const styles = StyleSheet.create({
   },
   title: {
     textAlign: 'left',
-    fontSize: 16,
+    fontSize: 14,
     fontFamily: 'Montserrat-Bold',
     color: colors.black,
   },
