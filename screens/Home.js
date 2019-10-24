@@ -23,7 +23,10 @@ import SelectedProducts from '../components/SelectedProducts';
 
 const Home = ({navigation}) => {
 
+  // States
   const properties = useStoreState(state => state.properties);
+
+  // Actions
   const getServices = useStoreActions(actions => actions.getServices);
   const getUserInfo = useStoreActions(actions => actions.getUserInfo);
 

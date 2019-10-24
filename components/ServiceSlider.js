@@ -49,47 +49,50 @@ const ServiceSlider = ({navigation}) => {
           }
           renderItem={({item}) =>
             <View>
-              <TouchableOpacity
-                style={styles.button}
-                onPress={() => {
-                  writePropertyState({name: 'activeServiceTab', value: item.itemA.name});
-                  // getBusinesses(item.itemA.name);
-                  // navigation.navigate('Categoría', {service: item.itemA.name, types: item.itemA.types});
-                }}
-              >
-                <View
-                  style={
-                    {
-                      height: 75,
-                      width: 150,
-                      backgroundColor: item.itemA.color,
-                      marginRight: 10,
-                      marginTop: 5,
-                      marginBottom: 5,
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      borderRadius: 7,
-                      shadowColor: "#000",
-                      shadowOffset: {
-                        width: 0,
-                        height: 1,
-                      },
-                      shadowOpacity: 0.20,
-                      shadowRadius: 1.41,
-                      elevation: 2,
-                    }
-                  }
+              { item.itemA !== undefined &&
+                <TouchableOpacity
+                  style={styles.button}
+                  onPress={() => {
+                    writePropertyState({name: 'activeServiceTab', value: item.itemA.name});
+                    // getBusinesses(item.itemA.name);
+                    // navigation.navigate('Categoría', {service: item.itemA.name, types: item.itemA.types});
+                  }}
                 >
-                  <Image
-                    style={{width: 150, height: 75, borderRadius: 7, zIndex: 1, position: 'absolute'}}
-                    source={{uri: item.itemA.image}}
-                  />
-                  <Text style={styles.item}>{item.itemA.name}</Text>
-                </View>
-              </TouchableOpacity>
+                  <View
+                    style={
+                      {
+                        height: 75,
+                        width: 150,
+                        backgroundColor: item.itemA.color,
+                        marginRight: 10,
+                        marginTop: 5,
+                        marginBottom: 5,
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        borderRadius: 7,
+                        shadowColor: "#000",
+                        shadowOffset: {
+                          width: 0,
+                          height: 1,
+                        },
+                        shadowOpacity: 0.20,
+                        shadowRadius: 1.41,
+                        elevation: 2,
+                      }
+                    }
+                  >
+                    { item.itemA.image !== null &&
+                      <Image
+                        style={{width: 150, height: 75, borderRadius: 7, zIndex: 1, position: 'absolute'}}
+                        source={{uri: item.itemA.image}}
+                      />
+                    }
+                    <Text style={styles.item}>{item.itemA.name}</Text>
+                  </View>
+                </TouchableOpacity>
+              }
               { item.itemB !== undefined &&
-
                 <TouchableOpacity
                   style={styles.button}
                   onPress={() => {
@@ -122,14 +125,18 @@ const ServiceSlider = ({navigation}) => {
                       }
                     }
                   >
-                    <Image
-                      style={{width: 150, height: 75, borderRadius: 7, zIndex: 1, position: 'absolute'}}
-                      source={{uri: item.itemB.image}}
-                    />
+                    { item.itemB.image !== null &&
+                      <Image
+                        style={{width: 150, height: 75, borderRadius: 7, zIndex: 1, position: 'absolute'}}
+                        source={{uri: item.itemB.image}}
+                      />
+                    }
                     <Text style={styles.item}>{item.itemB.name}</Text>
                   </View>
-                </TouchableOpacity>
+
+                </TouchableOpacity> 
               }
+
             </View>
           }
         />
