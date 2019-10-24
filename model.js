@@ -53,6 +53,8 @@ const storeModel = {
 
   orders: [],
 
+  businesses: [],
+
   products: {
     our_selection: null,
     top: null,
@@ -63,7 +65,7 @@ const storeModel = {
     isLoading: false,
     displayModal: false,
     activeAddress: null,
-    activeServiceTab: null,
+    activeServiceTab: '',
     isLoadingOurSelection: false,
     isLoadingTop: false,
     displayCloseSession: false,
@@ -100,6 +102,10 @@ const storeModel = {
 
   writeProducts: action((state, payload) => {
     state.products[payload.name] = payload.value
+  }),
+
+  writeBusiness: action((state, payload) => {
+    state.businesses = payload
   }),
 
   getServices: thunk(async (actions, payload) => {
@@ -154,6 +160,20 @@ const storeModel = {
           actions.writeProducts({value: response.data, name: 'top'});
           actions.writePropertyState({name: 'isLoadingTop', value: false});
         }
+      })
+      .catch(error => {
+        // Alert.alert('Se ha presentado un error');
+      });
+  }),
+
+  getBusinesses: thunk(async (actions, payload, { getStoreState }) => {
+    actions.writePropertyState({name: 'isLoadingTop', value: true});
+    const state = getStoreState();
+    const activeAddress = state.activeAddress;
+    axios.get(`${env.apiServer}/business/?service=${payload}&latitude=${activeAddress.latitude}&longitude=${activeAddress.longitude}&distance=6`)
+      .then(response => {
+        actions.writeBusiness(response.data);
+        actions.writePropertyState({name: 'isLoadingTop', value: false});
       })
       .catch(error => {
         // Alert.alert('Se ha presentado un error');
