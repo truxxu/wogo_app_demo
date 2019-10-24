@@ -83,13 +83,7 @@ const Login = ({navigation}) => {
             />
             <Text style={styles.placeholder}>_ _ _ _ _ _</Text>
           </View>
-          {auth.waitingForApi &&
-            <Image
-              source={require('../assets/gifs/spinner.gif')}
-              style={styles.stretch}
-            />
-          }
-          {!auth.waitingForApi &&
+          
             <TouchableOpacity
               onPress={() => {
                 if (auth.checked === true && auth.verificationCode !== null && auth.verificationCode !== '') {
@@ -99,9 +93,16 @@ const Login = ({navigation}) => {
               }
               style={styles.button}
             >
+            {!auth.waitingForApi &&            
               <Text style={styles.buttonText}>Registrarse</Text>
+            }
+            {auth.waitingForApi &&
+              <Image
+                source={require('../assets/gifs/spinner.gif')}
+                style={styles.stretch}
+              />
+            }            
             </TouchableOpacity>
-          }
            <TouchableOpacity              
               style={styles.button2}
             >
@@ -264,6 +265,11 @@ const styles = StyleSheet.create({
     fontFamily: 'Montserrat-Regular',
     color: colors.black,
     fontSize: 15,
+  },
+  stretch: {
+    height: 50,
+    width: 60,
+    resizeMode: 'contain',
   },
 });
 
