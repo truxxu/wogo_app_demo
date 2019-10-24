@@ -66,6 +66,7 @@ const storeModel = {
     activeServiceTab: null,
     isLoadingOurSelection: false,
     isLoadingTop: false,
+    displayCloseSession: false,
   },
 
   // Actions
