@@ -83,26 +83,30 @@ const Login = ({navigation}) => {
             />
             <Text style={styles.placeholder}>_ _ _ _ _ _</Text>
           </View>
-          
-            <TouchableOpacity
-              onPress={() => {
-                if (auth.checked === true && auth.verificationCode !== null && auth.verificationCode !== '') {
-                  this.onSubmit()
-                } else {
-                  Alert.alert('Error','Acepta las condiciones e introduce el código de verificación');            }}
-              }
-              style={styles.button}
-            >
-            {!auth.waitingForApi &&            
-              <Text style={styles.buttonText}>Registrarse</Text>
-            }
+            {!auth.waitingForApi && 
+              <TouchableOpacity
+                onPress={() => {
+                  if (auth.checked === true && auth.verificationCode !== null && auth.verificationCode !== '') {
+                    this.onSubmit()
+                  } else {
+                    Alert.alert('Error','Acepta las condiciones e introduce el código de verificación');            }}
+                }
+                style={styles.button}
+              >
+                <Text style={styles.buttonText}>Registrarse</Text>
+              </TouchableOpacity>
+            } 
             {auth.waitingForApi &&
-              <Image
-                source={require('../assets/gifs/spinner.gif')}
-                style={styles.stretch}
-              />
-            }            
-            </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.button}
+                disabled={true}
+              >
+                <Image
+                    source={require('../assets/gifs/spinner.gif')}
+                    style={styles.stretch}
+                />
+              </TouchableOpacity>
+            }        
            <TouchableOpacity              
               style={styles.button2}
             >
@@ -130,7 +134,6 @@ const Login = ({navigation}) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: colors.gray,
     marginTop: 120,
     flex: 1,
     alignItems: 'center',
@@ -240,6 +243,7 @@ const styles = StyleSheet.create({
     zIndex: 3
   },
   placeholder: {
+    paddingTop: 2,
     width: 211,
     fontSize: 22,
     textAlign: 'center',

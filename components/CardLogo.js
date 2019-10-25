@@ -1,13 +1,6 @@
 import React from 'react';
 import {
-	View,
-	StyleSheet,
-	Text,
-	TouchableOpacity,
-	Dimensions,
 	Image,
-	ScrollView,
-	TextInput
 } from 'react-native';
 
 const CardLogo = (props) => {
