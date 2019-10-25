@@ -71,6 +71,7 @@ const storeModel = {
     displayCloseSession: false,
     quantity: 1,
     activeBusiness: null,
+    activeType: 'Todo',
   },
 
   // Actions

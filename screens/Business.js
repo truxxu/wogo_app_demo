@@ -14,15 +14,15 @@ import * as _ from 'lodash';
 import { colors } from '../envStyles';
 import MenuBar from '../components/MenuBar';
 import ServiceTabs from '../components/ServiceTabs';
-// import CategorySlider from '../components/CategorySlider';
 import FooterBar from '../components/FooterBar';
+import TypesSlider from '../components/TypesSlider';
+import ProductType from '../components/ProductType';
+import AllProducts from '../components/AllProducts';
 
 const WIDTH = Dimensions.get('window').width;
 
 const Business = ({navigation}) => {
 
-  // const category = navigation.getParam('service');
-  // const types = navigation.getParam('types');
   const services = useStoreState(state => state.services);
   const properties = useStoreState(state => state.properties);
 
@@ -46,6 +46,19 @@ const Business = ({navigation}) => {
     }
     else {
       return `${parseFloat(distance).toFixed(1)} km`
+    }
+  };
+
+  renderProducts = () => {
+    if (properties.activeType === 'Todo') {
+      return(
+        <AllProducts navigation={navigation} types={typesArray} />
+      )
+    }
+    else {
+      return(
+        <ProductType navigation={navigation} />
+      )
     }
   };
 
@@ -85,11 +98,12 @@ const Business = ({navigation}) => {
               <Text style={styles.text}>{distanceStr(business.distance)}</Text>
             </View>
           </View>
+          <TypesSlider data={typesArray}/>
         </View>
         <View style={styles.cardContainer}>
-          <Text>
-            Products go here
-          </Text>
+          {
+            renderProducts()
+          }
         </View>
       </ScrollView>
       <FooterBar navigation={navigation} />
