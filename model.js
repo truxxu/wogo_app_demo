@@ -107,6 +107,7 @@ const storeModel = {
     activeType: 'Todo',
     installmentsNumber: null,
     displayClearCart: false,
+    loadingOrders: false
   },
 
   // Actions

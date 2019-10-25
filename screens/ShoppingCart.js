@@ -40,9 +40,6 @@ const ShoppingCart = ({navigation}) => {
   const writeActivePaymentMethod = useStoreActions(actions => actions.writeActivePaymentMethod);
   const getCards = useStoreActions(actions => actions.getCards);
 
-
-  const total = getTotal();
-  const priceStr = total.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
   const grouped_businesses = _.groupBy(shoppingCart, business => business.business);
   let items = Object.keys(grouped_businesses);
 
@@ -56,7 +53,7 @@ const ShoppingCart = ({navigation}) => {
       sum.price += product.price * product.quantity;
       sum.quantity += product.quantity;
     });
-    return sum
+    return sum.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
   };
 
 
@@ -95,13 +92,15 @@ const ShoppingCart = ({navigation}) => {
   };
 
   onSubmit = (payload) => {
+    writePropertyState({name: 'loadingOrders', value: true})
     if (properties.installmentsNumber > 0 && activePaymentMethod !== null) {
       payload.forEach(order => {
-        axios.post(`${env.localserver}/orders/`, order)
+        axios.post(`${env.apiServer}/orders/`, order)
           .then(response => {
             getOrders();
-            navigation.navigate('Historial');
+            navigation.navigate('OrderHistory');
             clearCart();
+      writePropertyState({name: 'loadingOrders', value: false});
           })
           .catch(error => {
             Alert.alert('No se pudo realizar tu pedido');
@@ -212,22 +211,8 @@ const ShoppingCart = ({navigation}) => {
           }
           <View style={styles.content}>
             <Text style={styles.text}>Total</Text>
-            <Text style={styles.boldText}>${priceStr}</Text>
+            <Text style={styles.boldText}>${getTotal()}</Text>
           </View>
-          {
-            // <View style={styles.content}>
-            //   <View style={styles.contentB}>
-            //     <Image
-            //       source={require('../../assets/icons/descuento.png')}
-            //       style={{height: 25, width: 25}}
-            //     />
-            //     <Text style={styles.textB}>Código de descuento</Text>
-            //   </View>
-            //   <TouchableOpacity>
-            //     <Text style={styles.link}>Agregar</Text>
-            //   </TouchableOpacity>
-            // </View>
-          }
           <View style={styles.content}>
             <View style={styles.contentB}>
               <CardLogo card={activePaymentMethod.payment_method}/>
@@ -265,7 +250,15 @@ const ShoppingCart = ({navigation}) => {
               }
             }
           >
-            <Text style={styles.buttonText}>Confirmar pedido</Text>
+            {!properties.loadingOrders &&
+              <Text style={styles.buttonText}>Confirmar pedido</Text>
+            }
+            {properties.loadingOrders &&
+              <Image
+              source={require('../assets/gifs/spinner.gif')}
+              style={styles.stretch}
+              />
+            }
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => toggleProperties('displayClearCart')}
@@ -369,8 +362,6 @@ const styles = StyleSheet.create({
   },
   innercontainer: {
     backgroundColor: colors.white,
-    // height: 300,
-    // width: 250,
     flexDirection: 'column',
     justifyContent: 'space-around',
     alignItems: 'center',
@@ -437,17 +428,21 @@ const styles = StyleSheet.create({
     color: colors.black,
   },
   inputSmall: {
-    borderColor: 'black',
-    borderBottomWidth: 0.5,
+    borderColor: 'gray',
+    borderWidth: 0.5,
     padding: 0,
-    paddingLeft: 5,
-    height: 20,
-    fontSize: 16,
+    width: 30,
+    fontSize: 14,
     textAlign: 'center',
-    borderRadius: 10,
+    borderRadius: 7,
     fontFamily: 'Montserrat-Regular',
     backgroundColor: 'white',
     marginTop: 5,
+  },
+  stretch: {
+    height: 50,
+    width: 60,
+    resizeMode: 'contain',
   },
 });
 

@@ -34,8 +34,10 @@ const BusinessInCart = (props) => {
     if (product.quantity >= 1) {
       return (
         <View style={styles.content2} key={product.product}>
-          <View>
-            <Text style={styles.boldText}>{shortener(product.name)}  x{product.quantity}</Text>
+          <View style={{ width: Dimensions.get('window').width - 80}}>
+            <View style={{ maxWidth: '70%'}}>
+              <Text style={styles.boldText}>{product.name}  x{product.quantity}</Text>
+            </View>
             <Text style={styles.price}>
               ${priceStr(product.quantity * product.price)}
             </Text>
@@ -64,7 +66,7 @@ const BusinessInCart = (props) => {
   return (
     <View>
       <View style={styles.content}>
-        <View>
+        <View style={{padding: 10, paddingLeft: 0}}>
           <Text style={styles.boldText}>{business.business_name}</Text>
           <Text style={styles.text}>{business.address}</Text>
         </View>
@@ -103,6 +105,12 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontFamily: 'Montserrat-Bold',
     color: colors.black
+  },
+  boldTextB: {
+    fontSize: 18,
+    fontFamily: 'Montserrat-Bold',
+    color: colors.black,
+    maxWidth: '50%',
   },
   text: {
     fontSize: 14,
