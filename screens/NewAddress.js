@@ -8,7 +8,8 @@ import {
   Alert,
   Dimensions,
   Keyboard,
-  ScrollView
+  ScrollView,
+  Image
  } from 'react-native';
 import axios from 'axios';
 import { useStoreState, useStoreActions } from 'easy-peasy';
@@ -23,12 +24,14 @@ const NewAddress = ({navigation}) => {
   // State
   const newAddress = useStoreState(state => state.newAddress);
   const newAddressRadioIndex = useStoreState(state => state.properties.newAddressRadioIndex);
+  const isLoading = useStoreState(state => state.properties.isLoading);
 
   // Actions
   const writeNewAddressRadioIndex = useStoreActions(actions => actions.writeNewAddressRadioIndex);
   const writeNewAddress = useStoreActions(actions => actions.writeNewAddress);
   const writeActiveAddressState = useStoreActions(actions => actions.writeActiveAddressState);
   const writeNewAddressState = useStoreActions(actions => actions.writeNewAddressState);
+  const writePropertyState = useStoreActions(actions => actions.writePropertyState);
 
   const radio_props = [
     {label: 'Casa', value: 'Casa', index: 0 },
@@ -57,6 +60,7 @@ const NewAddress = ({navigation}) => {
       country: newAddress.country
     };
 
+    writePropertyState({name: 'isLoading', value: true});
     axios.post(env.apiServer + '/addresses/', payload)
       .then(response => {
         writeActiveAddressState({ name: 'id', value: response.data.id })
@@ -69,9 +73,11 @@ const NewAddress = ({navigation}) => {
         writeActiveAddressState({ name: 'country', value: response.data.country })
         navigation.navigate('AddressList');
         resetFields();
+        writePropertyState({name: 'isLoading', value: false});
       })
       .catch(error => {
         Alert.alert('Error', 'No pudimos guardar tu dirección');
+        writePropertyState({name: 'isLoading', value: false});
       });
   }
 
@@ -82,7 +88,7 @@ const NewAddress = ({navigation}) => {
         <View>
           <Text style={styles.text}>Dirección</Text>
           <TextInput
-            style={styles.input}
+            style={styles.inputNotEditable}
             onChangeText={(text) => writeNewAddressState({ name: 'text', value: text })}
             value={newAddress.text}
             editable={false}
@@ -139,7 +145,15 @@ const NewAddress = ({navigation}) => {
           }
           style={styles.button}
         >
-          <Text style={styles.buttonText}>Guardar</Text>
+          {!isLoading &&
+            <Text style={styles.buttonText}>Guardar</Text>
+          }
+          {isLoading &&
+            <Image
+              source={require('../assets/gifs/spinner.gif')}
+              style={styles.stretch}
+            />
+          }
         </TouchableOpacity>
       </View>
     </View>
@@ -154,6 +168,20 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: 20,
+  },
+  inputNotEditable: {
+    borderColor: 'gray',
+    borderWidth: 0.5,
+    width: Dimensions.get("window").width - 40,
+    fontSize: 16,
+    padding: 5,
+    textAlign: 'left',
+    borderRadius: 10,
+    fontFamily: 'Montserrat-Regular',
+    marginLeft: 10,
+    backgroundColor: 'white',
+    paddingLeft: 5,
+    color: 'gray',
   },
   input: {
     borderColor: 'gray',
@@ -181,7 +209,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 10,
     width: 250,
-    padding: 15,
     marginTop: 20,
     backgroundColor: colors.yellow,
     shadowColor: "#000",
@@ -192,12 +219,19 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.20,
     shadowRadius: 1.41,
     elevation: 2,
+    alignItems: 'center',
   },
   buttonText: {
-    fontSize: 20,
+    fontSize: 18,
     textAlign: 'center',
     fontFamily: 'Montserrat-SemiBold',
     color: colors.black,
+    padding: 12,
+  },
+  stretch: {
+    height: 50,
+    width: 60,
+    resizeMode: 'contain',
   },
 })
 
