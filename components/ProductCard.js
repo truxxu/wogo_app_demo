@@ -18,8 +18,8 @@ const ProductCard = ({navigation, product}) => {
   const price = product.price.split(".")[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 
   shortener = (string) => {
-    if (string.length > 9) {
-      return string.substring(0, 10) + '...'
+    if (string.length > 24) {
+      return string.substring(0, 25) + '...'
     }
     else {return string}
   };

@@ -17,15 +17,14 @@ import CartBar from '../components/CartBar';
 
 const Product = ({navigation}) => {
 
-  // const plusQuantity = useStoreActions(actions => actions.plusQuantity);
-  // const addProduct = useStoreActions(actions => actions.addProduct);
-  // const minusQuantity = useStoreActions(actions => actions.minusQuantity);
-  // const quantity = useStoreState(state => state.properties.quantity);
   //States
   const shoppingCart = useStoreState(state => state.shoppingCart);
   const properties = useStoreState(state => state.properties);
   //Actions
   const plusQuantity = useStoreActions(actions => actions.plusQuantity);
+  const writePropertyState = useStoreActions(actions => actions.writePropertyState);
+  const addProduct = useStoreActions(actions => actions.addProduct);
+  const minusQuantity = useStoreActions(actions => actions.minusQuantity);
 
   const data = navigation.getParam('product');
   const priceStr = data.price.split(".")[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".");
@@ -49,13 +48,13 @@ const Product = ({navigation}) => {
           <View style={styles.quantitybox}>
             <View style={styles.quantity}>
               <TouchableOpacity
-                // onPress={() =>
-                //   {
-                //     if (quantity > 0) {
-                //       minusQuantity()
-                //     }
-                //   }
-                // }
+                onPress={() =>
+                  {
+                    if (properties.quantity > 1) {
+                      minusQuantity()
+                    }
+                  }
+                }
               >
                 <View style={styles.quantitycontrolB}>
                   <Text style={styles.quantitytext}>-</Text>
@@ -65,7 +64,7 @@ const Product = ({navigation}) => {
                 <Text style={styles.quantitytext}>{properties.quantity}</Text>
               </View>
               <TouchableOpacity
-                // onPress={() => addProduct(quantity)}
+                onPress={() => addProduct()}
               >
                 <View style={styles.quantitycontrolB}>
                   <Text style={styles.quantitytext}>+</Text>

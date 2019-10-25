@@ -13,7 +13,7 @@ import { useStoreState, useStoreActions } from 'easy-peasy';
 const HomeProductCard = ({navigation, product}) => {
 
   const price = product.price.split(".")[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-  // const plusSingleQuantity = useStoreActions(actions => actions.plusSingleQuantity);
+  const plusSingleQuantity = useStoreActions(actions => actions.plusSingleQuantity);
 
   shortener = (string) => {
     if (string.length > 9) {
@@ -34,9 +34,14 @@ const HomeProductCard = ({navigation, product}) => {
         />
       </TouchableOpacity>
       <TouchableOpacity
-        // onPress={() => navigation.navigate('Producto', {product: product,
-        //   business: {id: product.business, name: product.business_name, address: product.business_address},
-        //   origin: 'home'})}
+        onPress={() => navigation.navigate(
+            'Product',
+            {
+              product: product,
+              business: { id: product.business, name: product.business_name, address: product.business_address }
+            }
+          )
+        }
         style={styles.textbox}
       >
         <Text style={styles.price}>${price}</Text>
@@ -44,7 +49,7 @@ const HomeProductCard = ({navigation, product}) => {
         <Text style={styles.text}>{product.description.substring(0, 50) + '...'}</Text>
       </TouchableOpacity>
       <TouchableOpacity
-        // onPress={() => plusSingleQuantity({'product': product, 'quantity': 1})}
+        onPress={() => plusSingleQuantity({'product': product})}
         style={styles.button}
       >
         <Text style={styles.buttonText}>Agregar</Text>

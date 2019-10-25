@@ -386,8 +386,16 @@ const storeModel = {
       })
     }
     else {
-      product.quantity += payload.quantity
+      product.quantity += 1
     }
+  }),
+
+  addProduct: action(state => {
+    state.properties.quantity += 1
+  }),
+
+  minusQuantity: action((state, payload) => {
+    state.properties.quantity -= 1
   }),
 };
 
