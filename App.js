@@ -29,6 +29,7 @@ import PaymentMethods from './screens/PaymentMethods';
 import AddressList from './screens/AddressList';
 import Terms from './screens/Terms';
 import UserProfile from './screens/UserProfile';
+import NewCard from './screens/NewCard';
 import Category from './screens/Category';
 import BusinessesMap from './screens/BusinessesMap';
 import Business from './screens/Business';
@@ -44,6 +45,7 @@ const DrawerNavigator = createDrawerNavigator(
     OrderHistory: OrderHistory,
     Order: Order,
     PaymentMethods: PaymentMethods,
+    NewCard: NewCard,
     AddressList: AddressList,
     Terms: Terms,
     UserProfile: UserProfile,
