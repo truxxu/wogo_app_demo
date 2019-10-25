@@ -26,7 +26,7 @@ const AddressList = ({navigation}) => {
 
   // States
   const addresses = useStoreState(state => state.addresses);
-  const activeAddress = useStoreState(state => state.properties.activeAddress);
+  const activeAddress = useStoreState(state => state.activeAddress);
   const isLoading = useStoreState(state => state.properties.isLoading);
   const isLocating = useStoreState(state => state.properties.isLocating);
   const newAddress = useStoreState(state => state.newAddress);
@@ -37,10 +37,10 @@ const AddressList = ({navigation}) => {
   const writeNewAddress = useStoreActions(actions => actions.writeNewAddress);
   const writePropertyState = useStoreActions(actions => actions.writePropertyState);
 
-  //const sortedList = _.orderBy(addresses, [function(address) { return address.id === activeAddress.id }], ['desc']);
+  const sortedList = _.orderBy(addresses, [function(address) { return address.id === activeAddress.id }], ['desc']);
 
   useEffect(() => {
-    //getAddresses();
+    getAddresses();
   }, []);
 
   useEffect(() => {
@@ -223,8 +223,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   icon: {
-    height: 28,
-    width: 28,
+    height: 18,
+    width: 18,
     borderWidth: 0.5,
     borderColor: 'gray',
     borderRadius: 5,

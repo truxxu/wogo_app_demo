@@ -40,7 +40,7 @@ const storeModel = {
   },
 
   activeAddress: {
-    id: null,
+    id: 0,
     latitude: null,
     longitude: null,
     text: null,
@@ -106,7 +106,6 @@ const storeModel = {
     isLoading: false,
     isLocating: false,
     displayModal: false,
-    activeAddress: null,
     activeServiceTab: '',
     isLoadingOurSelection: false,
     isLoadingTop: false,
@@ -139,6 +138,7 @@ const storeModel = {
     state.properties[payload.name] = payload.value
   }),
 
+  // Addresses
   writeActiveAddress: action((state, payload) => {
     state.activeAddress = payload
   }),
@@ -153,6 +153,23 @@ const storeModel = {
 
   writeNewAddressRadioIndex: action((state, payload) => {
     state.properties.newAddressRadioIndex = payload
+  }),
+
+  writeAddresses: action((state, payload) => {
+    state.addresses = payload
+  }),
+
+  getAddresses: thunk(async actions => {
+    actions.writePropertyState({name: 'isLoading', value: true});
+    axios.get(env.apiServer + '/addresses/')
+      .then(response => {
+        actions.writeAddresses(response.data);
+        actions.writePropertyState({name: 'isLoading', value: false});
+      })
+      .catch(error => {
+        actions.writePropertyState({name: 'isLoading', value: false});
+        Alert.alert('Se ha presentado un error');
+      });
   }),
 
   toggleProperties: action((state, payload) => {
