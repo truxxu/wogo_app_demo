@@ -103,7 +103,6 @@ const Order = ({navigation}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.gray,
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: 10,
