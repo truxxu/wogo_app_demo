@@ -18,6 +18,8 @@ const BusinessList = ({navigation}) => {
   const businesses = useStoreState(state => state.businesses);
   const properties = useStoreState(state => state.properties);
 
+  const writePropertyState = useStoreActions(actions => actions.writePropertyState);
+
   const sortedBusinessList = _.orderBy(businesses, ['distance'], ['asc']);
 
   timeStr = (time) => {
@@ -63,7 +65,10 @@ const BusinessList = ({navigation}) => {
             <View style={styles.cardContainer}>
               <View style={styles.card}>
                 <TouchableOpacity
-                  onPress={() => {navigation.navigate('Business')}}
+                  onPress={() => {
+                    writePropertyState({name: 'activeBusiness', value: item.business})
+                    navigation.navigate('Business')
+                  }}
                   style={styles.button}
                 >
                   <View style={styles.imageBox}>
@@ -82,7 +87,7 @@ const BusinessList = ({navigation}) => {
                     <Text
                       style={styles.text}
                     >
-                      {timeStr(item.business.opening_hour)} - {timeStr(item.business.closing_hour)}
+                      {this.timeStr(item.business.opening_hour)} - {this.timeStr(item.business.closing_hour)}
                     </Text>
                     <View style={styles.ratebox}>
                       <Image
