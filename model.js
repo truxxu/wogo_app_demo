@@ -105,6 +105,8 @@ const storeModel = {
     quantity: 1,
     activeBusiness: null,
     activeType: 'Todo',
+    installmentsNumber: null,
+    displayClearCart: false,
   },
 
   // Actions
@@ -397,6 +399,27 @@ const storeModel = {
   minusQuantity: action((state, payload) => {
     state.properties.quantity -= 1
   }),
+
+  clearCart: action(state => {
+    state.shoppingCart = []
+  }),
+
+  minusCart: action((state, payload) => {
+    const product = state.shoppingCart.find(product => product.product === payload.product);
+    product.quantity -= 1
+  }),
+
+  plusCart: action((state, payload) => {
+    const product = state.shoppingCart.find(product => product.product === payload.product);
+    product.quantity += 1
+  }),
+
+  removeProduct: action((state, payload) => {
+    const newArray = _.remove(state.shoppingCart, function(n) {
+      return payload.product === n.product;
+    })
+  }),
+
 };
 
 export default storeModel;

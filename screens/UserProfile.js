@@ -20,6 +20,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 
 import { colors } from '../envStyles';
 import { env } from '../keys';
+import BackBarTitle from '../components/BackBarTitle';
 
 const UserProfile = ({navigation}) => {
 
@@ -95,7 +96,8 @@ const UserProfile = ({navigation}) => {
   };
 
   return (
-    <ScrollView contentContainerStyle={{flex: 1}} keyboardShouldPersistTaps={'never'}>
+    <ScrollView contentContainerStyle={{flex: 1, backgroundColor: colors.gray}} keyboardShouldPersistTaps={'never'}>
+      <BackBarTitle navigation={navigation} title={''} route={'Home'}/>
       <Modal
         isVisible={properties.displayCloseSession}
         backdropOpacity={0.2}
@@ -186,7 +188,7 @@ const UserProfile = ({navigation}) => {
                 borderRadius: 7,
                 fontFamily: 'Montserrat-Regular',
                 backgroundColor: 'white',
-                height: 30,
+                padding: 3,
               }
             }}
             onDateChange={(birth_date) => writeUser({name: 'birth_date', value: birth_date})}
@@ -243,13 +245,13 @@ const styles = StyleSheet.create({
     borderWidth: 0.5,
     padding: 0,
     width: Dimensions.get("window").width - 40,
-    height: 30,
+    // height: 30,
     fontSize: 16,
     textAlign: 'left',
     borderRadius: 7,
     fontFamily: 'Montserrat-Regular',
     backgroundColor: 'white',
-    paddingLeft: 5,
+    padding: 3,
   },
   text: {
     width: Dimensions.get("window").width - 40,
