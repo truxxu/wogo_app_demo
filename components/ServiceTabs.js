@@ -16,15 +16,19 @@ import { colors } from '../envStyles';
 
 const ServiceTabs = ({navigation}) => {
 
+  // States
   const services = useStoreState(state => state.services);
   const properties = useStoreState(state => state.properties);
+  // Actions
   const writePropertyState = useStoreActions(actions => actions.writePropertyState);
+  const getBusinesses = useStoreActions(actions => actions.getBusinesses);
+
   const servicesArray = services.map(item =>
     {
       const store = {};
       key: item.id;
       store.key = item.name;
-      store.types = item.types;
+      store.item = item;
       return store;
     }
   );
@@ -39,10 +43,12 @@ const ServiceTabs = ({navigation}) => {
           <TouchableOpacity
             style={styles.button}
             onPress={() => {
-              writePropertyState({name: 'activeServiceTab', value: item.key});
+              writePropertyState({name: 'activeServiceTab', value: item.item});
+              getBusinesses(item.key);
+              navigation.navigate('Category');
             }}
           >
-            <View style={properties.activeServiceTab === item.key ? styles.itemContainerA : null}>
+            <View style={properties.activeServiceTab.name === item.key ? styles.itemContainerA : null}>
               <Text style={styles.item}>{item.key}</Text>
             </View>
           </TouchableOpacity>

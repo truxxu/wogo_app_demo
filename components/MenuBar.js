@@ -5,6 +5,8 @@ import { useStoreState, useStoreActions } from 'easy-peasy';
 
 const MenuBar = ({navigation}) => {
 
+  const activeAddress = useStoreState(state => state.activeAddress);
+
   addressStr = (string) => {
     if (address.text === null) {
       return('')
@@ -28,7 +30,7 @@ const MenuBar = ({navigation}) => {
         style={{width: 200}}
         onPress={() => navigation.navigate('Direcciones')}
       >
-        <Text style={styles.text}>Address goes here</Text>
+        <Text style={styles.text}>{activeAddress.text}</Text>
       </TouchableOpacity>
       <View style={{height: 30, width: 30}} />
     </View>

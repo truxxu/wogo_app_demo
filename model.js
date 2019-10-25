@@ -56,6 +56,8 @@ const storeModel = {
 
   orders: [],
 
+  businesses: [],
+
   products: {
     our_selection: null,
     top: null,
@@ -93,10 +95,14 @@ const storeModel = {
     isLoading: false,
     displayModal: false,
     activeAddress: null,
-    activeServiceTab: null,
+    activeServiceTab: '',
     isLoadingOurSelection: false,
     isLoadingTop: false,
     displayCardDeleteModal: false,
+    displayCloseSession: false,
+    quantity: 1,
+    activeBusiness: null,
+    activeType: 'Todo',
   },
 
   // Actions
@@ -138,6 +144,10 @@ const storeModel = {
 
   writeCardToDelete: action((state, payload) => {
     state.cardToDelete = payload
+  }),
+
+  writeBusiness: action((state, payload) => {
+    state.businesses = payload
   }),
 
   getServices: thunk(async (actions, payload) => {
@@ -323,6 +333,20 @@ const storeModel = {
       state.newCard.isValid = false
       state.newCard.error = 'Fecha de expiración no puede ser antes de hoy'
     }
+  }),
+
+  getBusinesses: thunk(async (actions, payload, { getStoreState }) => {
+    actions.writePropertyState({name: 'isLoadingTop', value: true});
+    const state = getStoreState();
+    const activeAddress = state.activeAddress;
+    axios.get(`${env.apiServer}/business/?service=${payload}&latitude=${activeAddress.latitude}&longitude=${activeAddress.longitude}&distance=6`)
+      .then(response => {
+        actions.writeBusiness(response.data);
+        actions.writePropertyState({name: 'isLoadingTop', value: false});
+      })
+      .catch(error => {
+        Alert.alert('Se ha presentado un error');
+      });
   }),
 };
 

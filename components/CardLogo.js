@@ -54,8 +54,4 @@ const CardLogo = (props) => {
 	}
 }
 
-const styles = StyleSheet.create({
-
-});
-
 export default CardLogo;

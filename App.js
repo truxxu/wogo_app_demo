@@ -16,6 +16,7 @@ import { createDrawerNavigator } from 'react-navigation-drawer';
 import AsyncStorage from '@react-native-community/async-storage';
 
 import storeModel from './model';
+import MenuDrawer from './components/MenuDrawer';
 import Splash from './screens/Splash';
 import Welcome from './screens/Welcome';
 import Register from './screens/Register';
@@ -23,13 +24,16 @@ import Login from './screens/Login';
 import VehicleSelection from './screens/VehicleSelection';
 import Home from './screens/Home';
 import OrderHistory from './screens/OrderHistory';
+import Order from './screens/Order';
 import PaymentMethods from './screens/PaymentMethods';
 import AddressList from './screens/AddressList';
 import Terms from './screens/Terms';
 import UserProfile from './screens/UserProfile';
 import NewCard from './screens/NewCard';
-
-import MenuDrawer from './components/MenuDrawer';
+import Category from './screens/Category';
+import BusinessesMap from './screens/BusinessesMap';
+import Business from './screens/Business';
+import Product from './screens/Product';
 
 const WIDTH = Dimensions.get('window').width;
 
@@ -39,11 +43,16 @@ const DrawerNavigator = createDrawerNavigator(
   {
     Home: Home,
     OrderHistory: OrderHistory,
+    Order: Order,
     PaymentMethods: PaymentMethods,
     NewCard: NewCard,
     AddressList: AddressList,
     Terms: Terms,
-    UserProfile: UserProfile
+    UserProfile: UserProfile,
+    Category: Category,
+    BusinessesMap: BusinessesMap,
+    Business: Business,
+    Product: Product,
   },
   {
     unmountInactiveRoutes: true,
