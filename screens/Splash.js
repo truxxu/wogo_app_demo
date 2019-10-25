@@ -95,7 +95,7 @@ const Splash = ({navigation}) => {
       }
     }
     writeActiveAddress({
-      id: null,
+      id: 0,
       latitude: position.coords.latitude,
       longitude: position.coords.longitude,
       text: geocodingObject.results[0].formatted_address.split(",", 1)[0],
