@@ -27,7 +27,7 @@ const NewAddress = ({navigation}) => {
   // Actions
   const writeNewAddressRadioIndex = useStoreActions(actions => actions.writeNewAddressRadioIndex);
   const writeNewAddress = useStoreActions(actions => actions.writeNewAddress);
-  const writeActiveAddress = useStoreActions(actions => actions.writeActiveAddress);
+  const writeActiveAddressState = useStoreActions(actions => actions.writeActiveAddressState);
   const writeNewAddressState = useStoreActions(actions => actions.writeNewAddressState);
 
   const radio_props = [
@@ -51,11 +51,22 @@ const NewAddress = ({navigation}) => {
       name: newAddress.name,
       reference: newAddress.reference,
       favourite: false,
+      postal_code: newAddress.postalCode,
+      city: newAddress.city,
+      state: newAddress.state,
+      country: newAddress.country
     };
 
     axios.post(env.apiServer + '/addresses/', payload)
       .then(response => {
-        writeActiveAddress(response.data);
+        writeActiveAddressState({ name: 'id', value: response.data.id })
+        writeActiveAddressState({ name: 'latitude', value: response.data.latitude })
+        writeActiveAddressState({ name: 'longitude', value: response.data.longitude })
+        writeActiveAddressState({ name: 'text', value: response.data.text })
+        writeActiveAddressState({ name: 'postalCode', value: response.data.postal_code })
+        writeActiveAddressState({ name: 'city', value: response.data.city })
+        writeActiveAddressState({ name: 'state', value: response.data.state })
+        writeActiveAddressState({ name: 'country', value: response.data.country })
         navigation.navigate('AddressList');
         resetFields();
       })

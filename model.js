@@ -139,6 +139,10 @@ const storeModel = {
   }),
 
   // Addresses
+  writeActiveAddressState: action((state, payload) => {
+    state.activeAddress[payload.name] = payload.value
+  }),
+
   writeActiveAddress: action((state, payload) => {
     state.activeAddress = payload
   }),

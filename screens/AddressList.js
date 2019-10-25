@@ -33,7 +33,7 @@ const AddressList = ({navigation}) => {
 
   //Actions
   const getAddresses = useStoreActions(actions => actions.getAddresses);
-  const writeActiveAddress = useStoreActions(actions => actions.writeActiveAddress);
+  const writeActiveAddressState = useStoreActions(actions => actions.writeActiveAddressState);
   const writeNewAddress = useStoreActions(actions => actions.writeNewAddress);
   const writePropertyState = useStoreActions(actions => actions.writePropertyState);
 
@@ -54,10 +54,34 @@ const AddressList = ({navigation}) => {
 
   getAddressFromPosition = (position) => {
     Geocoder.from(position.coords.latitude, position.coords.longitude).then(json => {
+      addressComponents = json.results[0].address_components;
+      // default values for preventing payments rejection if this data is not provided
+      postalCode = '111111';
+      city = 'Bogotá';
+      state = 'Bogotá';
+      country = 'CO';
+      for(let i=0; i < addressComponents.length; i++) {
+        if (addressComponents[i].types.includes('postal_code')) {
+          postalCode = addressComponents[i].short_name;
+        }
+        if (addressComponents[i].types.includes('locality')) {
+          city = addressComponents[i].short_name;
+        }
+        if (addressComponents[i].types.includes('administrative_area_level_1')) {
+          state = addressComponents[i].short_name;
+        }
+        if (addressComponents[i].types.includes('country')) {
+          country = addressComponents[i].short_name;
+        }
+      }
       writeNewAddress({
         latitude: position.coords.latitude,
         longitude: position.coords.longitude,
-        text: json.results[0].formatted_address.split(",", 1)[0]
+        text: json.results[0].formatted_address.split(",", 1)[0],
+        postalCode: postalCode,
+        city: city,
+        state: state,
+        country: country
       });
       writePropertyState({name: 'isLocating', value: false});
     }).catch(error => {
@@ -87,7 +111,16 @@ const AddressList = ({navigation}) => {
           </View>
           <View style={styles.buttonbox}>
             <TouchableOpacity
-              onPress = { () => writeActiveAddress(item) }
+              onPress = { () => {
+                writeActiveAddressState({ name: 'id', value: item.id })
+                writeActiveAddressState({ name: 'latitude', value: item.latitude })
+                writeActiveAddressState({ name: 'longitude', value: item.longitude })
+                writeActiveAddressState({ name: 'text', value: item.text })
+                writeActiveAddressState({ name: 'postalCode', value: item.postal_code })
+                writeActiveAddressState({ name: 'city', value: item.city })
+                writeActiveAddressState({ name: 'state', value: item.state })
+                writeActiveAddressState({ name: 'country', value: item.country })
+              }}
             >
               <View style={styles.icon}>
                 <View style={item.id === activeAddress.id ? styles.active : null}></View>
