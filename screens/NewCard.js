@@ -182,22 +182,29 @@ const NewCard = ({navigation}) => {
         {!newCard.isValid && !newCard.isPristine &&
           <Text style={styles.error}>{newCard.error}</Text>
         }
-        {newCard.isValid &&
+        {newCard.isValid && 
+          <View>
+          {!isLoading &&
           <TouchableOpacity
             onPress={() => this.onSubmit()}
             style={styles.button}
-          >
-            {!isLoading &&
-              <Text style={styles.buttonText}>Guardar</Text>
-            }
-            {isLoading &&
-              <Image
-              source={require('../assets/gifs/spinner.gif')}
-              style={styles.stretch}
-              />
-            }
+          >            
+            <Text style={styles.buttonText}>Guardar</Text>
           </TouchableOpacity>
-        }
+          }
+          {isLoading &&
+            <TouchableOpacity
+              style={styles.button}
+              disabled={true}
+           >
+           <Image
+             source={require('../assets/gifs/spinner.gif')}
+             style={styles.stretch}
+           />
+           </TouchableOpacity>
+          }
+        </View>
+        }            
         <Text style={styles.disclaimerText}>
           *Por tu seguridad, vamos a proceder a realizar una transacción de prueba
           por un valor aleatorio de máximo $300, los cuales te serán retornados
@@ -242,8 +249,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 20,
-    width: 300,
-    height: 50,
+    width: 211,
+    height: 51,
     backgroundColor: colors.yellow,
     shadowColor: "#000",
     shadowOffset: {
