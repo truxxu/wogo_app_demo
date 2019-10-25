@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   Text,
   StyleSheet,
@@ -25,6 +25,11 @@ const Business = ({navigation}) => {
 
   const services = useStoreState(state => state.services);
   const properties = useStoreState(state => state.properties);
+  const writePropertyState = useStoreActions(actions => actions.writePropertyState);
+
+  useEffect(() => {
+    writePropertyState({name: 'activeType', value: 'Todo'})
+  }, []);
 
   const business = properties.activeBusiness;
   const grouped_products = _.groupBy(business.products, product => product.service_type_name);
