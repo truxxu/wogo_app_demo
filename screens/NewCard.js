@@ -14,10 +14,10 @@ import { useStoreState, useStoreActions } from 'easy-peasy';
 import axios from 'axios';
 import luhn from 'fast-luhn';
 
-import { colors } from '../envStyles';
 import BackBarTitle from '../components/BackBarTitle';
+import CardLogo2 from '../components/CardLogo2';
 import { env } from '../keys';
-//import CardLogo2 from '../components/CardLogo2';
+import { colors } from '../envStyles';
 
 const NewCard = ({navigation}) => {
 
@@ -29,10 +29,13 @@ const NewCard = ({navigation}) => {
   const newCardCvv = useStoreActions(actions => actions.newCardCvv);
   const newCardPristine = useStoreActions(actions => actions.newCardPristine);
   const getCards = useStoreActions(actions => actions.getCards);
+  const writePropertyState = useStoreActions(actions => actions.writePropertyState);
+  const writeActivePaymentMethod = useStoreActions(actions => actions.writeActivePaymentMethod);
 
   // states
   const newCard = useStoreState(state => state.newCard);
   const activeAddress = useStoreState(state => state.activeAddress);
+  const isLoading = useStoreState(state => state.properties.isLoading);
 
   useEffect(() => {
     this.clearFields();
@@ -74,15 +77,18 @@ const NewCard = ({navigation}) => {
       payload.payment_method !== 'unknown' &&
       payload.number.length >= 13 &&
       payload.number.length <= 16) {
-      axios.post(`${env.localserver}/credit-cards/`, payload)
+      writePropertyState({name: 'isLoading', value: true});
+      axios.post(`${env.apiServer}/credit-cards/`, payload)
         .then(response => {
           this.clearFields();
-          getCards();
-          navigation.navigate('Medios');
+          writeActivePaymentMethod(response.data);
+          navigation.navigate('PaymentMethods');
+          writePropertyState({name: 'isLoading', value: false});
         })
         .catch(error => {
           this.clearFields();
           Alert.alert('No pudimos guardar tu tarjeta', error.response.data.error);
+          writePropertyState({name: 'isLoading', value: false});
         });
     }
     else {
@@ -109,7 +115,7 @@ const NewCard = ({navigation}) => {
           <Text style={styles.text}>Número de tarjeta</Text>
           <View style={styles.codeBox}>
             {
-              //<CardLogo2 card={newCard.number}/>
+              <CardLogo2 card={newCard.number}/>
             }
             <TextInput
               autoCompleteType={"off"}
@@ -171,7 +177,6 @@ const NewCard = ({navigation}) => {
                 value={newCard.name}
               />
             </View>
-
           </View>
         </View>
         {!newCard.isValid && !newCard.isPristine &&
@@ -182,9 +187,22 @@ const NewCard = ({navigation}) => {
             onPress={() => this.onSubmit()}
             style={styles.button}
           >
-            <Text style={styles.buttonText}>Guardar</Text>
+            {!isLoading &&
+              <Text style={styles.buttonText}>Guardar</Text>
+            }
+            {isLoading &&
+              <Image
+              source={require('../assets/gifs/spinner.gif')}
+              style={styles.stretch}
+              />
+            }
           </TouchableOpacity>
         }
+        <Text style={styles.disclaimerText}>
+          *Por tu seguridad, vamos a proceder a realizar una transacción de prueba
+          por un valor aleatorio de máximo $300, los cuales te serán retornados
+          luego de esta validación.
+        </Text>
       </View>
     </View>
   );
@@ -212,7 +230,7 @@ const styles = StyleSheet.create({
     width: Dimensions.get("window").width - Dimensions.get('window').width * 0.14,
   },
   boldText: {
-    fontSize: 18,
+    fontSize: 16,
     fontFamily: 'Montserrat-Bold',
     color: colors.black,
   },
@@ -237,7 +255,7 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   buttonText: {
-    fontSize: 18,
+    fontSize: 16,
     textAlign: 'center',
     fontFamily: 'Montserrat-SemiBold',
     color: 'black'
@@ -248,8 +266,7 @@ const styles = StyleSheet.create({
     padding: 0,
     paddingLeft: 5,
     width: Dimensions.get("window").width - Dimensions.get('window').width * 0.24,
-    //height: hp('4%'),
-    fontSize: 18,
+    fontSize: 16,
     textAlign: 'left',
     borderRadius: 10,
     fontFamily: 'Montserrat-Regular',
@@ -262,8 +279,7 @@ const styles = StyleSheet.create({
     padding: 0,
     paddingLeft: 5,
     width: Dimensions.get("window").width - Dimensions.get('window').width * 0.14,
-    //height: hp('4%'),
-    fontSize: 18,
+    fontSize: 16,
     textAlign: 'left',
     borderRadius: 10,
     fontFamily: 'Montserrat-Regular',
@@ -275,8 +291,7 @@ const styles = StyleSheet.create({
     borderWidth: 0.5,
     padding: 0,
     paddingLeft: 5,
-    //height: hp('4%'),
-    fontSize: 18,
+    fontSize: 16,
     textAlign: 'center',
     borderRadius: 10,
     fontFamily: 'Montserrat-Regular',
@@ -287,9 +302,20 @@ const styles = StyleSheet.create({
     width: Dimensions.get("window").width - Dimensions.get('window').width * 0.24,
     fontFamily: 'Montserrat-Regular',
     color: colors.black,
-    fontSize: 18,
+    fontSize: 16,
     textAlign: 'left',
     marginTop: 20,
+  },
+  disclaimerText: {
+    fontFamily: 'Montserrat-Regular',
+    marginTop: 10,
+    padding: 10,
+    fontSize: 10,
+  },
+  stretch: {
+    height: 50,
+    width: 60,
+    resizeMode: 'contain',
   },
 });
 
