@@ -70,6 +70,8 @@ const storeModel = {
     isLoadingTop: false,
     displayCloseSession: false,
     quantity: 1,
+    activeBusiness: null,
+    activeType: 'Todo',
   },
 
   // Actions
