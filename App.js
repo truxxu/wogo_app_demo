@@ -34,6 +34,7 @@ import Category from './screens/Category';
 import BusinessesMap from './screens/BusinessesMap';
 import Business from './screens/Business';
 import Product from './screens/Product';
+import ShoppingCart from './screens/ShoppingCart';
 
 const WIDTH = Dimensions.get('window').width;
 
@@ -53,6 +54,7 @@ const DrawerNavigator = createDrawerNavigator(
     BusinessesMap: BusinessesMap,
     Business: Business,
     Product: Product,
+    ShoppingCart: ShoppingCart,
   },
   {
     unmountInactiveRoutes: true,

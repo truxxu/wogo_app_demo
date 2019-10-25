@@ -10,7 +10,6 @@ import {
 import { useStoreState, useStoreActions } from 'easy-peasy';
 import * as _ from 'lodash';
 
-
 import { colors } from '../envStyles';
 import MenuBar from '../components/MenuBar';
 import ServiceTabs from '../components/ServiceTabs';
@@ -18,6 +17,7 @@ import FooterBar from '../components/FooterBar';
 import TypesSlider from '../components/TypesSlider';
 import ProductType from '../components/ProductType';
 import AllProducts from '../components/AllProducts';
+import CartBar from '../components/CartBar';
 
 const WIDTH = Dimensions.get('window').width;
 
@@ -111,6 +111,7 @@ const Business = ({navigation}) => {
           }
         </View>
       </ScrollView>
+      <CartBar navigation={navigation} />
       <FooterBar navigation={navigation} />
     </View>
   );

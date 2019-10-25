@@ -34,14 +34,7 @@ https://wogoapp.co/desgarga-wogo`,
   return (
     <View style={styles.container}>
       <TouchableOpacity
-        // onPress={() => {
-        //   if (origin === 'home') {
-        //     navigation.navigate('Home')
-        //   }
-        //   else {
-        //     navigation.navigate('Negocio', {business: business, service: product.service})
-        //   }
-        // }}
+        onPress={() => navigation.navigate('Business')}
       >
         <Image
           source={require('../assets/icons/Flecha2.png')}

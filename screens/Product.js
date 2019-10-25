@@ -13,7 +13,7 @@ import { useStoreState, useStoreActions } from 'easy-peasy';
 import { colors } from '../envStyles';
 import FooterBar from '../components/FooterBar';
 import ShareBar from '../components/ShareBar';
-// import CartBar from '../components/CartBar';
+import CartBar from '../components/CartBar';
 
 const Product = ({navigation}) => {
 
@@ -23,7 +23,9 @@ const Product = ({navigation}) => {
   // const quantity = useStoreState(state => state.properties.quantity);
   //States
   const shoppingCart = useStoreState(state => state.shoppingCart);
+  const properties = useStoreState(state => state.properties);
   //Actions
+  const plusQuantity = useStoreActions(actions => actions.plusQuantity);
 
   const data = navigation.getParam('product');
   const priceStr = data.price.split(".")[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".");
@@ -60,7 +62,7 @@ const Product = ({navigation}) => {
                 </View>
               </TouchableOpacity>
               <View style={styles.quantitycontrolA}>
-                <Text style={styles.quantitytext}>#</Text>
+                <Text style={styles.quantitytext}>{properties.quantity}</Text>
               </View>
               <TouchableOpacity
                 // onPress={() => addProduct(quantity)}
@@ -71,7 +73,7 @@ const Product = ({navigation}) => {
               </TouchableOpacity>
             </View>
               <TouchableOpacity
-                // onPress={() => plusQuantity({'product': data, 'quantity': quantity})}
+                onPress={() => plusQuantity({'product': data, 'quantity': properties.quantity})}
                 style={styles.button}
               >
                 <Text style={styles.buttonText}>Agregar</Text>
@@ -80,6 +82,7 @@ const Product = ({navigation}) => {
         </View>
       </View>
       <View style={{position: 'absolute', bottom: 0}}>
+        <CartBar navigation={navigation} />
         <FooterBar navigation={navigation} />
       </View>
     </View>
