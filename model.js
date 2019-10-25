@@ -50,6 +50,17 @@ const storeModel = {
     country: null,
   },
 
+  addresses: [],
+
+  newAddress: {
+    latitude: '',
+    longitude: '',
+    text: '',
+    name: '',
+    reference: '',
+    favourite: true,
+  },
+
   currentVehicle: null,
 
   services: [],
@@ -90,9 +101,11 @@ const storeModel = {
     payment_method: ''
   },
 
+
   properties: {
     currentVehicle: null,
     isLoading: false,
+    isLocating: false,
     displayModal: false,
     activeAddress: null,
     activeServiceTab: '',
@@ -128,6 +141,10 @@ const storeModel = {
 
   writeActiveAddress: action((state, payload) => {
     state.activeAddress = payload
+  }),
+
+  writeNewAddress: action((state, payload) => {
+    state.newAddress = payload
   }),
 
   toggleProperties: action((state, payload) => {
