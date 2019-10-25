@@ -58,6 +58,8 @@ const storeModel = {
 
   businesses: [],
 
+  shoppingCart: [],
+
   products: {
     our_selection: null,
     top: null,
