@@ -28,7 +28,7 @@ const MenuBar = ({navigation}) => {
       </TouchableOpacity>
       <TouchableOpacity
         style={{width: 200}}
-        onPress={() => navigation.navigate('Direcciones')}
+        onPress={() => navigation.navigate('AddressList')}
       >
         <Text style={styles.text}>{activeAddress.text}</Text>
       </TouchableOpacity>
