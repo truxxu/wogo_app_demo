@@ -1,7 +1,9 @@
+import { Alert } from 'react-native';
 import { action, thunk } from 'easy-peasy';
 import Geocoder from 'react-native-geocoding';
 import axios from 'axios';
 import moment from 'moment';
+import * as _ from 'lodash';
 
 import { env, geocoding } from './keys';
 
@@ -74,6 +76,18 @@ const storeModel = {
     isPristine: true,
   },
 
+  activePaymentMethod: {
+    token_id: '',
+    masked_number: '',
+    payment_method: ''
+  },
+
+  cardToDelete: {
+    token_id: '',
+    masked_number: '',
+    payment_method: ''
+  },
+
   properties: {
     currentVehicle: null,
     isLoading: false,
@@ -82,6 +96,7 @@ const storeModel = {
     activeServiceTab: null,
     isLoadingOurSelection: false,
     isLoadingTop: false,
+    displayCardDeleteModal: false,
   },
 
   // Actions
@@ -117,6 +132,14 @@ const storeModel = {
     state.products[payload.name] = payload.value
   }),
 
+  writeActivePaymentMethod: action((state, payload) => {
+    state.activePaymentMethod = payload
+  }),
+
+  writeCardToDelete: action((state, payload) => {
+    state.cardToDelete = payload
+  }),
+
   getServices: thunk(async (actions, payload) => {
     actions.writePropertyState({name: 'isLoading', value: true});
     axios.get(`${env.apiServer}/services/?vehicle_type=${payload}`)
@@ -125,7 +148,7 @@ const storeModel = {
         actions.writePropertyState({name: 'isLoading', value: false});
       })
       .catch(error => {
-        // Alert.alert('Se ha presentado un error');
+         Alert.alert('Se ha presentado un error');
       });
   }),
 
@@ -152,7 +175,7 @@ const storeModel = {
         actions.writeUser({name: 'waitingForApi', value: false});
       })
       .catch(error => {
-        // Alert.alert('Se ha presentado un error');
+         Alert.alert('Se ha presentado un error');
     });
   }),
 
@@ -171,7 +194,7 @@ const storeModel = {
         }
       })
       .catch(error => {
-        // Alert.alert('Se ha presentado un error');
+         Alert.alert('Se ha presentado un error');
       });
   }),
 
@@ -194,6 +217,16 @@ const storeModel = {
 
   setCardToDelete: action((state, payload) => {
     state.cardToDelete = payload
+  }),
+
+  deleteCard: thunk(async (actions, payload) => {
+    axios.delete(`${env.apiServer}/credit-cards/${payload.token_id}`)
+      .then(response => {
+        actions.removeCardObject(payload);
+      })
+      .catch(error => {
+        Alert.alert('¡Se ha presentado un error!');
+      });
   }),
 
   removeCardObject: action((state, payload) => {

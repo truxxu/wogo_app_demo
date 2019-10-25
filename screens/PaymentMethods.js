@@ -12,23 +12,23 @@ import Modal from "react-native-modal";
 import { useStoreState, useStoreActions } from 'easy-peasy';
 
 import { colors } from '../envStyles';
-//import CreditCard from '../components/CreditCard';
+import CreditCard from '../components/CreditCard';
 import BackBarTitle from '../components/BackBarTitle';
 
 
 const PaymentMethods = ({navigation}) => {
   // States
   const cards = useStoreState(state => state.cards);
-  //const displayCardRemove = useStoreState(state => state.properties.displayCardRemove);
+  const displayCardDeleteModal = useStoreState(state => state.properties.displayCardDeleteModal);
   const isLoading = useStoreState(state => state.properties.isLoading);
-  //const cardToDelete = useStoreState(state => state.cardToDelete);
+  const cardToDelete = useStoreState(state => state.cardToDelete);
+
   // Actions
   const getCards = useStoreActions(actions => actions.getCards);
-  //const activePaymentMethodWrite = useStoreActions(actions => actions.activePaymentMethodWrite);
-  //const toggleCardRemove = useStoreActions(actions => actions.toggleCardRemove);
-  //const setCardToDelete = useStoreActions(actions => actions.setCardToDelete);
-  //const removeCard = useStoreActions(actions => actions.removeCard);
-  //const removeCardObject = useStoreActions(actions => actions.removeCardObject);
+  const writeActivePaymentMethod = useStoreActions(actions => actions.writeActivePaymentMethod);
+  const writeCardToDelete = useStoreActions(actions => actions.writeCardToDelete);
+  const toggleProperties = useStoreActions(actions => actions.toggleProperties);
+  const deleteCard = useStoreActions(actions => actions.deleteCard);
 
   useEffect(() => {
     getCards();
@@ -38,9 +38,8 @@ const PaymentMethods = ({navigation}) => {
     return(
       <TouchableOpacity
         key={index}
-        onPress={() => activePaymentMethodWrite(card)}
+        onPress={() => writeActivePaymentMethod(card)}
       >
-          <Text>Card</Text>
         <CreditCard index={index} data={card}/>
       </TouchableOpacity>
     )
@@ -58,7 +57,7 @@ const PaymentMethods = ({navigation}) => {
       )
     }
     else if (isLoading === false && cards.length !== 0) {
-      return <Text>asdf</Text>
+      return cards.map((card, index) => this.renderCards(card, index))
     }
     else {
       return (
@@ -74,44 +73,43 @@ const PaymentMethods = ({navigation}) => {
   return (
     <View style={styles.cardList}>
       <BackBarTitle navigation={navigation} title={'Mis métodos de pago'} route={'Home'}/>
-      {
-      //<Modal
-        //isVisible={displayCardRemove}
-        //backdropOpacity={0.4}
-      //>
-        //<View style={styles.modalContainer}>
-          //<View style={styles.innercontainer}>
-            //<View style={styles.modalContent}>
-              //<Image
-                //source={require('../assets/icons/Error.png')}
-                //style={{width: 80, height: 80, marginRight: 15}}
-              ///>
-              //<Text style={styles.modalText}>¿Quieres borrar tu tarjeta?</Text>
-            //</View>
-            //<TouchableOpacity
-              //style={styles.button}
-              //onPress={() =>
-                //{
-                  //removeCard(cardToDelete);
-                  //toggleCardRemove();
-                //}
-              //}
-            //>
-              //<Text style={styles.buttonText}>Si, estoy seguro</Text>
-            //</TouchableOpacity>
-            //<TouchableOpacity
-              //style={styles.button}
-              //onPress={() => {
-                //toggleCardRemove();
-                //setCardToDelete({});
-              //}}
-            //>
-              //<Text style={styles.buttonText}>Cancelar</Text>
-            //</TouchableOpacity>
-          //</View>
-        //</View>
-      //</Modal>
-      }
+      <Modal
+        isVisible={displayCardDeleteModal}
+        backdropOpacity={0.4}
+      >
+        <View style={styles.modalContainer}>
+          <View style={styles.innercontainer}>
+            <View style={styles.modalContent}>
+              <Image
+                source={require('../assets/icons/Error.png')}
+                style={{width: 80, height: 80, marginRight: 15}}
+              />
+              <Text style={styles.modalText}>¿Quieres borrar tu tarjeta?</Text>
+            </View>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() =>
+                {
+                  deleteCard(cardToDelete);
+                  writeCardToDelete({});
+                  toggleProperties('displayCardDeleteModal');
+                }
+              }
+            >
+              <Text style={styles.buttonText}>Si, estoy seguro</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => {
+                toggleProperties('displayCardDeleteModal');
+                writeCardToDelete({});
+              }}
+            >
+              <Text style={styles.buttonText}>Cancelar</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
       <View style={styles.container}>
         <ScrollView>
           <View style={styles.instructions}>
@@ -158,7 +156,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'space-between',
     alignItems: 'center',
-    padding: 20,
+    padding: 10,
   },
   cardContainer: {
     width: Dimensions.get('window').width - Dimensions.get('window').width * 0.14,
@@ -249,8 +247,6 @@ const styles = StyleSheet.create({
   },
   innercontainer: {
     backgroundColor: colors.white,
-    //height: hp('25%'),
-    //width: ,
     flexDirection: 'column',
     justifyContent: 'space-around',
     alignItems: 'center',
