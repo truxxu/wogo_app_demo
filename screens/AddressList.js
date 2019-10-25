@@ -141,31 +141,16 @@ const AddressList = ({navigation}) => {
     <View style={{backgroundColor: colors.gray, flex: 1}}>
       <BackBarTitle navigation={navigation} title={'Elige tu dirección'} route={'Home'}/>
       <View style={styles.container}>
-        {
-        // <View style={styles.content}>
-        //   <Image
-        //     source={require('../../assets/icons/marcador_Ubicacion.png')}
-        //     style={{height: wp('10%'), width: wp('10%')}}
-        //   />
-        //   <TouchableOpacity
-        //     onPress={() => navigation.navigate('NuevaDireccion')}
-        //   >
-        //     <View style={{marginLeft: 15}}>
-        //       <Text style={styles.linkText}>Agregar una dirección nueva</Text>
-        //     </View>
-        //   </TouchableOpacity>
-        // </View>
-        }
         <View style={styles.content}>
           <Image
             source={require('../assets/icons/direccion.png')}
             style={{height: 28, width: 28}}
           />
           <TouchableOpacity
-            onPress={() => navigation.navigate('Dirección')}
+            onPress={() => navigation.navigate('NewAddress')}
           >
             <View style={{marginLeft: 15}}>
-              <Text style={styles.linkText}>Anadir ubicación actual</Text>
+              <Text style={styles.linkText}>Añadir ubicación actual</Text>
               {
                 this.loadingLocation()
               }

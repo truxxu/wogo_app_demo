@@ -101,7 +101,6 @@ const storeModel = {
     payment_method: ''
   },
 
-
   properties: {
     currentVehicle: null,
     isLoading: false,
@@ -116,6 +115,7 @@ const storeModel = {
     quantity: 1,
     activeBusiness: null,
     activeType: 'Todo',
+    newAddressRadioIndex: null,
   },
 
   // Actions
@@ -143,8 +143,16 @@ const storeModel = {
     state.activeAddress = payload
   }),
 
+  writeNewAddressState: action((state, payload) => {
+    state.newAddress[payload.name] = payload.value
+  }),
+
   writeNewAddress: action((state, payload) => {
     state.newAddress = payload
+  }),
+
+  writeNewAddressRadioIndex: action((state, payload) => {
+    state.properties.newAddressRadioIndex = payload
   }),
 
   toggleProperties: action((state, payload) => {
