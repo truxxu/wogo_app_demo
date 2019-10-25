@@ -58,6 +58,8 @@ const storeModel = {
 
   businesses: [],
 
+  shoppingCart: [],
+
   products: {
     our_selection: null,
     top: null,
@@ -347,6 +349,53 @@ const storeModel = {
       .catch(error => {
         Alert.alert('Se ha presentado un error');
       });
+  }),
+
+  //Shopping Cart
+  plusQuantity: action((state, payload) => {
+    const product = state.shoppingCart.find(product => product.product === payload.product.id);
+    if (product === undefined) {
+      state.shoppingCart.push({
+        business: payload.product.business,
+        address: payload.product.business_address,
+        business_name: payload.product.business_name,
+        name: payload.product.name,
+        service: payload.product.service,
+        product: payload.product.id,
+        quantity: state.properties.quantity,
+        price: parseInt(payload.product.price.split('.')[0]),
+      })
+    }
+    else {
+      product.quantity += payload.quantity
+    }
+  }),
+
+  plusSingleQuantity: action((state, payload) => {
+    const product = state.shoppingCart.find(product => product.product === payload.product.id);
+    if (product === undefined) {
+      state.shoppingCart.push({
+        business: payload.product.business,
+        address: payload.product.business_address,
+        business_name: payload.product.business_name,
+        name: payload.product.name,
+        service: payload.product.service,
+        product: payload.product.id,
+        quantity: 1,
+        price: parseInt(payload.product.price.split('.')[0]),
+      })
+    }
+    else {
+      product.quantity += 1
+    }
+  }),
+
+  addProduct: action(state => {
+    state.properties.quantity += 1
+  }),
+
+  minusQuantity: action((state, payload) => {
+    state.properties.quantity -= 1
   }),
 };
 

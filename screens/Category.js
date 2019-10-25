@@ -9,12 +9,14 @@ import {
   Dimensions
 } from 'react-native';
 import { useStoreState, useStoreActions } from 'easy-peasy';
+
+import { colors } from '../envStyles';
 import MenuBar from '../components/MenuBar';
 import ServiceTabs from '../components/ServiceTabs';
 import FooterBar from '../components/FooterBar';
 import Carousel from '../components/Carousel';
 import BusinessList from '../components/BusinessList';
-import { colors } from '../envStyles';
+import CartBar from '../components/CartBar';
 
 const Category = ({navigation}) => {
 
@@ -66,6 +68,7 @@ const Category = ({navigation}) => {
           <BusinessList navigation={navigation} />
         </View>
       </ScrollView>
+      <CartBar navigation={navigation} />
       <FooterBar navigation={navigation} />
     </View>
   );

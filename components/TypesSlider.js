@@ -44,7 +44,8 @@ const TypesSlider = (props) => {
                 <View style={properties.activeType === item.key ? styles.itemContainerA : null}>
                   <Text style={styles.item}>
                     {
-                      item.key.length > 9 ? item.key.substring(0, 9) + '...' : item.key
+                      // item.key.length > 9 ? item.key.substring(0, 9) + '...' : item.key
+                      item.key
                     }
                   </Text>
                 </View>
