@@ -57,3 +57,8 @@ buck-out/
 
 # CocoaPods
 /ios/Pods/
+
+# Deployment
+keys.prod.js
+keys.staging.js
+android/app/wogo-android-release-key.jks
