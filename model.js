@@ -40,7 +40,7 @@ const storeModel = {
   },
 
   activeAddress: {
-    id: null,
+    id: 0,
     latitude: null,
     longitude: null,
     text: null,
@@ -48,6 +48,17 @@ const storeModel = {
     city: null,
     state: null,
     country: null,
+  },
+
+  addresses: [],
+
+  newAddress: {
+    latitude: '',
+    longitude: '',
+    text: '',
+    name: '',
+    reference: '',
+    favourite: true,
   },
 
   currentVehicle: null,
@@ -95,8 +106,8 @@ const storeModel = {
   properties: {
     currentVehicle: null,
     isLoading: false,
+    isLocating: false,
     displayModal: false,
-    activeAddress: null,
     activeServiceTab: '',
     isLoadingOurSelection: false,
     isLoadingTop: false,
@@ -107,7 +118,8 @@ const storeModel = {
     activeType: 'Todo',
     installmentsNumber: null,
     displayClearCart: false,
-    loadingOrders: false
+    loadingOrders: false,
+    newAddressRadioIndex: null,
   },
 
   // Actions
@@ -131,8 +143,42 @@ const storeModel = {
     state.properties[payload.name] = payload.value
   }),
 
+  // Addresses
+  writeActiveAddressState: action((state, payload) => {
+    state.activeAddress[payload.name] = payload.value
+  }),
+
   writeActiveAddress: action((state, payload) => {
     state.activeAddress = payload
+  }),
+
+  writeNewAddressState: action((state, payload) => {
+    state.newAddress[payload.name] = payload.value
+  }),
+
+  writeNewAddress: action((state, payload) => {
+    state.newAddress = payload
+  }),
+
+  writeNewAddressRadioIndex: action((state, payload) => {
+    state.properties.newAddressRadioIndex = payload
+  }),
+
+  writeAddresses: action((state, payload) => {
+    state.addresses = payload
+  }),
+
+  getAddresses: thunk(async actions => {
+    actions.writePropertyState({name: 'isLoading', value: true});
+    axios.get(env.apiServer + '/addresses/')
+      .then(response => {
+        actions.writeAddresses(response.data);
+        actions.writePropertyState({name: 'isLoading', value: false});
+      })
+      .catch(error => {
+        actions.writePropertyState({name: 'isLoading', value: false});
+        Alert.alert('Se ha presentado un error');
+      });
   }),
 
   toggleProperties: action((state, payload) => {
