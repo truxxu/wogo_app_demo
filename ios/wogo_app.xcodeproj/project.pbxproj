@@ -309,6 +309,10 @@
 						CreatedOnToolsVersion = 6.2;
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
+					13B07F861A680F5B00A75B9A = {
+						DevelopmentTeam = P48TWFJHFB;
+						ProvisioningStyle = Manual;
+					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
 						ProvisioningStyle = Automatic;
@@ -669,10 +673,14 @@
 			baseConfigurationReference = 0C0AB94B868CCBF13DE4A648 /* Pods-wogo_app.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
+				DEVELOPMENT_TEAM = P48TWFJHFB;
 				INFOPLIST_FILE = wogo_app/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 0.0.19;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -680,6 +688,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = co.wogoapp.mobile;
 				PRODUCT_NAME = wogo_app;
+				PROVISIONING_PROFILE_SPECIFIER = WogoDevelopment;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -689,9 +698,13 @@
 			baseConfigurationReference = 510E97B08D802C4A1DED2708 /* Pods-wogo_app.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = P48TWFJHFB;
 				INFOPLIST_FILE = wogo_app/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 0.0.19;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -699,6 +712,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = co.wogoapp.mobile;
 				PRODUCT_NAME = wogo_app;
+				PROVISIONING_PROFILE_SPECIFIER = WogoProduction;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
