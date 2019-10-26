@@ -3,8 +3,8 @@ import {
   View,
   Text,
   StyleSheet,
+  Dimensions,
   Image,
-  Button,
   TouchableOpacity,
 } from 'react-native';
 import { colors } from '../envStyles';
@@ -45,7 +45,7 @@ const HomeProductCard = ({navigation, product}) => {
         style={styles.textbox}
       >
         <Text style={styles.price}>${price}</Text>
-        <Text style={styles.name}>{shortener(product.name)}</Text>
+        <Text style={styles.name}>{/*shortener(product.name)*/product.name}</Text>
         <Text style={styles.text}>{product.description.substring(0, 50) + '...'}</Text>
       </TouchableOpacity>
       <TouchableOpacity
@@ -62,14 +62,13 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.white,
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    justifyContent: 'space-evenly',
+    alignItems: 'stretch',
     padding: 5,
-    height: 100,
-    width: '100%',
+    width: Dimensions.get('window').width - 30,
     borderRadius: 3,
-    marginTop: 10,
-    marginBottom: 10,
+    marginTop: 5,
+    marginBottom: 5,
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
@@ -80,7 +79,7 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   price: {
-    fontSize: 14,
+    fontSize: 15,
     color: colors.purple,
     fontFamily: 'Montserrat-SemiBold',
   },
@@ -89,8 +88,8 @@ const styles = StyleSheet.create({
     fontFamily: 'Montserrat-SemiBold',
   },
   text: {
-    textAlign: 'justify',
-    fontSize: 12,
+    textAlign: 'left',
+    fontSize: 10,
     fontFamily: 'Montserrat-Regular',
   },
   image: {
@@ -99,6 +98,7 @@ const styles = StyleSheet.create({
     width: 90,
   },
   button: {
+    alignSelf: 'center',
     borderColor: colors.purple,
     borderWidth: 1,
     borderRadius: 10,
@@ -120,6 +120,7 @@ const styles = StyleSheet.create({
     color: colors.white,
   },
   textbox: {
+    justifyContent: 'space-evenly',
     paddingLeft: 5,
     paddingRight: 5,
     maxWidth: '50%'
@@ -132,6 +133,7 @@ const styles = StyleSheet.create({
     bottom: 5,
   },
   imagecontainer: {
+    alignSelf: 'center',
     borderRadius: 3,
     borderWidth: 0.5,
     borderColor: 'gray'

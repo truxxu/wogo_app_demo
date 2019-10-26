@@ -115,7 +115,7 @@ const PaymentMethods = ({navigation}) => {
           <View style={styles.instructions}>
             <Image
               source={require('../assets/icons/medios.png')}
-              style={{width: 80, height: 80}}
+              style={{width: 83, height: 80}}
             />
             <Text style={styles.instructionsText}>Agrega tu método de pago preferido</Text>
           </View>
@@ -174,7 +174,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     alignSelf: 'center',
     marginBottom: 20,
-    width: Dimensions.get('window').width - Dimensions.get('window').width * 0.25,
+    width: Dimensions.get('window').width - Dimensions.get('window').width * 0.18,
     padding: 20,
     borderColor: colors.white,
     backgroundColor: colors.white,
@@ -200,8 +200,9 @@ const styles = StyleSheet.create({
     borderColor: colors.yellow,
     borderWidth: 1,
     borderRadius: 10,
-    width: 300,
-    height: 50,
+    bottom: 20,
+    width: 211,
+    height: 51,
     marginTop: 30,
     backgroundColor: colors.yellow,
     shadowColor: "#000",
@@ -233,13 +234,11 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   },
   gifContainer: {
-    flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
   },
   modalContainer: {
     backgroundColor: 'transparent',
-    flexDirection: 'column',
     justifyContent: 'space-around',
     alignItems: 'center',
     padding: 20,
@@ -247,7 +246,6 @@ const styles = StyleSheet.create({
   },
   innercontainer: {
     backgroundColor: colors.white,
-    flexDirection: 'column',
     justifyContent: 'space-around',
     alignItems: 'center',
     borderRadius: 10,
@@ -262,26 +260,6 @@ const styles = StyleSheet.create({
     fontFamily: 'Montserrat-Regular',
     color: colors.black,
     maxWidth: '60%',
-  },
-  button: {
-    borderColor: colors.yellow,
-    borderWidth: 1,
-    borderRadius: 10,
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: 300,
-    height: 50,
-    margin: 10,
-    backgroundColor: colors.yellow,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.20,
-    shadowRadius: 1.41,
-    elevation: 2,
   },
   buttonText: {
     fontSize: 18,

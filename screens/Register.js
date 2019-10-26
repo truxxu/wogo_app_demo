@@ -78,6 +78,7 @@ const Register = ({navigation}) => {
           </View>
         </View>
         <View style={styles.footer}>
+          {!auth.waitingForApi &&
             <TouchableOpacity
               onPress={() => {
                 if (auth.telephone === null || auth.telephone === "") {
@@ -87,17 +88,21 @@ const Register = ({navigation}) => {
                 }}
               }
               style={styles.button}
-              >
-              {!auth.waitingForApi &&
-                <Text style={styles.buttonText}>Enviar</Text>
-              }
-              {auth.waitingForApi &&
-                <Image
-                source={require('../assets/gifs/spinner.gif')}
-                style={styles.stretch}
-                />
-              }
+            >
+                <Text style={styles.buttonText}>Enviar</Text>                 
             </TouchableOpacity>
+          }
+          {auth.waitingForApi &&
+            <TouchableOpacity
+               style={styles.button}
+              disabled={true}
+            >
+            <Image
+              source={require('../assets/gifs/spinner.gif')}
+              style={styles.stretch}
+            />
+            </TouchableOpacity>
+          }  
         </View>
       </ScrollView>
     </ScrollView>

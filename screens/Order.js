@@ -5,10 +5,11 @@ import {
   StyleSheet,
   Dimensions,
   ScrollView,
+  Image,
 } from 'react-native';
 import { colors } from '../envStyles';
 import { useStoreState } from 'easy-peasy';
-// import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
+import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 
 
 import BackBarTitle from '../components/BackBarTitle';
@@ -59,7 +60,7 @@ const Order = ({navigation}) => {
           <PaymentState state={order.payment_state} />
         </View>
       </View>
-      {/* <View style={styles.mapcontainer}>
+      <View style={styles.mapcontainer}>
         <MapView
          provider={PROVIDER_GOOGLE} // remove if not using Google Maps
          style={styles.map}
@@ -78,9 +79,14 @@ const Order = ({navigation}) => {
               longitude: parseFloat(order.business_longitude)
             }
           }
+        >
+        <Image
+            source={require('../assets/icons/Marcador4.png')}
+            style={{height: 40, resizeMode: 'contain'}}
         />
+        </Marker>
        </MapView>
-      </View> */}
+      </View>
     </ScrollView>
   );
 }
@@ -88,7 +94,6 @@ const Order = ({navigation}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.gray,
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: 10,
@@ -137,7 +142,7 @@ const styles = StyleSheet.create({
   },
   mapcontainer: {
     width: Dimensions.get('window').width,
-    height: Dimensions.get('window').width,
+    height: Dimensions.get('window').width - 116,
   },
   map: {
     ...StyleSheet.absoluteFillObject,

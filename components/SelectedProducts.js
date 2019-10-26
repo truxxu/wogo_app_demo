@@ -51,7 +51,6 @@ const SelectedProducts = ({navigation, type}) => {
 
 const styles = StyleSheet.create({
   gifContainer: {
-    flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
   },
