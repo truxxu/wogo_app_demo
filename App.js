@@ -27,6 +27,7 @@ import OrderHistory from './screens/OrderHistory';
 import Order from './screens/Order';
 import PaymentMethods from './screens/PaymentMethods';
 import AddressList from './screens/AddressList';
+import NewAddress from './screens/NewAddress';
 import Terms from './screens/Terms';
 import UserProfile from './screens/UserProfile';
 import NewCard from './screens/NewCard';
@@ -34,6 +35,7 @@ import Category from './screens/Category';
 import BusinessesMap from './screens/BusinessesMap';
 import Business from './screens/Business';
 import Product from './screens/Product';
+import ShoppingCart from './screens/ShoppingCart';
 
 const WIDTH = Dimensions.get('window').width;
 
@@ -47,12 +49,14 @@ const DrawerNavigator = createDrawerNavigator(
     PaymentMethods: PaymentMethods,
     NewCard: NewCard,
     AddressList: AddressList,
+    NewAddress: NewAddress,
     Terms: Terms,
     UserProfile: UserProfile,
     Category: Category,
     BusinessesMap: BusinessesMap,
     Business: Business,
     Product: Product,
+    ShoppingCart: ShoppingCart,
   },
   {
     unmountInactiveRoutes: true,

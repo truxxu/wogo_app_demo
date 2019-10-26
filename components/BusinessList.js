@@ -7,11 +7,14 @@ import {
   FlatList,
   Image,
   TouchableOpacity,
-  ScrollView
+  ScrollView,
+  Dimensions
 } from 'react-native';
 import { useStoreState, useStoreActions } from 'easy-peasy';
 import { colors } from '../envStyles';
 import * as _ from 'lodash';
+
+const WIDTH = Dimensions.get('window').width;
 
 const BusinessList = ({navigation}) => {
 
@@ -87,7 +90,7 @@ const BusinessList = ({navigation}) => {
                     <Text
                       style={styles.text}
                     >
-                      {this.timeStr(item.business.opening_hour)} - {this.timeStr(item.business.closing_hour)}
+                      {timeStr(item.business.opening_hour)} - {timeStr(item.business.closing_hour)}
                     </Text>
                     <View style={styles.ratebox}>
                       <Image
@@ -158,8 +161,9 @@ const styles = StyleSheet.create({
   },
   button: {
     flexDirection: 'row',
-    justifyContent: 'center',
+    // justifyContent: 'space-around',
     alignItems: 'center',
+    width: WIDTH - 40,
   },
   messageText: {
     marginTop: 40,
@@ -182,7 +186,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   textBox: {
-    width: 100
+    maxWidth: '55%'
   },
   imageBox: {
     borderWidth: 0.5,

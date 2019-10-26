@@ -40,7 +40,7 @@ const storeModel = {
   },
 
   activeAddress: {
-    id: null,
+    id: 0,
     latitude: null,
     longitude: null,
     text: null,
@@ -50,6 +50,17 @@ const storeModel = {
     country: null,
   },
 
+  addresses: [],
+
+  newAddress: {
+    latitude: '',
+    longitude: '',
+    text: '',
+    name: '',
+    reference: '',
+    favourite: true,
+  },
+
   currentVehicle: null,
 
   services: [],
@@ -57,6 +68,8 @@ const storeModel = {
   orders: [],
 
   businesses: [],
+
+  shoppingCart: [],
 
   products: {
     our_selection: null,
@@ -93,8 +106,8 @@ const storeModel = {
   properties: {
     currentVehicle: null,
     isLoading: false,
+    isLocating: false,
     displayModal: false,
-    activeAddress: null,
     activeServiceTab: '',
     isLoadingOurSelection: false,
     isLoadingTop: false,
@@ -103,6 +116,10 @@ const storeModel = {
     quantity: 1,
     activeBusiness: null,
     activeType: 'Todo',
+    installmentsNumber: null,
+    displayClearCart: false,
+    loadingOrders: false,
+    newAddressRadioIndex: null,
   },
 
   // Actions
@@ -126,8 +143,42 @@ const storeModel = {
     state.properties[payload.name] = payload.value
   }),
 
+  // Addresses
+  writeActiveAddressState: action((state, payload) => {
+    state.activeAddress[payload.name] = payload.value
+  }),
+
   writeActiveAddress: action((state, payload) => {
     state.activeAddress = payload
+  }),
+
+  writeNewAddressState: action((state, payload) => {
+    state.newAddress[payload.name] = payload.value
+  }),
+
+  writeNewAddress: action((state, payload) => {
+    state.newAddress = payload
+  }),
+
+  writeNewAddressRadioIndex: action((state, payload) => {
+    state.properties.newAddressRadioIndex = payload
+  }),
+
+  writeAddresses: action((state, payload) => {
+    state.addresses = payload
+  }),
+
+  getAddresses: thunk(async actions => {
+    actions.writePropertyState({name: 'isLoading', value: true});
+    axios.get(env.apiServer + '/addresses/')
+      .then(response => {
+        actions.writeAddresses(response.data);
+        actions.writePropertyState({name: 'isLoading', value: false});
+      })
+      .catch(error => {
+        actions.writePropertyState({name: 'isLoading', value: false});
+        Alert.alert('Se ha presentado un error');
+      });
   }),
 
   toggleProperties: action((state, payload) => {
@@ -348,6 +399,74 @@ const storeModel = {
         Alert.alert('Se ha presentado un error');
       });
   }),
+
+  //Shopping Cart
+  plusQuantity: action((state, payload) => {
+    const product = state.shoppingCart.find(product => product.product === payload.product.id);
+    if (product === undefined) {
+      state.shoppingCart.push({
+        business: payload.product.business,
+        address: payload.product.business_address,
+        business_name: payload.product.business_name,
+        name: payload.product.name,
+        service: payload.product.service,
+        product: payload.product.id,
+        quantity: state.properties.quantity,
+        price: parseInt(payload.product.price.split('.')[0]),
+      })
+    }
+    else {
+      product.quantity += payload.quantity
+    }
+  }),
+
+  plusSingleQuantity: action((state, payload) => {
+    const product = state.shoppingCart.find(product => product.product === payload.product.id);
+    if (product === undefined) {
+      state.shoppingCart.push({
+        business: payload.product.business,
+        address: payload.product.business_address,
+        business_name: payload.product.business_name,
+        name: payload.product.name,
+        service: payload.product.service,
+        product: payload.product.id,
+        quantity: 1,
+        price: parseInt(payload.product.price.split('.')[0]),
+      })
+    }
+    else {
+      product.quantity += 1
+    }
+  }),
+
+  addProduct: action(state => {
+    state.properties.quantity += 1
+  }),
+
+  minusQuantity: action((state, payload) => {
+    state.properties.quantity -= 1
+  }),
+
+  clearCart: action(state => {
+    state.shoppingCart = []
+  }),
+
+  minusCart: action((state, payload) => {
+    const product = state.shoppingCart.find(product => product.product === payload.product);
+    product.quantity -= 1
+  }),
+
+  plusCart: action((state, payload) => {
+    const product = state.shoppingCart.find(product => product.product === payload.product);
+    product.quantity += 1
+  }),
+
+  removeProduct: action((state, payload) => {
+    const newArray = _.remove(state.shoppingCart, function(n) {
+      return payload.product === n.product;
+    })
+  }),
+
 };
 
 export default storeModel;

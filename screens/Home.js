@@ -19,7 +19,7 @@ import ServiceSlider from '../components/ServiceSlider';
 import Carousel from '../components/Carousel';
 import TopProducts from '../components/TopProducts';
 import SelectedProducts from '../components/SelectedProducts';
-
+import CartBar from '../components/CartBar';
 
 const Home = ({navigation}) => {
 
@@ -55,6 +55,7 @@ const Home = ({navigation}) => {
           <SelectedProducts navigation={navigation} type={'our_selection'}/>
         </View>
       </ScrollView>
+      <CartBar navigation={navigation} />
       <FooterBar navigation={navigation} />
     </View>
   );

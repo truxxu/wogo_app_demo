@@ -13,13 +13,13 @@ import { colors } from '../envStyles';
 
 const ProductCard = ({navigation, product}) => {
 
-  // const plusSingleQuantity = useStoreActions(actions => actions.plusSingleQuantity);
-  // const clearCart = useStoreActions(actions => actions.clearCart);
+  const plusSingleQuantity = useStoreActions(actions => actions.plusSingleQuantity);
+
   const price = product.price.split(".")[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 
   shortener = (string) => {
-    if (string.length > 9) {
-      return string.substring(0, 10) + '...'
+    if (string.length > 24) {
+      return string.substring(0, 25) + '...'
     }
     else {return string}
   };
@@ -44,7 +44,7 @@ const ProductCard = ({navigation, product}) => {
         <Text style={styles.text}>{product.description.substring(0, 50) + '...'}</Text>
       </TouchableOpacity>
       <TouchableOpacity
-        // onPress={() => plusSingleQuantity({'product': product})}
+        onPress={() => plusSingleQuantity({'product': product})}
         style={styles.button}
       >
         <Text style={styles.buttonText}>Agregar</Text>

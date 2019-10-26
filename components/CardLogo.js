@@ -9,7 +9,7 @@ const CardLogo = (props) => {
 		return(
 			<Image
 			  source={require('../assets/icons/visa.png')}
-			  style={{width: 28, height: 28, marginRight: 15}}
+			  style={{width: 35, height: 35, marginRight: 15}}
 			/>
 		);
 	}
@@ -17,7 +17,7 @@ const CardLogo = (props) => {
 		return(
 			<Image
 			  source={require('../assets/icons/mastercard.png')}
-			  style={{width: 28, height: 28, marginRight: 15}}
+			  style={{width: 35, height: 35, marginRight: 15}}
 			/>
 		);
 	}
@@ -25,7 +25,7 @@ const CardLogo = (props) => {
 		return(
 			<Image
 			  source={require('../assets/icons/diners.png')}
-			  style={{width: 28, height: 28, marginRight: 15}}
+			  style={{width: 35, height: 35, marginRight: 15}}
 			/>
 		);
 	}
@@ -33,7 +33,7 @@ const CardLogo = (props) => {
 		return(
 			<Image
 			  source={require('../assets/icons/amex.png')}
-			  style={{width: 28, height: 28, marginRight: 15}}
+			  style={{width: 35, height: 35, marginRight: 15}}
 			/>
 		);
 	}
@@ -41,7 +41,7 @@ const CardLogo = (props) => {
 		return(
 			<Image
 			  source={require('../assets/icons/medios.png')}
-			  style={{width: 28, height: 28, marginRight: 15}}
+			  style={{width: 35, height: 35, marginRight: 15}}
 			/>
 		);
 	}
