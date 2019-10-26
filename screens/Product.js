@@ -22,7 +22,6 @@ const Product = ({navigation}) => {
   const properties = useStoreState(state => state.properties);
   //Actions
   const plusQuantity = useStoreActions(actions => actions.plusQuantity);
-  const writePropertyState = useStoreActions(actions => actions.writePropertyState);
   const addProduct = useStoreActions(actions => actions.addProduct);
   const minusQuantity = useStoreActions(actions => actions.minusQuantity);
 

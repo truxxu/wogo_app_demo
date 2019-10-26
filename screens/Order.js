@@ -31,7 +31,7 @@ const Order = ({navigation}) => {
     return (
       <View style={styles.content} key={product.product}>
         <Text style={styles.boldText}>{product.product_name}               x{product.quantity}</Text>
-        <Text style={styles.price}>${this.priceStr(product.price)}</Text>
+        <Text style={styles.price}>${priceStr(product.price)}</Text>
         <Text style={styles.text}>{product.product_service}</Text>
       </View>
     )
@@ -50,26 +50,11 @@ const Order = ({navigation}) => {
             <Text style={styles.text}>Tiempo estimado</Text>
           </View>
           {
-            order.ordered_products.map(product => this.render(product))
+            order.ordered_products.map(product => render(product))
           }
           <View style={styles.contentC}>
             <Text style={styles.textC}>Total</Text>
-            <Text style={styles.price}>${this.totalPrice(order.order_total)}</Text>
-          </View>
-          <View style={styles.contentC}>
-            <View style={styles.contentC}>
-              <CardLogo card={order.payment_method}/>
-              <Text style={styles.textB}>{/*order.customer*/}1234 1234 **** ****</Text>
-            </View>
-            {
-            // <View style={styles.contentC}>
-            //   <Image
-            //     source={require('../../assets/icons/descuento.png')}
-            //     style={{height: wp('10%'), width: wp('10%')}}
-            //   />
-            //   <Text style={styles.textB}>SARA1234</Text>
-            // </View>
-            }
+            <Text style={styles.price}>${totalPrice(order.order_total)}</Text>
           </View>
           <PaymentState state={order.payment_state} />
         </View>
