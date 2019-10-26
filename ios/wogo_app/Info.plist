@@ -37,8 +37,20 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>We need your media library for setting your profile picture</string>
+	<key>NSCameraUsageDescription</key>
+	<string>We need your  camera for setting your profile picture</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>We need your location to show you products and services around you.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>We need your location to show you products and services around you.</string>
+	<key>NSLocationUsageDescription</key>
+	<string>We need your location to show you products and services around you.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>We need your location to show you products and services around you.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>We need your photo library for setting your profile picture</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Montserrat-Bold.otf</string>
