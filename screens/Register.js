@@ -89,7 +89,7 @@ const Register = ({navigation}) => {
               }
               style={styles.button}
             >
-                <Text style={styles.buttonText}>Enviar</Text>                 
+                <Text style={styles.buttonText}>Enviar</Text>
             </TouchableOpacity>
           }
           {auth.waitingForApi &&

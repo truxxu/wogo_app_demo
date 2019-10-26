@@ -45,17 +45,18 @@ const Login = ({navigation}) => {
       .then(response => {
         writeAuthState({name: 'verificationCode', value: ''});
         const { token, user } = response.data;
-        //writeAuthState({name: 'token', value: `Token ${token}`})
         // sets axios auth header
         axios.defaults.headers.common.Authorization = `Token ${token}`;
         writeAuthState({name: 'waitingForApi', value: false})
         // store token in local storage
         storeToken(token);
         navigation.navigate('VehicleSelection');
+        writeAuthState({name: 'waitingForApi', value: false})
       })
       .catch(error => {
-        Alert('Error', 'No fue posible iniciar sesión. Intenta de nuevo');
+        Alert.alert('Error', 'El código que ingresaste no es correcto o ha expirado.');
         writeAuthState({name: 'verificationCode', value: ''});
+        writeAuthState({name: 'waitingForApi', value: false})
       });
   }
 
