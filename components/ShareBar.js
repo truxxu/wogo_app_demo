@@ -18,7 +18,7 @@ const ShareBar = ({navigation, product}) => {
   onClick = (product) => {
     Share.share({
       message:
-        `${product.name} por solo $${priceStr}. Sólo en WOGO, ¡descárgala ya!
+        `${product.name} por solo $${priceStr}. Solo en WOGO, ¡descárgala ya!
 https://wogoapp.co/desgarga-wogo`,
       url: 'https://wogoapp.co/desgarga-wogo',
       title: 'WOGO'
