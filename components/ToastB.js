@@ -5,36 +5,53 @@ import {
   Text,
   Image,
   Dimensions,
-  Keyboard
+  Keyboard,
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import { useStoreState, useStoreActions } from 'easy-peasy';
+import axios from 'axios';
 
+import { env } from '../keys';
 import { colors } from '../envStyles';
 
-const Toast = (props) => {
+const Toast2 = ({navigation}) => {
 
   //States
   const properties = useStoreState(state => state.properties);
   //Actions
   const writePropertyState = useStoreActions(actions => actions.writePropertyState);
+  const writeAuthState = useStoreActions(actions => actions.writeAuthState);
 
   const WIDTH = Dimensions.get('window').width;
 
-  toastMessages = (props) => {
-    if (props.data === 'error') {
-      return(
-        <View style={styles.containerB}>
-          <Image
-            source={require('../assets/icons/Error.png')}
-            style={{height: 45, width: 45}}
-          />
-          <Text style={styles.textB}>Número ingresado no es válido</Text>
-        </View>
-      )
+  const slideIn = {
+    from: {
+      transform: [{ translateX: -200 }]
+    },
+    to: {
+      transform: [{ translateX: 0 }]
     }
-    else if (props.data === 'success') {
-      return(
+  };
+
+  if (properties.displayToastB === true) {
+    return (
+      <Animatable.View
+        animation={slideIn}
+        // delay={100}
+        duration={200}
+        iterationCount={2}
+        iterationDelay={500}
+        direction='alternate'
+        useNativeDriver={true}
+        style={styles.toast}
+        onAnimationStart={Keyboard.dismiss()}
+        onAnimationEnd={() => {
+          writePropertyState({name: 'displayToastB', value: false});
+          writeAuthState({name: 'waitingForApi', value: false})
+          navigation.replace('VehicleSelection');
+          }
+        }
+      >
         <View style={styles.containerA}>
           <Image
             source={require('../assets/icons/Hecho.png')}
@@ -42,44 +59,6 @@ const Toast = (props) => {
           />
           <Text style={styles.textA}>Código correcto</Text>
         </View>
-      )
-    }
-    else if (props.data === 'sent') {
-      return(
-        <View style={styles.containerA}>
-          <Image
-            source={require('../assets/icons/Mensaje.png')}
-            style={{height: 45, width: 45}}
-          />
-          <Text style={styles.textA}>Mensaje enviado</Text>
-        </View>
-      )
-    }
-  };
-
-  const slideIn = {
-    from: {
-      transform: [{ translateX: -200}]
-    },
-    to: {
-      transform: [{ translateX: 0 }]
-    }
-  };
-
-  if (properties.displayToast === true) {
-    return (
-      <Animatable.View
-        animation={slideIn}
-        duration={200}
-        iterationCount={2}
-        iterationDelay={500}
-        direction='alternate'
-        useNativeDriver={true}
-        style={styles.toast}
-        onAnimationEnd={() => writePropertyState({name: 'displayToast', value: false})}
-        onAnimationStart={Keyboard.dismiss()}
-      >
-        {toastMessages(props)}
       </Animatable.View>
     );
   }
@@ -124,4 +103,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Toast;
+export default Toast2;

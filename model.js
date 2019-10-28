@@ -118,7 +118,9 @@ const storeModel = {
     displayClearCart: false,
     loadingOrders: false,
     newAddressRadioIndex: null,
-    displayToast: null,
+    displayToast: false,
+    displayToastB: false,
+    toastData: null,
   },
 
   // Actions
