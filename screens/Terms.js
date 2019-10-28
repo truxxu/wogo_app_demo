@@ -9,12 +9,15 @@ import {
   TouchableOpacity,
   Alert,
 } from 'react-native';
+import SafeAreaView from 'react-native-safe-area-view';
 
 const Terms = ({navigation}) => {
   return(
-    <Text>
-      Terms
-    </Text>
+    <SafeAreaView style={{ flex: 1, backgroundColor: colors.gray }}>
+      <Text>
+        Terms
+      </Text>
+    </SafeAreaView>
   );
 }
 

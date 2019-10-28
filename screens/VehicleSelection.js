@@ -12,10 +12,10 @@ import {
 import { useStoreState, useStoreActions } from 'easy-peasy';
 import axios from 'axios';
 import AsyncStorage from '@react-native-community/async-storage';
+import SafeAreaView from 'react-native-safe-area-view';
 
 import { colors } from '../envStyles';
 import { env } from '../keys';
-
 
 const VehicleSelection = ({navigation}) => {
 
@@ -27,49 +27,51 @@ const VehicleSelection = ({navigation}) => {
     try {
       await AsyncStorage.setItem('activeVehicle', vehicle);
     } catch (e) {
-      Alert('Error', 'No fue posible realizar la operación');
+      Alert('Error', 'No fue posible realizar la operación');home
       navigation.replace('VehicleSelection');
     }
-  }
+  };
 
   return(
-    <View style={{flex: 1, backgroundColor: colors.gray}}>
-      <Text style={styles.boldText}>Escoge tu Vehículo</Text>
-      <View style={styles.container}>
-        <View style={styles.iconContainer}>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => {
-              storeVehicle('carro');
-              writePropertyState({name: 'currentVehicle', value: 'carro'});
-              navigation.replace('DrawerNavigator');
-            }}
-          >
-            <Image
-              source={require('../assets/icons/carro.png')}
-              style={styles.icon}
-              resizeMode="contain"
-            />
-            <Text style={styles.title}>Carro</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => {
-              writePropertyState({name: 'currentVehicle', value: 'moto'});
-              storeVehicle('moto');
-              navigation.replace('DrawerNavigator');
-            }}
-          >
-            <Image
-              source={require('../assets/icons/moto.png')}
-              style={styles.icon}
-              resizeMode="contain"
-            />
-            <Text style={styles.title}>Moto</Text>
-          </TouchableOpacity>
+    <SafeAreaView style={{ flex: 1, backgroundColor: colors.gray }}>
+      <View style={{flex: 1, backgroundColor: colors.gray}}>
+        <Text style={styles.boldText}>Escoge tu Vehículo</Text>
+        <View style={styles.container}>
+          <View style={styles.iconContainer}>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => {
+                storeVehicle('carro');
+                writePropertyState({name: 'currentVehicle', value: 'carro'});
+                navigation.replace('DrawerNavigator');
+              }}
+            >
+              <Image
+                source={require('../assets/icons/carro.png')}
+                style={styles.icon}
+                resizeMode="contain"
+              />
+              <Text style={styles.title}>Carro</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => {
+                writePropertyState({name: 'currentVehicle', value: 'moto'});
+                storeVehicle('moto');
+                navigation.replace('DrawerNavigator');
+              }}
+            >
+              <Image
+                source={require('../assets/icons/moto.png')}
+                style={styles.icon}
+                resizeMode="contain"
+              />
+              <Text style={styles.title}>Moto</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 

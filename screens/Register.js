@@ -12,6 +12,7 @@ import {
 import { useStoreState, useStoreActions } from 'easy-peasy';
 import ModalSelector from 'react-native-modal-selector';
 import axios from 'axios';
+import SafeAreaView from 'react-native-safe-area-view';
 
 import { colors } from '../envStyles';
 import { env } from '../keys';
@@ -53,65 +54,67 @@ const Register = ({navigation}) => {
   };
 
   return(
-    <ScrollView keyboardShouldPersistTaps={'always'}>
-      <Toast data={'error'} />
-      <ScrollView keyboardShouldPersistTaps={'handled'}>
-        <View style={styles.container}>
-          <Text
-            style={styles.boldText}>
-            Ingresa tu número de celular
-          </Text>
-          <View style={styles.phone}>
-            <CountryFlag data={auth.areaCode}/>
-            <ModalSelector
-              data={data}
-              initValue={`${auth.areaCode} ▼`}
-              cancelText={'Cancelar'}
-              onChange={(option)=> writeAuthState({name: 'areaCode', value: option.label})}
-              selectStyle={styles.picker}
-              initValueTextStyle={styles.item}
-              cancelContainerStyle={{display: 'none'}}
-              optionContainerStyle={{backgroundColor: colors.white}}
-              keyboardShouldPersistTaps={'always'}
-              />
-            <TextInput
-              style={styles.input}
-              keyboardType='numeric'
-              maxLength={10}
-              onChangeText={(text) => writeAuthState({name: 'telephone', value: text})}
-              value={auth.telephone}
-              />
+    <SafeAreaView style={{ flex: 1, backgroundColor: colors.gray }}>
+      <ScrollView keyboardShouldPersistTaps={'always'}>
+        <Toast data={'error'} />
+        <ScrollView keyboardShouldPersistTaps={'handled'}>
+          <View style={styles.container}>
+            <Text
+              style={styles.boldText}>
+              Ingresa tu número de celular
+            </Text>
+            <View style={styles.phone}>
+              <CountryFlag data={auth.areaCode}/>
+              <ModalSelector
+                data={data}
+                initValue={`${auth.areaCode} ▼`}
+                cancelText={'Cancelar'}
+                onChange={(option)=> writeAuthState({name: 'areaCode', value: option.label})}
+                selectStyle={styles.picker}
+                initValueTextStyle={styles.item}
+                cancelContainerStyle={{display: 'none'}}
+                optionContainerStyle={{backgroundColor: colors.white}}
+                keyboardShouldPersistTaps={'always'}
+                />
+              <TextInput
+                style={styles.input}
+                keyboardType='numeric'
+                maxLength={10}
+                onChangeText={(text) => writeAuthState({name: 'telephone', value: text})}
+                value={auth.telephone}
+                />
+            </View>
           </View>
-        </View>
-        <View style={styles.footer}>
-          {!auth.waitingForApi &&
-            <TouchableOpacity
-              onPress={() => {
-                if (auth.telephone === null || auth.telephone === "") {
-                  Alert.alert('Completa tus datos');
-                } else {
-                  this.onSubmit()
-                }}
-              }
-              style={styles.button}
-            >
-                <Text style={styles.buttonText}>Enviar</Text>
-            </TouchableOpacity>
-          }
-          {auth.waitingForApi &&
-            <TouchableOpacity
-               style={styles.button}
-              disabled={true}
-            >
-            <Image
-              source={require('../assets/gifs/spinner.gif')}
-              style={styles.stretch}
-            />
-            </TouchableOpacity>
-          }
-        </View>
+          <View style={styles.footer}>
+            {!auth.waitingForApi &&
+              <TouchableOpacity
+                onPress={() => {
+                  if (auth.telephone === null || auth.telephone === "") {
+                    Alert.alert('Completa tus datos');
+                  } else {
+                    this.onSubmit()
+                  }}
+                }
+                style={styles.button}
+              >
+                  <Text style={styles.buttonText}>Enviar</Text>
+              </TouchableOpacity>
+            }
+            {auth.waitingForApi &&
+              <TouchableOpacity
+                 style={styles.button}
+                disabled={true}
+              >
+              <Image
+                source={require('../assets/gifs/spinner.gif')}
+                style={styles.stretch}
+              />
+              </TouchableOpacity>
+            }
+          </View>
+        </ScrollView>
       </ScrollView>
-    </ScrollView>
+    </SafeAreaView>
   );
 }
 

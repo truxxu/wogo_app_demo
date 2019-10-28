@@ -9,11 +9,12 @@ import {
   ScrollView
 } from 'react-native';
 import { useStoreState, useStoreActions } from 'easy-peasy';
+import * as _ from 'lodash';
+import SafeAreaView from 'react-native-safe-area-view';
 
 import { colors } from '../envStyles';
 import OrderStatus from '../components/OrderStatus';
 import BackBarTitle from '../components/BackBarTitle';
-import * as _ from 'lodash';
 
 
 const OrderHistory = ({navigation}) => {
@@ -82,16 +83,18 @@ const OrderHistory = ({navigation}) => {
   };
 
     return(
-      <View style={{flex: 1, backgroundColor: colors.gray}}>
-        <BackBarTitle navigation={navigation} title={'Mis pedidos'} route={'Home'}/>
-        <ScrollView>
-          <View style={styles.container}>
-            {
-              this.gifRender()
-            }
-          </View>
-        </ScrollView>
-      </View>
+      <SafeAreaView style={{ flex: 1, backgroundColor: colors.gray }}>
+        <View style={{flex: 1, backgroundColor: colors.gray}}>
+          <BackBarTitle navigation={navigation} title={'Mis pedidos'} route={'Home'}/>
+          <ScrollView>
+            <View style={styles.container}>
+              {
+                this.gifRender()
+              }
+            </View>
+          </ScrollView>
+        </View>
+      </SafeAreaView>
     );
 }
 
