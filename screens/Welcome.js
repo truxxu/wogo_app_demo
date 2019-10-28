@@ -25,28 +25,28 @@ const Welcome = ({navigation}) => {
             source={require('../assets/images/01_Bienvenida.png')}
             style={styles.stretch}
           />
-          <Text style={styles.text}>aquí encontrarás servicios y productos para lo que te mueve</Text>
+          <Text style={styles.text}>Hola, aquí encontrarás servicios y productos para lo que te mueve</Text>
         </View>
         <View style={styles.slide}>
           <Image
             source={require('../assets/images/02_Quetemueve.png')}
             style={styles.stretch}
           />
-          <Text style={styles.text}>carro, moto, bici, scooter, caminar...</Text>
+          <Text style={styles.text}>¿Qué te mueve?. Carro, moto, bici, scooter, caminar...</Text>
         </View>
         <View style={styles.slide}>
           <Image
             source={require('../assets/images/03_Elige.png')}
             style={styles.stretch}
           />
-          <Text style={styles.text}>tu producto o servicio y paga por la aplicación</Text>
+          <Text style={styles.text}>Elige tu producto o servicio y paga por la aplicación</Text>
         </View>
         <View style={styles.slide}>
           <Image
             source={require('../assets/images/04_Ahora.png')}
             style={styles.stretch}
           />
-          <Text style={styles.text}>que lo sabes</Text>
+          <Text style={styles.text}>Ahora que lo sabes</Text>
           <TouchableOpacity
             onPress={() => navigation.navigate('Register')}
             style={styles.button}
