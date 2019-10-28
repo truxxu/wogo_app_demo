@@ -14,6 +14,7 @@ import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createDrawerNavigator } from 'react-navigation-drawer';
 import AsyncStorage from '@react-native-community/async-storage';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import storeModel from './model';
 import MenuDrawer from './components/MenuDrawer';
@@ -90,9 +91,9 @@ const AppContainer = createAppContainer(RootStack);
 const App: () => React$Node = () => {
   return (
     <StoreProvider store={store}>
-      <SafeAreaView style={{flex: 1}}>
+      <SafeAreaProvider>
         <AppContainer />
-      </SafeAreaView>
+      </SafeAreaProvider>
     </StoreProvider>
   );
 };

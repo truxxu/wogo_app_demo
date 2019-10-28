@@ -10,6 +10,7 @@ import {
   Alert,
 } from 'react-native';
 import { useStoreState, useStoreActions } from 'easy-peasy';
+import SafeAreaView from 'react-native-safe-area-view';
 
 import { colors } from '../envStyles';
 import MenuBar from '../components/MenuBar';
@@ -39,25 +40,27 @@ const Home = ({navigation}) => {
   }, []);
 
   return(
-    <View style={{flex: 1, backgroundColor: colors.gray}}>
-      <MenuBar navigation={navigation}/>
-      <ServiceTabs navigation={navigation}/>
-      <ScrollView
-      showsVerticalScrollIndicator={false}
-      >
-        <View style={styles.container}>
-          <Carousel navigation={navigation} />
-          <Text style={styles.title}>¿Qué Necesitas?</Text>
-          <ServiceSlider navigation={navigation}/>
-          <Text style={styles.title}>Productos Más Vendidos</Text>
-          <TopProducts navigation={navigation} type={'top'}/>
-          <Text style={styles.title}>Nuestra Selección Para Ti</Text>
-          <SelectedProducts navigation={navigation} type={'our_selection'}/>
-        </View>
-      </ScrollView>
-      <CartBar navigation={navigation} />
-      <FooterBar navigation={navigation} />
-    </View>
+    <SafeAreaView style={{ flex: 1, backgroundColor: colors.gray }}>
+      <View style={{flex: 1, backgroundColor: colors.gray}}>
+        <MenuBar navigation={navigation}/>
+        <ServiceTabs navigation={navigation}/>
+        <ScrollView
+        showsVerticalScrollIndicator={false}
+        >
+          <View style={styles.container}>
+            <Carousel navigation={navigation} />
+            <Text style={styles.title}>¿Qué Necesitas?</Text>
+            <ServiceSlider navigation={navigation}/>
+            <Text style={styles.title}>Productos Más Vendidos</Text>
+            <TopProducts navigation={navigation} type={'top'}/>
+            <Text style={styles.title}>Nuestra Selección Para Ti</Text>
+            <SelectedProducts navigation={navigation} type={'our_selection'}/>
+          </View>
+        </ScrollView>
+        <CartBar navigation={navigation} />
+        <FooterBar navigation={navigation} />
+      </View>
+    </SafeAreaView>
   );
 }
 

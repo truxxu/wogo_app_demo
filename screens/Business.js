@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import { useStoreState, useStoreActions } from 'easy-peasy';
 import * as _ from 'lodash';
+import SafeAreaView from 'react-native-safe-area-view';
 
 import { colors } from '../envStyles';
 import MenuBar from '../components/MenuBar';
@@ -68,52 +69,54 @@ const Business = ({navigation}) => {
   };
 
   return (
-    <View style={{flex: 1}}>
-      <MenuBar navigation={navigation} />
-      <ServiceTabs navigation={navigation} />
-      <ScrollView
-        stickyHeaderIndices={[1]}
-        showsVerticalScrollIndicator={false}
-        >
-        <Image
-          style={styles.image}
-          source={{uri: business.image}}
-        />
-        <View style={{backgroundColor: colors.white}}>
-          <View style={styles.description}>
-            <View>
-              <Text style={styles.title}>{business.name}</Text>
-              <Text style={styles.text}>{properties.activeServiceTab.name}</Text>
-            </View>
-            <View>
-              <Text style={styles.text}>
-                {timeStr(business.opening_hour)} - {timeStr(business.closing_hour)}
-              </Text>
-              <View style={styles.ratebox}>
-                <Image
-                  source={require('../assets/icons/star.png')}
-                  style={{height: 20, width: 20, marginRight: 3}}
-                />
-                <Text
-                  style={styles.text}
-                >
-                  {business.score} ({business.rates_number})
-                </Text>
+    <SafeAreaView style={{ flex: 1, backgroundColor: colors.gray }}>
+      <View style={{flex: 1}}>
+        <MenuBar navigation={navigation} />
+        <ServiceTabs navigation={navigation} />
+        <ScrollView
+          stickyHeaderIndices={[1]}
+          showsVerticalScrollIndicator={false}
+          >
+          <Image
+            style={styles.image}
+            source={{uri: business.image}}
+          />
+          <View style={{backgroundColor: colors.white}}>
+            <View style={styles.description}>
+              <View>
+                <Text style={styles.title}>{business.name}</Text>
+                <Text style={styles.text}>{properties.activeServiceTab.name}</Text>
               </View>
-              <Text style={styles.text}>{distanceStr(business.distance)}</Text>
+              <View>
+                <Text style={styles.text}>
+                  {timeStr(business.opening_hour)} - {timeStr(business.closing_hour)}
+                </Text>
+                <View style={styles.ratebox}>
+                  <Image
+                    source={require('../assets/icons/star.png')}
+                    style={{height: 20, width: 20, marginRight: 3}}
+                  />
+                  <Text
+                    style={styles.text}
+                  >
+                    {business.score} ({business.rates_number})
+                  </Text>
+                </View>
+                <Text style={styles.text}>{distanceStr(business.distance)}</Text>
+              </View>
             </View>
+            <TypesSlider data={typesArray}/>
           </View>
-          <TypesSlider data={typesArray}/>
-        </View>
-        <View style={styles.cardContainer}>
-          {
-            renderProducts()
-          }
-        </View>
-      </ScrollView>
-      <CartBar navigation={navigation} />
-      <FooterBar navigation={navigation} />
-    </View>
+          <View style={styles.cardContainer}>
+            {
+              renderProducts()
+            }
+          </View>
+        </ScrollView>
+        <CartBar navigation={navigation} />
+        <FooterBar navigation={navigation} />
+      </View>
+    </SafeAreaView>
   );
 }
 

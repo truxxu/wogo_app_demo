@@ -9,6 +9,7 @@ import {
   Dimensions
 } from 'react-native';
 import { useStoreState, useStoreActions } from 'easy-peasy';
+import SafeAreaView from 'react-native-safe-area-view';
 
 import { colors } from '../envStyles';
 import MenuBar from '../components/MenuBar';
@@ -31,46 +32,48 @@ const Category = ({navigation}) => {
   }, []);
 
   return (
-    <View style={{flex: 1, backgroundColor: colors.gray}}>
-      <MenuBar navigation={navigation} />
-      <ServiceTabs navigation={navigation} />
-      <ScrollView
-        stickyHeaderIndices={[1]}
-        showsVerticalScrollIndicator={false}
-      >
-        <View style={styles.container}>
-          <Carousel navigation={navigation} />
-        </View>
-        <View style={{backgroundColor: colors.gray}}>
-          <View style={styles.barcontainer}>
-            <Text style={styles.title}>{properties.activeServiceTab.name}</Text>
-            <View style={styles.iconcontainer}>
-              <TouchableOpacity
-                // onPress={() => navigation.navigate('Mapa', {data: category, types: types})}
-              >
-                <Image
-                  source={require('../assets/icons/settings.png')}
-                  style={{height: 35, width: 35, marginLeft: 12}}
-                />
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => navigation.navigate('BusinessesMap')}
-              >
-                <Image
-                  source={require('../assets/icons/marcador_Ubicacion.png')}
-                  style={{height: 35, width: 35, marginLeft: 12}}
-                />
-              </TouchableOpacity>
+    <SafeAreaView style={{ flex: 1, backgroundColor: colors.gray }}>
+      <View style={{flex: 1, backgroundColor: colors.gray}}>
+        <MenuBar navigation={navigation} />
+        <ServiceTabs navigation={navigation} />
+        <ScrollView
+          stickyHeaderIndices={[1]}
+          showsVerticalScrollIndicator={false}
+        >
+          <View style={styles.container}>
+            <Carousel navigation={navigation} />
+          </View>
+          <View style={{backgroundColor: colors.gray}}>
+            <View style={styles.barcontainer}>
+              <Text style={styles.title}>{properties.activeServiceTab.name}</Text>
+              <View style={styles.iconcontainer}>
+                <TouchableOpacity
+                  // onPress={() => navigation.navigate('Mapa', {data: category, types: types})}
+                >
+                  <Image
+                    source={require('../assets/icons/settings.png')}
+                    style={{height: 35, width: 35, marginLeft: 12}}
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => navigation.navigate('BusinessesMap')}
+                >
+                  <Image
+                    source={require('../assets/icons/marcador_Ubicacion.png')}
+                    style={{height: 35, width: 35, marginLeft: 12}}
+                  />
+                </TouchableOpacity>
+              </View>
             </View>
           </View>
-        </View>
-        <View style={{marginRight: 20, marginLeft: 20}}>
-          <BusinessList navigation={navigation} />
-        </View>
-      </ScrollView>
-      <CartBar navigation={navigation} />
-      <FooterBar navigation={navigation} />
-    </View>
+          <View style={{marginRight: 20, marginLeft: 20}}>
+            <BusinessList navigation={navigation} />
+          </View>
+        </ScrollView>
+        <CartBar navigation={navigation} />
+        <FooterBar navigation={navigation} />
+      </View>
+    </SafeAreaView>
   );
 }
 

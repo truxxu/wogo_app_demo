@@ -15,11 +15,10 @@ import * as _ from 'lodash';
 import axios from 'axios';
 import ModalSelector from 'react-native-modal-selector';
 import Modal from "react-native-modal";
-
+import SafeAreaView from 'react-native-safe-area-view';
 
 import { colors } from '../envStyles';
 import { env } from '../keys';
-// import BusinessInCart from 'components/BusinessInCart';
 import BackBarTitle from '../components/BackBarTitle';
 import CardLogo from '../components/CardLogo';
 import BusinessInCart from '../components/BusinessInCart';
@@ -168,106 +167,108 @@ const ShoppingCart = ({navigation}) => {
   };
 
   return (
-    <ScrollView style={{flex: 1, backgroundColor: colors.gray}}>
-      <BackBarTitle navigation={navigation} title={'Carrito'} route={'Home'}/>
-      <Modal
-        isVisible={properties.displayClearCart}
-        backdropOpacity={0.2}
-      >
-        <View style={styles.modalContainer}>
-          <View style={styles.innercontainer}>
-            <View style={styles.modalContent}>
-              <Image
-                source={require('../assets/icons/Error.png')}
-                style={{width: 75, height: 75, marginRight: 15}}
-              />
-              <Text style={styles.modalText}>¿Deseas limpiar el carrito?</Text>
+    <SafeAreaView style={{ flex: 1, backgroundColor: colors.gray }}>
+      <ScrollView style={{flex: 1, backgroundColor: colors.gray}}>
+        <BackBarTitle navigation={navigation} title={'Carrito'} route={'Home'}/>
+        <Modal
+          isVisible={properties.displayClearCart}
+          backdropOpacity={0.2}
+        >
+          <View style={styles.modalContainer}>
+            <View style={styles.innercontainer}>
+              <View style={styles.modalContent}>
+                <Image
+                  source={require('../assets/icons/Error.png')}
+                  style={{width: 75, height: 75, marginRight: 15}}
+                />
+                <Text style={styles.modalText}>¿Deseas limpiar el carrito?</Text>
+              </View>
+              <TouchableOpacity
+                style={styles.modalbutton}
+                onPress={() =>
+                  {
+                    toggleProperties('displayClearCart');
+                    navigation.navigate('Home');
+                    clearCart();
+                  }
+                }
+              >
+                <Text style={styles.modalButtonText}>Si, estoy seguro</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.modalbutton}
+                onPress={() => toggleProperties('displayClearCart')}
+              >
+                <Text style={styles.modalButtonText}>Cancelar</Text>
+              </TouchableOpacity>
             </View>
+          </View>
+        </Modal>
+        <View style={styles.container}>
+          <View>
+            {
+              items.map(key => render(key))
+            }
+            <View style={styles.content}>
+              <Text style={styles.text}>Total</Text>
+              <Text style={styles.boldText}>${getTotal()}</Text>
+            </View>
+            <View style={styles.content}>
+              <View style={styles.contentB}>
+                <CardLogo card={activePaymentMethod.payment_method}/>
+                <Text style={styles.textC}>Método de pago</Text>
+              </View>
+              <TouchableOpacity>
+                {
+                  renderCardList()
+                }
+              </TouchableOpacity>
+            </View>
+            <View style={styles.contentB}>
+              <Text style={styles.textC}>Número de pagos</Text>
+              <TextInput
+                autoCompleteType={'off'}
+                autoCorrect={false}
+                style={styles.inputSmall}
+                keyboardType='numeric'
+                maxLength={2}
+                onChangeText={(number) =>
+                  writePropertyState({
+                    name: 'installmentsNumber',
+                    value: number
+                  })}
+                value={properties.installmentsNumber}
+              />
+            </View>
+          </View>
+          <View>
             <TouchableOpacity
-              style={styles.modalbutton}
+              style={styles.button}
               onPress={() =>
                 {
-                  toggleProperties('displayClearCart');
-                  navigation.navigate('Home');
-                  clearCart();
+                  onSubmit(payload);
                 }
               }
             >
-              <Text style={styles.modalButtonText}>Si, estoy seguro</Text>
+              {!properties.loadingOrders &&
+                <Text style={styles.buttonText}>Confirmar pedido</Text>
+              }
+              {properties.loadingOrders &&
+                <Image
+                source={require('../assets/gifs/spinner.gif')}
+                style={styles.stretch}
+                />
+              }
             </TouchableOpacity>
             <TouchableOpacity
-              style={styles.modalbutton}
               onPress={() => toggleProperties('displayClearCart')}
             >
-              <Text style={styles.modalButtonText}>Cancelar</Text>
+              <Text style={styles.link}>Limpiar carrito</Text>
             </TouchableOpacity>
           </View>
         </View>
-      </Modal>
-      <View style={styles.container}>
-        <View>
-          {
-            items.map(key => render(key))
-          }
-          <View style={styles.content}>
-            <Text style={styles.text}>Total</Text>
-            <Text style={styles.boldText}>${getTotal()}</Text>
-          </View>
-          <View style={styles.content}>
-            <View style={styles.contentB}>
-              <CardLogo card={activePaymentMethod.payment_method}/>
-              <Text style={styles.textC}>Método de pago</Text>
-            </View>
-            <TouchableOpacity>
-              {
-                renderCardList()
-              }
-            </TouchableOpacity>
-          </View>
-          <View style={styles.contentB}>
-            <Text style={styles.textC}>Número de pagos</Text>
-            <TextInput
-              autoCompleteType={'off'}
-              autoCorrect={false}
-              style={styles.inputSmall}
-              keyboardType='numeric'
-              maxLength={2}
-              onChangeText={(number) =>
-                writePropertyState({
-                  name: 'installmentsNumber',
-                  value: number
-                })}
-              value={properties.installmentsNumber}
-            />
-          </View>
-        </View>
-        <View>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() =>
-              {
-                onSubmit(payload);
-              }
-            }
-          >
-            {!properties.loadingOrders &&
-              <Text style={styles.buttonText}>Confirmar pedido</Text>
-            }
-            {properties.loadingOrders &&
-              <Image
-              source={require('../assets/gifs/spinner.gif')}
-              style={styles.stretch}
-              />
-            }
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => toggleProperties('displayClearCart')}
-          >
-            <Text style={styles.link}>Limpiar carrito</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 

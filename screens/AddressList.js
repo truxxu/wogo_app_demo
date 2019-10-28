@@ -15,6 +15,7 @@ import Geocoder from 'react-native-geocoding';
 import axios from 'axios';
 import { useStoreState, useStoreActions } from 'easy-peasy';
 import * as _ from 'lodash';
+import SafeAreaView from 'react-native-safe-area-view';
 
 import { env } from '../keys';
 import { colors } from '../envStyles';
@@ -171,34 +172,36 @@ const AddressList = ({navigation}) => {
   };
 
   return (
-    <View style={{backgroundColor: colors.gray, flex: 1}}>
-      <BackBarTitle navigation={navigation} title={'Elige tu dirección'} route={'Home'}/>
-      <View style={styles.container}>
-        <View style={styles.content}>
-          <Image
-            source={require('../assets/icons/direccion.png')}
-            style={{height: 28, width: 28}}
-          />
-          <TouchableOpacity
-            onPress={() => navigation.navigate('NewAddress')}
+    <SafeAreaView style={{ flex: 1, backgroundColor: colors.gray }}>
+      <View style={{backgroundColor: colors.gray, flex: 1}}>
+        <BackBarTitle navigation={navigation} title={'Elige tu dirección'} route={'Home'}/>
+        <View style={styles.container}>
+          <View style={styles.content}>
+            <Image
+              source={require('../assets/icons/direccion.png')}
+              style={{height: 28, width: 28}}
+            />
+            <TouchableOpacity
+              onPress={() => navigation.navigate('NewAddress')}
+            >
+              <View style={{marginLeft: 15}}>
+                <Text style={styles.linkText}>Añadir ubicación actual</Text>
+                {
+                  this.loadingLocation()
+                }
+              </View>
+            </TouchableOpacity>
+          </View>
+          <ScrollView
+            showsVerticalScrollIndicator={false}
           >
-            <View style={{marginLeft: 15}}>
-              <Text style={styles.linkText}>Añadir ubicación actual</Text>
-              {
-                this.loadingLocation()
-              }
-            </View>
-          </TouchableOpacity>
+            {
+              this.renderGif()
+            }
+          </ScrollView>
         </View>
-        <ScrollView
-          showsVerticalScrollIndicator={false}
-        >
-          {
-            this.renderGif()
-          }
-        </ScrollView>
       </View>
-    </View>
+    </SafeAreaView>
   )
 }
 
