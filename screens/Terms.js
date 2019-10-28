@@ -11,6 +11,8 @@ import {
 } from 'react-native';
 import SafeAreaView from 'react-native-safe-area-view';
 
+import { colors } from '../envStyles';
+
 const Terms = ({navigation}) => {
   return(
     <SafeAreaView style={{ flex: 1, backgroundColor: colors.gray }}>
