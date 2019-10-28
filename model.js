@@ -392,7 +392,7 @@ const storeModel = {
     const state = getStoreState();
     const activeAddress = state.activeAddress;
     const currentVehicle = state.properties.currentVehicle;
-    axios.get(`${env.apiServer}/business/?service=${payload}&latitude=${activeAddress.latitude}&longitude=${activeAddress.longitude}&distance=6&vehicle=${currentVehicle}`)
+    axios.get(`${env.apiServer}/business/?service=${payload}&latitude=${activeAddress.latitude}&longitude=${activeAddress.longitude}&distance=30&vehicle=${currentVehicle}`)
       .then(response => {
         actions.writeBusiness(response.data);
         actions.writePropertyState({name: 'isLoadingTop', value: false});
