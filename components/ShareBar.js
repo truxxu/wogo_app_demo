@@ -8,12 +8,16 @@ import {
   Dimensions,
   Share
 } from 'react-native';
+import { useStoreState } from 'easy-peasy';
+
 import { colors } from '../envStyles';
 
 const ShareBar = ({navigation, product}) => {
 
-  const priceStr = product.price.split(".")[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  // State
+  const activeBusiness = useStoreState(state => state.properties.activeBusiness);
 
+  const priceStr = product.price.split(".")[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 
   onClick = (product) => {
     Share.share({
@@ -34,7 +38,13 @@ https://wogoapp.co/desgarga-wogo`,
   return (
     <View style={styles.container}>
       <TouchableOpacity
-        onPress={() => navigation.navigate('Business')}
+        onPress={() => {
+          if (activeBusiness == null || product.business != activeBusiness.id) {
+            navigation.navigate('Home');
+          } else {
+            navigation.navigate('Business');
+          }
+        }}
       >
         <Image
           source={require('../assets/icons/Flecha2.png')}

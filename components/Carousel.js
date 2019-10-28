@@ -82,20 +82,14 @@ class Carousel extends React.Component {
           >
             {this.state.banners.map(banner => (
               <TouchableOpacity
-                // onPress={() => {
-                //   if(banner.product != null) {
-                //     this.props.navigation.navigate('Producto',
-                //     {
-                //       product: banner.product,
-                //       business: {
-                //         id: banner.product.business,
-                //         name: banner.product.business_name,
-                //         address: banner.product.business_address
-                //       },
-                //       origin: 'home'
-                //     })
-                //   }
-                // }}
+                 onPress={() => {
+                   if(banner.product != null) {
+                     this.props.navigation.navigate('Product',
+                     {
+                       product: banner.product,
+                     })
+                   }
+                 }}
                 key={banner.id}
               >
                 <Image
