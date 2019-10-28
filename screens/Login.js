@@ -123,7 +123,7 @@ const Login = ({navigation}) => {
             }
             {auth.waitingForApi &&
               <TouchableOpacity
-                style={styles.button2}
+                style={styles.buttonDis}
                 disabled={true}
               >
                 <Text style={styles.buttonText2}>Registrarse</Text>
@@ -183,6 +183,27 @@ const styles = StyleSheet.create({
     margin: 10,
     marginTop: 70,
     backgroundColor: colors.yellow,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.20,
+    shadowRadius: 1.41,
+    elevation: 2,
+  },
+  buttonDis: {
+    borderColor: 'gray',
+    backgroundColor: 'gray',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderRadius: 10,
+    width: 211,
+    height: 51,
+    margin: 10,
+    marginTop: 70,
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
