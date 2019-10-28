@@ -17,12 +17,18 @@ import AsyncStorage from '@react-native-community/async-storage';
 
 import { colors } from '../envStyles';
 import { env } from '../keys';
-
+import Toast from '../components/Toast';
+import ToastB from '../components/ToastB';
 
 const Login = ({navigation}) => {
 
+  //States
   const auth = useStoreState(state => state.auth);
+  const properties = useStoreState(state => state.properties);
+  //Actions
   const writeAuthState = useStoreActions(actions => actions.writeAuthState);
+  const writePropertyState = useStoreActions(actions => actions.writePropertyState);
+  const toggleProperties = useStoreActions(actions => actions.toggleProperties);
 
   storeToken = async (token) => {
     try {
@@ -50,18 +56,34 @@ const Login = ({navigation}) => {
         writeAuthState({name: 'waitingForApi', value: false})
         // store token in local storage
         storeToken(token);
-        navigation.navigate('VehicleSelection');
-        writeAuthState({name: 'waitingForApi', value: false})
+        writePropertyState({name: 'displayToastB', value: true})
       })
       .catch(error => {
-        Alert.alert('Error', 'El código que ingresaste no es correcto o ha expirado.');
+        writeAuthState({name: 'waitingForApi', value: false});
         writeAuthState({name: 'verificationCode', value: ''});
-        writeAuthState({name: 'waitingForApi', value: false})
+        writePropertyState({name: 'toastData', value: 'error'});
+        writePropertyState({name: 'displayToast', value: true});
       });
-  }
+  };
+
+  resendCode = () => {
+    const payload = {
+      phone_number: auth.areaCode + auth.telephone
+    };
+
+    axios.post(env.apiServer + '/auth/register_customer', payload)
+      .then(response => {
+        writePropertyState({name: 'toastData', value: 'sent'});
+        writePropertyState({name: 'displayToast', value: true});
+      })
+      .catch(error => {
+      });
+  };
 
   return(
     <ScrollView keyboardShouldPersistTaps={'always'}>
+      <Toast data={properties.toastData} />
+      <ToastB navigation={navigation} />
       <ScrollView  keyboardShouldPersistTaps={'handled'}>
         <View style={styles.container}>
           <Text
@@ -84,7 +106,7 @@ const Login = ({navigation}) => {
             />
             <Text style={styles.placeholder}>_ _ _ _ _ _</Text>
           </View>
-            {!auth.waitingForApi && 
+            {!auth.waitingForApi &&
               <TouchableOpacity
                 onPress={() => {
                   if (auth.checked === true && auth.verificationCode !== null && auth.verificationCode !== '') {
@@ -96,7 +118,7 @@ const Login = ({navigation}) => {
               >
                 <Text style={styles.buttonText}>Registrarse</Text>
               </TouchableOpacity>
-            } 
+            }
             {auth.waitingForApi &&
               <TouchableOpacity
                 style={styles.button}
@@ -107,19 +129,20 @@ const Login = ({navigation}) => {
                     style={styles.stretch}
                 />
               </TouchableOpacity>
-            }        
-           <TouchableOpacity              
+            }
+           <TouchableOpacity
               style={styles.button2}
+              onPress={() => resendCode()}
             >
               <Text style={styles.buttonText2}>Reenviar Código</Text>
             </TouchableOpacity>
           <View style={styles.switchcontainer}>
             <Switch
               value = {auth.checked}
-              trackColor={{ true: colors.purple, false: Platform.OS=='android'?'#d3d3d3':'#fbfbfb'  }}
-              thumbColor={[Platform.OS=='ios'?'#FFFFFF': (auth.checked ? colors.purple :'#ffffff')]}
+              trackColor={{ true: colors.purple, false: Platform.OS==='android'?'#d3d3d3':'#fbfbfb'  }}
+              thumbColor={[Platform.OS==='ios'?'#FFFFFF': (auth.checked ? colors.purple :'#ffffff')]}
               ios_backgroundColor="#fbfbfb"
-              onValueChange={(checked) => writeAuthState({ name: 'checked', value: checked})}
+              onValueChange={() => toggleProperties('auth.checked')}
             />
             <View style={{width: 250, paddingLeft: 5}}>
               <Text style={styles.switchtext}>

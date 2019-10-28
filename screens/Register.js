@@ -18,7 +18,6 @@ import { env } from '../keys';
 import CountryFlag from '../components/CountryFlag';
 import Toast from '../components/Toast';
 
-
 const Register = ({navigation}) => {
 
   //States
@@ -43,20 +42,20 @@ const Register = ({navigation}) => {
     };
     axios.post( env.apiServer + '/auth/register_customer', payload)
       .then(response => {
-        navigation.navigate('Login');
+        navigation.replace('Login');
         writeAuthState({name: 'waitingForApi', value: false});
       })
       .catch(error => {
         // Alert.alert('Error', 'Ingresa un número válido');
-        writeAuthState({name: 'waitingForApi', value: false});
         writePropertyState({name: 'displayToast', value: true});
+        writeAuthState({name: 'waitingForApi', value: false});
       });
   };
 
   return(
     <ScrollView keyboardShouldPersistTaps={'always'}>
+      <Toast data={'error'} />
       <ScrollView keyboardShouldPersistTaps={'handled'}>
-        <Toast data={'error'} />
         <View style={styles.container}>
           <Text
             style={styles.boldText}>
