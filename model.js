@@ -120,6 +120,7 @@ const storeModel = {
     displayClearCart: false,
     loadingOrders: false,
     newAddressRadioIndex: null,
+    displayToast: null,
   },
 
   // Actions

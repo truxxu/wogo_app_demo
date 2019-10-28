@@ -16,12 +16,17 @@ import axios from 'axios';
 import { colors } from '../envStyles';
 import { env } from '../keys';
 import CountryFlag from '../components/CountryFlag';
+import Toast from '../components/Toast';
 
 
 const Register = ({navigation}) => {
 
+  //States
   const auth = useStoreState(state => state.auth);
+  const properties = useStoreState(state => state.properties);
+  //Actions
   const writeAuthState = useStoreActions(actions => actions.writeAuthState);
+  const writePropertyState = useStoreActions(actions => actions.writePropertyState);
 
   const data = [
       { key: 1, label: '+54', component:<Text style={styles.item}>(+54) Argentina</Text> },
@@ -42,14 +47,16 @@ const Register = ({navigation}) => {
         writeAuthState({name: 'waitingForApi', value: false});
       })
       .catch(error => {
-        Alert.alert('Error', 'Ingresa un número válido');
+        // Alert.alert('Error', 'Ingresa un número válido');
         writeAuthState({name: 'waitingForApi', value: false});
+        writePropertyState({name: 'displayToast', value: true});
       });
   };
 
   return(
     <ScrollView keyboardShouldPersistTaps={'always'}>
       <ScrollView keyboardShouldPersistTaps={'handled'}>
+        <Toast data={'error'} />
         <View style={styles.container}>
           <Text
             style={styles.boldText}>
@@ -102,7 +109,7 @@ const Register = ({navigation}) => {
               style={styles.stretch}
             />
             </TouchableOpacity>
-          }  
+          }
         </View>
       </ScrollView>
     </ScrollView>
