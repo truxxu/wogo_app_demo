@@ -14,6 +14,7 @@ import { colors } from '../envStyles';
 import { customerService } from '../keys';
 import Modal from "react-native-modal";
 import { useStoreState, useStoreActions } from 'easy-peasy';
+import SafeAreaView from 'react-native-safe-area-view';
 
 const MenuDrawer = ({navigation}) => {
 
@@ -40,167 +41,169 @@ const MenuDrawer = ({navigation}) => {
   };
 
   return (
-    <ScrollView
-      keyboardShouldPersistTaps={'never'}
-      style={styles.container}>
-      <Modal isVisible={properties.displayModal}>
-        <View style={styles.modalContainer}>
-          <Text style={styles.modalText}>Contáctanos</Text>
+    <SafeAreaView style={{ flex: 1, backgroundColor: colors.gray }}>
+      <ScrollView
+        keyboardShouldPersistTaps={'never'}
+        style={styles.container}>
+        <Modal isVisible={properties.displayModal}>
+          <View style={styles.modalContainer}>
+            <Text style={styles.modalText}>Contáctanos</Text>
+            <TouchableOpacity
+              style={styles.close}
+              onPress={() => toggleProperties('displayModal')}
+            >
+              <Text style={styles.modalText}>X</Text>
+            </TouchableOpacity>
+            <View style={styles.buttonContainer}>
+              <TouchableOpacity
+                style={styles.modalButton}
+                onPress={() => this.callNumber(`tel:+${customerService.phone}`)}
+              >
+                <Image
+                  source={require('../assets/icons/telefono.png')}
+                  style={{height: 75, width: 75}}
+                />
+                <Text style={styles.modalText2}>Llámanos</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.modalButton}
+                onPress={() => this.callNumber(`http://api.whatsapp.com/send?phone=${customerService.phone}`)}
+              >
+                <Image
+                  source={require('../assets/icons/wa.png')}
+                  style={{height: 75, width: 75}}
+                />
+                <Text style={styles.modalText2}>Whatsapp</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </Modal>
+        <View style={styles.usercontainer}>
+          <Image
+            source={require('../assets/icons/usuario.png')}
+            style={styles.bigicon}
+          />
+          <View>
+            <View style={{borderBottomWidth: 0.5, borderColor: 'gray'}}>
+              <Text style={styles.boldText}>{userName(user.name)}</Text>
+            </View>
+            <View style={styles.linkcontainer}>
+              <Text style={styles.text}></Text>
+            </View>
+          </View>
+        </View>
+        <View style={styles.bottomLinks}>
           <TouchableOpacity
-            style={styles.close}
-            onPress={() => toggleProperties('displayModal')}
+            style={styles.button}
+            onPress={() => navigation.navigate('OrderHistory')}
           >
-            <Text style={styles.modalText}>X</Text>
+            <View style={styles.linkcontainer}>
+              <View style={styles.iconbox}>
+                <Image
+                  source={require('../assets/icons/pedidos.png')}
+                  style={styles.icon}
+                />
+              </View>
+              <Text style={styles.link}>Mis pedidos</Text>
+            </View>
           </TouchableOpacity>
-          <View style={styles.buttonContainer}>
-            <TouchableOpacity
-              style={styles.modalButton}
-              onPress={() => this.callNumber(`tel:+${customerService.phone}`)}
-            >
-              <Image
-                source={require('../assets/icons/telefono.png')}
-                style={{height: 75, width: 75}}
-              />
-              <Text style={styles.modalText2}>Llámanos</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.modalButton}
-              onPress={() => this.callNumber(`http://api.whatsapp.com/send?phone=${customerService.phone}`)}
-            >
-              <Image
-                source={require('../assets/icons/wa.png')}
-                style={{height: 75, width: 75}}
-              />
-              <Text style={styles.modalText2}>Whatsapp</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </Modal>
-      <View style={styles.usercontainer}>
-        <Image
-          source={require('../assets/icons/usuario.png')}
-          style={styles.bigicon}
-        />
-        <View>
-          <View style={{borderBottomWidth: 0.5, borderColor: 'gray'}}>
-            <Text style={styles.boldText}>{userName(user.name)}</Text>
-          </View>
-          <View style={styles.linkcontainer}>
-            <Text style={styles.text}></Text>
-          </View>
-        </View>
-      </View>
-      <View style={styles.bottomLinks}>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => navigation.navigate('OrderHistory')}
-        >
-          <View style={styles.linkcontainer}>
-            <View style={styles.iconbox}>
-              <Image
-                source={require('../assets/icons/pedidos.png')}
-                style={styles.icon}
-              />
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => navigation.navigate('PaymentMethods')}
+          >
+            <View style={styles.linkcontainer}>
+              <View style={styles.iconbox}>
+                <Image
+                  source={require('../assets/icons/medios.png')}
+                  style={styles.icon}
+                />
+              </View>
+              <Text style={styles.link}>Mis Métodos de Pago</Text>
             </View>
-            <Text style={styles.link}>Mis pedidos</Text>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => navigation.navigate('PaymentMethods')}
-        >
-          <View style={styles.linkcontainer}>
-            <View style={styles.iconbox}>
-              <Image
-                source={require('../assets/icons/medios.png')}
-                style={styles.icon}
-              />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => navigation.navigate('AddressList')}
+          >
+            <View style={styles.linkcontainer}>
+              <View style={styles.iconbox}>
+                <Image
+                  source={require('../assets/icons/direcciones.png')}
+                  style={styles.icon}
+                />
+              </View>
+              <Text style={styles.link}>Mis direcciones</Text>
             </View>
-            <Text style={styles.link}>Mis Métodos de Pago</Text>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => navigation.navigate('AddressList')}
-        >
-          <View style={styles.linkcontainer}>
-            <View style={styles.iconbox}>
-              <Image
-                source={require('../assets/icons/direcciones.png')}
-                style={styles.icon}
-              />
-            </View>
-            <Text style={styles.link}>Mis direcciones</Text>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() =>
-            {
-              navigation.navigate('VehicleSelection')
-              navigation.toggleDrawer();
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() =>
+              {
+                navigation.navigate('VehicleSelection')
+                navigation.toggleDrawer();
+              }
             }
-          }
-        >
-          <View style={styles.linkcontainer}>
-            <View style={styles.iconbox}>
-              <Image
-                source={require('../assets/icons/cambiar.png')}
-                style={styles.icon}
-              />
+          >
+            <View style={styles.linkcontainer}>
+              <View style={styles.iconbox}>
+                <Image
+                  source={require('../assets/icons/cambiar.png')}
+                  style={styles.icon}
+                />
+              </View>
+              <Text style={styles.link}>Cambiar Vehículo</Text>
             </View>
-            <Text style={styles.link}>Cambiar Vehículo</Text>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => navigation.navigate('UserProfile')}
-        >
-          <View style={styles.linkcontainer}>
-            <View style={styles.iconbox}>
-              <Image
-                source={require('../assets/icons/perfil.png')}
-                style={styles.icon}
-              />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => navigation.navigate('UserProfile')}
+          >
+            <View style={styles.linkcontainer}>
+              <View style={styles.iconbox}>
+                <Image
+                  source={require('../assets/icons/perfil.png')}
+                  style={styles.icon}
+                />
+              </View>
+              <Text style={styles.link}>Editar perfil</Text>
             </View>
-            <Text style={styles.link}>Editar perfil</Text>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() =>
-            {
-              navigation.toggleDrawer();
-              toggleProperties('displayModal');
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() =>
+              {
+                navigation.toggleDrawer();
+                toggleProperties('displayModal');
+              }
             }
-          }
-        >
-          <View style={styles.linkcontainer}>
-            <View style={styles.iconbox}>
-              <Image
-                source={require('../assets/icons/soporte.png')}
-                style={styles.icon}
-              />
+          >
+            <View style={styles.linkcontainer}>
+              <View style={styles.iconbox}>
+                <Image
+                  source={require('../assets/icons/soporte.png')}
+                  style={styles.icon}
+                />
+              </View>
+              <Text style={styles.link}>Soporte</Text>
             </View>
-            <Text style={styles.link}>Soporte</Text>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => navigation.navigate('Terms')}
-        >
-          <View style={styles.linkcontainer}>
-            <View style={styles.iconbox}>
-              <Image
-                source={require('../assets/icons/terminos.png')}
-                style={styles.icon}
-              />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => navigation.navigate('Terms')}
+          >
+            <View style={styles.linkcontainer}>
+              <View style={styles.iconbox}>
+                <Image
+                  source={require('../assets/icons/terminos.png')}
+                  style={styles.icon}
+                />
+              </View>
+              <Text style={styles.link}>Términos y condiciones</Text>
             </View>
-            <Text style={styles.link}>Términos y condiciones</Text>
-          </View>
-        </TouchableOpacity>
-      </View>
-    </ScrollView>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 
