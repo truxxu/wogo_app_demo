@@ -136,30 +136,31 @@ const NewAddress = ({navigation}) => {
               }
             </RadioForm>
           </View>
-          <TouchableOpacity
-            onPress={() => {
-              if (newAddress.name !== '' && newAddress.text !== '' &&
-                  newAddress.reference !== '' && newAddress.latitude !== ''
-                  && newAddress.longitude !== '') {
-                onSubmit();
-              } else {
-                Alert.alert('Completa tus datos');
-              }}
-            }
-            style={styles.button}
-          >
-              <Text style={styles.buttonText}>Guardar</Text>
-            
-          </TouchableOpacity>
-        }            
-        {isLoading &&
-          <TouchableOpacity
-            disabled={true}
-            style={styles.button2}
-          >
-            <Text style={styles.buttonText2}>Guardar</Text>
-          </TouchableOpacity>
-        }
+          {!isLoading &&
+            <TouchableOpacity
+              onPress={() => {
+                if (newAddress.name !== '' && newAddress.text !== '' &&
+                    newAddress.reference !== '' && newAddress.latitude !== ''
+                    && newAddress.longitude !== '') {
+                  onSubmit();
+                } else {
+                  Alert.alert('Completa tus datos');
+                }}
+              }
+              style={styles.button}
+            >
+              <Text style={styles.buttonText}>Guardar</Text>              
+            </TouchableOpacity>
+          }            
+          {isLoading &&
+            <TouchableOpacity
+              disabled={true}
+              style={styles.button2}
+            >
+              <Text style={styles.buttonText2}>Guardar</Text>
+            </TouchableOpacity>
+          }
+        </View>
       </View>
     </SafeAreaView>
   );
