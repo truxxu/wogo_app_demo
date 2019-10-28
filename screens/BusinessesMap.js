@@ -1,5 +1,4 @@
 import React from 'react';
-import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import {
   View,
   Text,
@@ -8,11 +7,14 @@ import {
   TouchableOpacity,
   Image
 } from 'react-native';
+import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import { useStoreState } from 'easy-peasy';
 import MenuBar from '../components/MenuBar';
 import ServiceTabs from '../components/ServiceTabs';
-import FooterBar from '../components/FooterBar';
+import SafeAreaView from 'react-native-safe-area-view';
+
 import { colors } from '../envStyles';
+import FooterBar from '../components/FooterBar';
 
 const BusinessesMap = ({navigation}) => {
 
@@ -27,65 +29,67 @@ const BusinessesMap = ({navigation}) => {
   };
 
   return (
-    <View>
-      <MenuBar navigation={navigation} />
-      <ServiceTabs navigation={navigation}/>
-      <View style={styles.mapcontainer}>
-        <View style={styles.barcontainer}>
-          <TouchableOpacity
-            style={styles.close}
-            onPress={() => navigation.navigate('Category')}
-          >
-            <Text style={styles.text}>X</Text>
-          </TouchableOpacity>
-          <View style={styles.iconcontainer}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: colors.gray }}>
+      <View>
+        <MenuBar navigation={navigation} />
+        <ServiceTabs navigation={navigation}/>
+        <View style={styles.mapcontainer}>
+          <View style={styles.barcontainer}>
             <TouchableOpacity
-              // onPress={() => navigation.navigate('Mapa', {data: category, types: types})}
+              style={styles.close}
+              onPress={() => navigation.navigate('Category')}
             >
-              <Image
-                source={require('../assets/icons/settings.png')}
-                style={{height: 35, width: 35, marginLeft: 12}}
-              />
+              <Text style={styles.text}>X</Text>
             </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => _mapView.animateToRegion(region, 1000)}
-            >
-              <Image
-                source={require('../assets/icons/marcador_Ubicacion.png')}
-                style={{height: 35, width: 35, marginLeft: 12}}
-              />
-            </TouchableOpacity>
+            <View style={styles.iconcontainer}>
+              <TouchableOpacity
+                // onPress={() => navigation.navigate('Mapa', {data: category, types: types})}
+              >
+                <Image
+                  source={require('../assets/icons/settings.png')}
+                  style={{height: 35, width: 35, marginLeft: 12}}
+                />
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => _mapView.animateToRegion(region, 1000)}
+              >
+                <Image
+                  source={require('../assets/icons/marcador_Ubicacion.png')}
+                  style={{height: 35, width: 35, marginLeft: 12}}
+                />
+              </TouchableOpacity>
+            </View>
           </View>
-        </View>
-        <MapView
-         provider={PROVIDER_GOOGLE} // remove if not using Google Maps
-         style={styles.map}
-         initialRegion={region}
-         ref = {(mapView) => { _mapView = mapView; }}
-         showsUserLocation={true}
-         showsMyLocationButton={false}
-       >
-        {businesses.map(marker => (
-          <Marker
-            key={marker.id}
-            title={marker.name}
-            coordinate= {
-              {
-                latitude: parseFloat(marker.latitude),
-                longitude: parseFloat(marker.longitude)
+          <MapView
+           provider={PROVIDER_GOOGLE} // remove if not using Google Maps
+           style={styles.map}
+           initialRegion={region}
+           ref = {(mapView) => { _mapView = mapView; }}
+           showsUserLocation={true}
+           showsMyLocationButton={false}
+         >
+          {businesses.map(marker => (
+            <Marker
+              key={marker.id}
+              title={marker.name}
+              coordinate= {
+                {
+                  latitude: parseFloat(marker.latitude),
+                  longitude: parseFloat(marker.longitude)
+                }
               }
-            }
-          >
-            <Image
-              source={require('../assets/icons/Marcador4.png')}
-              style={{height: 40, resizeMode: 'contain'}}
-            />
-          </Marker>
-        ))}
-       </MapView>
+            >
+              <Image
+                source={require('../assets/icons/Marcador4.png')}
+                style={{height: 40, resizeMode: 'contain'}}
+              />
+            </Marker>
+          ))}
+         </MapView>
+        </View>
+        <FooterBar navigation={navigation} />
       </View>
-      <FooterBar navigation={navigation} />
-    </View>
+    </SafeAreaView>
   );
 }
 

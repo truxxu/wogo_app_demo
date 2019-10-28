@@ -9,6 +9,7 @@ import {
   ScrollView
 } from 'react-native';
 import { useStoreState, useStoreActions } from 'easy-peasy';
+import SafeAreaView from 'react-native-safe-area-view';
 
 import { colors } from '../envStyles';
 import FooterBar from '../components/FooterBar';
@@ -30,60 +31,62 @@ const Product = ({navigation}) => {
   const product = shoppingCart.find(product => product.product === data.id);
 
   return (
-    <View style={styles.container}>
-      <View>
-        <View style={styles.imagecontainer}>
-          <ShareBar navigation={navigation} product={data} />
-          <Image
-            style={styles.image}
-            source={{uri: data.image}}
-          />
-        </View>
-        <View style={styles.textcontainer}>
-          <Text style={styles.boldText}>{data.name}</Text>
-          <Text style={styles.price}>${priceStr}</Text>
-          <Text style={styles.text}>{data.service}</Text>
-          <Text style={styles.text}>{data.description}</Text>
-          <View style={styles.quantitybox}>
-            <View style={styles.quantity}>
-              <TouchableOpacity
-                onPress={() =>
-                  {
-                    if (properties.quantity > 1) {
-                      minusQuantity()
+    <SafeAreaView style={{ flex: 1, backgroundColor: colors.gray }}>
+      <View style={styles.container}>
+        <View>
+          <View style={styles.imagecontainer}>
+            <ShareBar navigation={navigation} product={data} />
+            <Image
+              style={styles.image}
+              source={{uri: data.image}}
+            />
+          </View>
+          <View style={styles.textcontainer}>
+            <Text style={styles.boldText}>{data.name}</Text>
+            <Text style={styles.price}>${priceStr}</Text>
+            <Text style={styles.text}>{data.service}</Text>
+            <Text style={styles.text}>{data.description}</Text>
+            <View style={styles.quantitybox}>
+              <View style={styles.quantity}>
+                <TouchableOpacity
+                  onPress={() =>
+                    {
+                      if (properties.quantity > 1) {
+                        minusQuantity()
+                      }
                     }
                   }
-                }
-              >
-                <View style={styles.quantitycontrolB}>
-                  <Text style={styles.quantitytext}>-</Text>
+                >
+                  <View style={styles.quantitycontrolB}>
+                    <Text style={styles.quantitytext}>-</Text>
+                  </View>
+                </TouchableOpacity>
+                <View style={styles.quantitycontrolA}>
+                  <Text style={styles.quantitytext}>{properties.quantity}</Text>
                 </View>
-              </TouchableOpacity>
-              <View style={styles.quantitycontrolA}>
-                <Text style={styles.quantitytext}>{properties.quantity}</Text>
+                <TouchableOpacity
+                  onPress={() => addProduct()}
+                >
+                  <View style={styles.quantitycontrolB}>
+                    <Text style={styles.quantitytext}>+</Text>
+                  </View>
+                </TouchableOpacity>
               </View>
-              <TouchableOpacity
-                onPress={() => addProduct()}
-              >
-                <View style={styles.quantitycontrolB}>
-                  <Text style={styles.quantitytext}>+</Text>
-                </View>
-              </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => plusQuantity({'product': data, 'quantity': properties.quantity})}
+                  style={styles.button}
+                >
+                  <Text style={styles.buttonText}>Agregar</Text>
+                </TouchableOpacity>
             </View>
-              <TouchableOpacity
-                onPress={() => plusQuantity({'product': data, 'quantity': properties.quantity})}
-                style={styles.button}
-              >
-                <Text style={styles.buttonText}>Agregar</Text>
-              </TouchableOpacity>
           </View>
         </View>
+        <View style={{position: 'absolute', bottom: 0}}>
+          <CartBar navigation={navigation} />
+          <FooterBar navigation={navigation} />
+        </View>
       </View>
-      <View style={{position: 'absolute', bottom: 0}}>
-        <CartBar navigation={navigation} />
-        <FooterBar navigation={navigation} />
-      </View>
-    </View>
+    </SafeAreaView>
   );
 
 }

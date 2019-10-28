@@ -14,6 +14,7 @@ import {
 import { useStoreState, useStoreActions } from 'easy-peasy';
 import axios from 'axios';
 import AsyncStorage from '@react-native-community/async-storage';
+import SafeAreaView from 'react-native-safe-area-view';
 
 import { colors } from '../envStyles';
 import { env } from '../keys';
@@ -81,31 +82,32 @@ const Login = ({navigation}) => {
   };
 
   return(
-    <ScrollView keyboardShouldPersistTaps={'always'}>
-      <Toast data={properties.toastData} />
-      <ToastB navigation={navigation} />
-      <ScrollView  keyboardShouldPersistTaps={'handled'}>
-        <View style={styles.container}>
-          <Text
-            style={styles.text}>
-            Te enviamos un código de seis dígitos al número
-          </Text>
-          <Text style={styles.boldText}>{auth.areaCode+" "+ auth.telephone}</Text>
-          <TouchableOpacity
-            onPress={() => navigation.replace('Register')}
-          >
-            <Text style={styles.link}>¿Número incorrecto?</Text>
-          </TouchableOpacity>
-          <View style={{zIndex: 1}}>
-            <TextInput
-              style={styles.code}
-              onChangeText={(verificationCode) => writeAuthState({ name: 'verificationCode', value: verificationCode})}
-              value={auth.verificationCode}
-              keyboardType='numeric'
-              maxLength={6}
-            />
-            <Text style={styles.placeholder}>_ _ _ _ _ _</Text>
-          </View>
+    <SafeAreaView style={{ flex: 1, backgroundColor: colors.gray }}>
+      <ScrollView keyboardShouldPersistTaps={'always'}>
+        <Toast data={properties.toastData} />
+        <ToastB navigation={navigation} />
+        <ScrollView  keyboardShouldPersistTaps={'handled'}>
+          <View style={styles.container}>
+            <Text
+              style={styles.text}>
+              Te enviamos un código de seis dígitos al número
+            </Text>
+            <Text style={styles.boldText}>{auth.areaCode+" "+ auth.telephone}</Text>
+            <TouchableOpacity
+              onPress={() => navigation.replace('Register')}
+            >
+              <Text style={styles.link}>¿Número incorrecto?</Text>
+            </TouchableOpacity>
+            <View style={{zIndex: 1}}>
+              <TextInput
+                style={styles.code}
+                onChangeText={(verificationCode) => writeAuthState({ name: 'verificationCode', value: verificationCode})}
+                value={auth.verificationCode}
+                keyboardType='numeric'
+                maxLength={6}
+              />
+              <Text style={styles.placeholder}>_ _ _ _ _ _</Text>
+            </View>
             {!auth.waitingForApi &&
               <TouchableOpacity
                 onPress={() => {
@@ -127,29 +129,30 @@ const Login = ({navigation}) => {
                 <Text style={styles.buttonText2}>Registrarse</Text>
               </TouchableOpacity>
             }
-           <TouchableOpacity
+            <TouchableOpacity
               style={styles.button2}
               onPress={() => resendCode()}
             >
               <Text style={styles.buttonText2}>Reenviar Código</Text>
             </TouchableOpacity>
-          <View style={styles.switchcontainer}>
-            <Switch
-              value = {auth.checked}
-              trackColor={{ true: colors.purple, false: Platform.OS==='android'?'#d3d3d3':'#fbfbfb'  }}
-              thumbColor={[Platform.OS==='ios'?'#FFFFFF': (auth.checked ? colors.purple :'#ffffff')]}
-              ios_backgroundColor="#fbfbfb"
-              onValueChange={() => toggleProperties('auth.checked')}
-            />
-            <View style={{width: 250, paddingLeft: 5}}>
-              <Text style={styles.switchtext}>
-                Mediante el registro acepto los términos y condiciones de uso.
-              </Text>
+            <View style={styles.switchcontainer}>
+              <Switch
+                value = {auth.checked}
+                trackColor={{ true: colors.purple, false: Platform.OS==='android'?'#d3d3d3':'#fbfbfb'  }}
+                thumbColor={[Platform.OS==='ios'?'#FFFFFF': (auth.checked ? colors.purple :'#ffffff')]}
+                ios_backgroundColor="#fbfbfb"
+                onValueChange={() => toggleProperties('auth.checked')}
+              />
+              <View style={{width: 250, paddingLeft: 5}}>
+                <Text style={styles.switchtext}>
+                  Mediante el registro acepto los términos y condiciones de uso.
+                </Text>
+              </View>
             </View>
           </View>
-        </View>
+        </ScrollView>
       </ScrollView>
-    </ScrollView>
+    </SafeAreaView>
   );
 }
 

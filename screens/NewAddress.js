@@ -13,6 +13,7 @@ import {
  } from 'react-native';
 import axios from 'axios';
 import { useStoreState, useStoreActions } from 'easy-peasy';
+import SafeAreaView from 'react-native-safe-area-view';
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
 
 import { env } from '../keys';
@@ -82,58 +83,59 @@ const NewAddress = ({navigation}) => {
   }
 
   return (
-    <View style={{backgroundColor: colors.gray, flex: 1}}>
-      <BackBarTitle navigation={navigation} title={'Edita tu dirección'} route={'AddressList'}/>
-      <View style={styles.container}>
-        <View>
-          <Text style={styles.text}>Dirección</Text>
-          <TextInput
-            style={styles.inputNotEditable}
-            onChangeText={(text) => writeNewAddressState({ name: 'text', value: text })}
-            value={newAddress.text}
-            editable={false}
-          />
-          <Text style={styles.text}>Referencia</Text>
-          <TextInput
-            style={styles.input}
-            onChangeText={(reference) => writeNewAddressState({ name: 'reference', value: reference })}
-            value={newAddress.reference}
-            clearButtonMode='always'
-          />
-          <Text style={styles.text}>Nombre</Text>
-          <RadioForm animation={true}>
-            {radio_props.map((obj, i) => {
-              var onPress = (value, index) => {
-                writeNewAddressState({ name: 'name', value: value });
-                writeNewAddressRadioIndex(index);
-                Keyboard.dismiss();
+    <SafeAreaView style={{ flex: 1, backgroundColor: colors.gray }}>
+      <View style={{backgroundColor: colors.gray, flex: 1}}>
+        <BackBarTitle navigation={navigation} title={'Edita tu dirección'} route={'AddressList'}/>
+        <View style={styles.container}>
+          <View>
+            <Text style={styles.text}>Dirección</Text>
+            <TextInput
+              style={styles.inputNotEditable}
+              onChangeText={(text) => writeNewAddressState({ name: 'text', value: text })}
+              value={newAddress.text}
+              editable={false}
+            />
+            <Text style={styles.text}>Referencia</Text>
+            <TextInput
+              style={styles.input}
+              onChangeText={(reference) => writeNewAddressState({ name: 'reference', value: reference })}
+              value={newAddress.reference}
+              clearButtonMode='always'
+            />
+            <Text style={styles.text}>Nombre</Text>
+            <RadioForm animation={true}>
+              {radio_props.map((obj, i) => {
+                var onPress = (value, index) => {
+                  writeNewAddressState({ name: 'name', value: value });
+                  writeNewAddressRadioIndex(index);
+                  Keyboard.dismiss();
+                }
+                return (
+                  <RadioButton labelHorizontal={true} key={i} >
+                    <RadioButtonInput
+                      obj={obj}
+                      index={i}
+                      isSelected={newAddressRadioIndex === i}
+                      onPress={onPress}
+                      buttonInnerColor={colors.purple}
+                      buttonOuterColor={colors.purple}
+                      buttonSize={20}
+                      buttonStyle={{}}
+                      buttonWrapStyle={{marginLeft: 10}}
+                    />
+                    <RadioButtonLabel
+                      obj={obj}
+                      index={i}
+                      onPress={onPress}
+                      labelStyle={styles.text}
+                      labelWrapStyle={{marginLeft: 10}}
+                    />
+                  </RadioButton>
+                )
+              })
               }
-              return (
-                <RadioButton labelHorizontal={true} key={i} >
-                  <RadioButtonInput
-                    obj={obj}
-                    index={i}
-                    isSelected={newAddressRadioIndex === i}
-                    onPress={onPress}
-                    buttonInnerColor={colors.purple}
-                    buttonOuterColor={colors.purple}
-                    buttonSize={20}
-                    buttonStyle={{}}
-                    buttonWrapStyle={{marginLeft: 10}}
-                  />
-                  <RadioButtonLabel
-                    obj={obj}
-                    index={i}
-                    onPress={onPress}
-                    labelStyle={styles.text}
-                    labelWrapStyle={{marginLeft: 10}}
-                  />
-                </RadioButton>
-              )
-            })}
-          </RadioForm>
-        </View>
-        {!isLoading &&
+            </RadioForm>
+          </View>
           <TouchableOpacity
             onPress={() => {
               if (newAddress.name !== '' && newAddress.text !== '' &&
@@ -159,7 +161,7 @@ const NewAddress = ({navigation}) => {
           </TouchableOpacity>
         }
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

@@ -9,8 +9,8 @@ import {
 } from 'react-native';
 import { colors } from '../envStyles';
 import { useStoreState } from 'easy-peasy';
+import SafeAreaView from 'react-native-safe-area-view';
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
-
 
 import BackBarTitle from '../components/BackBarTitle';
 import StatusCard from '../components/StatusCard';
@@ -39,55 +39,57 @@ const Order = ({navigation}) => {
   };
 
   return (
-    <ScrollView>
-      <BackBarTitle navigation={navigation} title={`Pedido ${order.id}`} route={'OrderHistory'} />
-      <View style={styles.container}>
-        <Text style={styles.text}>{order.date}</Text>
-        <StatusCard data={order.order_status} open={'6:00 am'} close={'6:00 pm'}/>
-        <View>
-          <View style={styles.content}>
-            <Text style={styles.boldText}>{order.business_address}</Text>
-            <Text style={styles.text}>{order.business_name}</Text>
-            <Text style={styles.text}>Tiempo estimado</Text>
-          </View>
-          {
-            order.ordered_products.map(product => render(product))
-          }
-          <View style={styles.contentC}>
-            <Text style={styles.textC}>Total</Text>
-            <Text style={styles.price}>${totalPrice(order.order_total)}</Text>
-          </View>
-          <PaymentState state={order.payment_state} />
-        </View>
-      </View>
-      <View style={styles.mapcontainer}>
-        <MapView
-         provider={PROVIDER_GOOGLE} // remove if not using Google Maps
-         style={styles.map}
-         region={{
-            latitude: parseFloat(order.business_latitude),
-            longitude: parseFloat(order.business_longitude),
-            latitudeDelta: 0.005,
-            longitudeDelta: 0.005,
-         }}
-         // showsUserLocation={true}
-        >
-        <Marker
-          coordinate= {
+    <SafeAreaView style={{ flex: 1, backgroundColor: colors.gray }}>
+      <ScrollView>
+        <BackBarTitle navigation={navigation} title={`Pedido ${order.id}`} route={'OrderHistory'} />
+        <View style={styles.container}>
+          <Text style={styles.text}>{order.date}</Text>
+          <StatusCard data={order.order_status} open={'6:00 am'} close={'6:00 pm'}/>
+          <View>
+            <View style={styles.content}>
+              <Text style={styles.boldText}>{order.business_address}</Text>
+              <Text style={styles.text}>{order.business_name}</Text>
+              <Text style={styles.text}>Tiempo estimado</Text>
+            </View>
             {
-              latitude: parseFloat(order.business_latitude),
-              longitude: parseFloat(order.business_longitude)
+              order.ordered_products.map(product => render(product))
             }
-          }
-        >
-        <Image
-            source={require('../assets/icons/Marcador4.png')}
-            style={{height: 40, resizeMode: 'contain'}}
-        />
-        </Marker>
-       </MapView>
-      </View>
-    </ScrollView>
+            <View style={styles.contentC}>
+              <Text style={styles.textC}>Total</Text>
+              <Text style={styles.price}>${totalPrice(order.order_total)}</Text>
+            </View>
+            <PaymentState state={order.payment_state} />
+          </View>
+        </View>
+        <View style={styles.mapcontainer}>
+          <MapView
+           provider={PROVIDER_GOOGLE} // remove if not using Google Maps
+           style={styles.map}
+           region={{
+              latitude: parseFloat(order.business_latitude),
+              longitude: parseFloat(order.business_longitude),
+              latitudeDelta: 0.005,
+              longitudeDelta: 0.005,
+           }}
+           // showsUserLocation={true}
+          >
+          <Marker
+            coordinate= {
+              {
+                latitude: parseFloat(order.business_latitude),
+                longitude: parseFloat(order.business_longitude)
+              }
+            }
+          >
+          <Image
+              source={require('../assets/icons/Marcador4.png')}
+              style={{height: 40, resizeMode: 'contain'}}
+          />
+          </Marker>
+         </MapView>
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 

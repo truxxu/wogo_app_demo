@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import Modal from "react-native-modal";
 import { useStoreState, useStoreActions } from 'easy-peasy';
+import SafeAreaView from 'react-native-safe-area-view';
 
 import { colors } from '../envStyles';
 import CreditCard from '../components/CreditCard';
@@ -71,79 +72,81 @@ const PaymentMethods = ({navigation}) => {
   };
 
   return (
-    <View style={styles.cardList}>
-      <BackBarTitle navigation={navigation} title={'Mis métodos de pago'} route={'Home'}/>
-      <Modal
-        isVisible={displayCardDeleteModal}
-        backdropOpacity={0.4}
-      >
-        <View style={styles.modalContainer}>
-          <View style={styles.innercontainer}>
-            <View style={styles.modalContent}>
-              <Image
-                source={require('../assets/icons/Error.png')}
-                style={{width: 80, height: 80, marginRight: 15}}
-              />
-              <Text style={styles.modalText}>¿Quieres borrar tu tarjeta?</Text>
-            </View>
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() =>
-                {
-                  deleteCard(cardToDelete);
-                  writeCardToDelete({});
-                  toggleProperties('displayCardDeleteModal');
-                }
-              }
-            >
-              <Text style={styles.buttonText}>Si, estoy seguro</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => {
-                toggleProperties('displayCardDeleteModal');
-                writeCardToDelete({});
-              }}
-            >
-              <Text style={styles.buttonText}>Cancelar</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </Modal>
-      <View style={styles.container}>
-        <ScrollView>
-          <View style={styles.instructions}>
-            <Image
-              source={require('../assets/icons/medios.png')}
-              style={{width: 83, height: 80}}
-            />
-            <Text style={styles.instructionsText}>Agrega tu método de pago preferido</Text>
-          </View>
-          <View>
-            {
-              this.gifRender()
-            }
-          </View>
-          {
-          // <View style={styles.cardContainer}>
-          //   <View style={{flexDirection: 'row', alignItems: 'center'}}>
-          //     <Image
-          //       source={require('../../assets/icons/medios.png')}
-          //       style={{width: wp('10%'), height: wp('10%'), marginRight: 15}}
-          //     />
-          //     <Text style={styles.text}>Efectivo</Text>
-          //   </View>
-          // </View>
-          }
-        </ScrollView>
-        <TouchableOpacity
-          onPress={() => navigation.navigate('NewCard')}
-          style={styles.button}
+    <SafeAreaView style={{ flex: 1, backgroundColor: colors.gray }}>
+      <View style={styles.cardList}>
+        <BackBarTitle navigation={navigation} title={'Mis métodos de pago'} route={'Home'}/>
+        <Modal
+          isVisible={displayCardDeleteModal}
+          backdropOpacity={0.4}
         >
-          <Text style={styles.buttonText}>Agregar tarjeta</Text>
-        </TouchableOpacity>
+          <View style={styles.modalContainer}>
+            <View style={styles.innercontainer}>
+              <View style={styles.modalContent}>
+                <Image
+                  source={require('../assets/icons/Error.png')}
+                  style={{width: 80, height: 80, marginRight: 15}}
+                />
+                <Text style={styles.modalText}>¿Quieres borrar tu tarjeta?</Text>
+              </View>
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() =>
+                  {
+                    deleteCard(cardToDelete);
+                    writeCardToDelete({});
+                    toggleProperties('displayCardDeleteModal');
+                  }
+                }
+              >
+                <Text style={styles.buttonText}>Si, estoy seguro</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => {
+                  toggleProperties('displayCardDeleteModal');
+                  writeCardToDelete({});
+                }}
+              >
+                <Text style={styles.buttonText}>Cancelar</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </Modal>
+        <View style={styles.container}>
+          <ScrollView>
+            <View style={styles.instructions}>
+              <Image
+                source={require('../assets/icons/medios.png')}
+                style={{width: 83, height: 80}}
+              />
+              <Text style={styles.instructionsText}>Agrega tu método de pago preferido</Text>
+            </View>
+            <View>
+              {
+                this.gifRender()
+              }
+            </View>
+            {
+            // <View style={styles.cardContainer}>
+            //   <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            //     <Image
+            //       source={require('../../assets/icons/medios.png')}
+            //       style={{width: wp('10%'), height: wp('10%'), marginRight: 15}}
+            //     />
+            //     <Text style={styles.text}>Efectivo</Text>
+            //   </View>
+            // </View>
+            }
+          </ScrollView>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('NewCard')}
+            style={styles.button}
+          >
+            <Text style={styles.buttonText}>Agregar tarjeta</Text>
+          </TouchableOpacity>
+        </View>
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 

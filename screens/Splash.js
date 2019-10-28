@@ -13,6 +13,7 @@ import Geolocation from 'react-native-geolocation-service';
 import Geocoder from 'react-native-geocoding';
 import axios from 'axios';
 import AsyncStorage from '@react-native-community/async-storage';
+import SafeAreaView from 'react-native-safe-area-view';
 
 import { colors } from '../envStyles';
 
@@ -157,12 +158,14 @@ const Splash = ({navigation}) => {
   }
 
   return(
-    <View style={styles.container}>
-      <Image
-        source={require('../assets/gifs/welcome.gif')}
-        style={{height: 400, width: 400}}
-      />
-    </View>
+    <SafeAreaView style={{ flex: 1, backgroundColor: colors.yellow }}>
+      <View style={styles.container}>
+        <Image
+          source={require('../assets/gifs/welcome.gif')}
+          style={{height: 400, width: 400}}
+        />
+      </View>
+    </SafeAreaView>
   );
 }
 

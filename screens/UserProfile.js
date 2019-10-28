@@ -15,6 +15,7 @@ import DatePicker from 'react-native-datepicker';
 import ImagePicker from 'react-native-image-picker';
 import { useStoreState, useStoreActions } from 'easy-peasy';
 import Modal from "react-native-modal";
+import SafeAreaView from 'react-native-safe-area-view';
 import AsyncStorage from '@react-native-community/async-storage';
 
 import { colors } from '../envStyles';
@@ -95,139 +96,141 @@ const UserProfile = ({navigation}) => {
   };
 
   return (
-    <ScrollView contentContainerStyle={{flex: 1, backgroundColor: colors.gray}} keyboardShouldPersistTaps={'never'}>
-      <BackBarTitle navigation={navigation} title={''} route={'Home'}/>
-      <Modal
-        isVisible={properties.displayCloseSession}
-        backdropOpacity={0.2}
-      >
-        <View style={styles.modalContainer}>
-          <View style={styles.innercontainer}>
-            <View style={styles.modalContent}>
-              <Image
-                source={require('../assets/icons/Error.png')}
-                style={{width: 75, height: 75, marginRight: 15}}
-              />
-              <Text style={styles.modalText}>¿Deseas cerrar sesión?</Text>
+    <SafeAreaView style={{ flex: 1, backgroundColor: colors.gray }}>
+      <ScrollView contentContainerStyle={{flex: 1, backgroundColor: colors.gray}} keyboardShouldPersistTaps={'never'}>
+        <BackBarTitle navigation={navigation} title={''} route={'Home'}/>
+        <Modal
+          isVisible={properties.displayCloseSession}
+          backdropOpacity={0.2}
+        >
+          <View style={styles.modalContainer}>
+            <View style={styles.innercontainer}>
+              <View style={styles.modalContent}>
+                <Image
+                  source={require('../assets/icons/Error.png')}
+                  style={{width: 75, height: 75, marginRight: 15}}
+                />
+                <Text style={styles.modalText}>¿Deseas cerrar sesión?</Text>
+              </View>
+              <TouchableOpacity
+                style={styles.modalbutton}
+                onPress={() => this.logOut() }
+              >
+                <Text style={styles.modalButtonText}>Si, estoy seguro</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.modalbutton}
+                onPress={() => toggleProperties('displayCloseSession')}
+              >
+                <Text style={styles.modalButtonText}>Cancelar</Text>
+              </TouchableOpacity>
             </View>
+          </View>
+        </Modal>
+        <View style={styles.container}>
+          <View>
+            <View>
+              <View style={styles.avatarcontainer}>
+                <Image
+                  style={styles.avatar}
+                  source={{uri: user.avatar_uri === null ? user.photo : user.avatar_uri}}
+                />
+              </View>
+              <TouchableOpacity
+                onPress={takePic.bind(this)}
+                style={styles.button2}
+              >
+                <Image
+                  source={require('../assets/icons/editar.png')}
+                  style={{height: 23, width: 23}}
+                />
+              </TouchableOpacity>
+            </View>
+            <Text style={styles.boldText}>Perfil</Text>
+          </View>
+          <View>
+            <Text style={styles.text}>Nombre</Text>
+            <TextInput
+              style={styles.input}
+              onChangeText={(name) => writeUser({name: 'name', value: name})}
+              value={user.name}
+            />
+          </View>
+          <View>
+            <Text style={styles.text}>Correo electrónico</Text>
+            <TextInput
+              style={styles.input}
+              autoCompleteType={'email'}
+              keyboardType={'email-address'}
+              textContentType={'emailAddress'}
+              onChangeText={(email) => writeUser({name: 'email', value: email})}
+              value={user.email}
+            />
+          </View>
+          <View>
+            <Text style={styles.text}>Fecha de nacimiento</Text>
+            <DatePicker
+              style={{width: Dimensions.get("window").width - 40}}
+              date={user.birth_date}
+              placeholder={' '}
+              mode="date"
+              format="YYYY-MM-DD"
+              minDate="1900-01-01"
+              maxDate={user.today}
+              confirmBtnText="Confirm"
+              cancelBtnText="Cancel"
+              showIcon={false}
+              customStyles={{
+                dateInput: {
+                  borderColor: 'gray',
+                  borderWidth: 0.5,
+                  fontSize: 16,
+                  textAlign: 'left',
+                  borderRadius: 7,
+                  fontFamily: 'Montserrat-Regular',
+                  backgroundColor: 'white',
+                  padding: 3,
+                }
+              }}
+              onDateChange={(birth_date) => writeUser({name: 'birth_date', value: birth_date})}
+            />
+          </View>
+          <View>
+            <Text style={styles.text}>Celular</Text>
+            <Text style={styles.text2}>{user.phone}</Text>
+          </View>
+          <View>
+            {user.waitingForApi &&
+              <TouchableOpacity
+                style={styles.buttonDis}
+                disabled={true}
+              >
+                <Text style={styles.buttonText2}>Guardar</Text>
+              </TouchableOpacity>
+            }
+            {!user.waitingForApi &&
+              <TouchableOpacity
+                onPress={() => {
+                  if (user.name !== null && user.email !== null && user.birth_date !== null) {
+                    onSubmitProfile()
+                  } else {
+                    Alert.alert('Error', 'Completa tus datos');
+                  }}
+                }
+                style={styles.button}
+              >
+                <Text style={styles.buttonText}>Guardar</Text>
+              </TouchableOpacity>
+            }
             <TouchableOpacity
-              style={styles.modalbutton}
-              onPress={() => this.logOut() }
-            >
-              <Text style={styles.modalButtonText}>Si, estoy seguro</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.modalbutton}
               onPress={() => toggleProperties('displayCloseSession')}
             >
-              <Text style={styles.modalButtonText}>Cancelar</Text>
+              <Text style={styles.link}>Cerrar Sesión</Text>
             </TouchableOpacity>
           </View>
         </View>
-      </Modal>
-      <View style={styles.container}>
-        <View>
-          <View>
-            <View style={styles.avatarcontainer}>
-              <Image
-                style={styles.avatar}
-                source={{uri: user.avatar_uri === null ? user.photo : user.avatar_uri}}
-              />
-            </View>
-            <TouchableOpacity
-              onPress={takePic.bind(this)}
-              style={styles.button2}
-            >
-              <Image
-                source={require('../assets/icons/editar.png')}
-                style={{height: 23, width: 23}}
-              />
-            </TouchableOpacity>
-          </View>
-          <Text style={styles.boldText}>Perfil</Text>
-        </View>
-        <View>
-          <Text style={styles.text}>Nombre</Text>
-          <TextInput
-            style={styles.input}
-            onChangeText={(name) => writeUser({name: 'name', value: name})}
-            value={user.name}
-          />
-        </View>
-        <View>
-          <Text style={styles.text}>Correo electrónico</Text>
-          <TextInput
-            style={styles.input}
-            autoCompleteType={'email'}
-            keyboardType={'email-address'}
-            textContentType={'emailAddress'}
-            onChangeText={(email) => writeUser({name: 'email', value: email})}
-            value={user.email}
-          />
-        </View>
-        <View>
-          <Text style={styles.text}>Fecha de nacimiento</Text>
-          <DatePicker
-            style={{width: Dimensions.get("window").width - 40}}
-            date={user.birth_date}
-            placeholder={' '}
-            mode="date"
-            format="YYYY-MM-DD"
-            minDate="1900-01-01"
-            maxDate={user.today}
-            confirmBtnText="Confirm"
-            cancelBtnText="Cancel"
-            showIcon={false}
-            customStyles={{
-              dateInput: {
-                borderColor: 'gray',
-                borderWidth: 0.5,
-                fontSize: 16,
-                textAlign: 'left',
-                borderRadius: 7,
-                fontFamily: 'Montserrat-Regular',
-                backgroundColor: 'white',
-                padding: 3,
-              }
-            }}
-            onDateChange={(birth_date) => writeUser({name: 'birth_date', value: birth_date})}
-          />
-        </View>
-        <View>
-          <Text style={styles.text}>Celular</Text>
-          <Text style={styles.text2}>{user.phone}</Text>
-        </View>
-        <View>
-          {user.waitingForApi &&
-            <TouchableOpacity
-              style={styles.buttonDis}
-              disabled={true}
-            >
-              <Text style={styles.buttonText2}>Guardar</Text>
-            </TouchableOpacity>
-          }
-          {!user.waitingForApi &&
-            <TouchableOpacity
-              onPress={() => {
-                if (user.name !== null && user.email !== null && user.birth_date !== null) {
-                  onSubmitProfile()
-                } else {
-                  Alert.alert('Error', 'Completa tus datos');
-                }}
-              }
-              style={styles.button}
-            >
-              <Text style={styles.buttonText}>Guardar</Text>
-            </TouchableOpacity>
-          }
-          <TouchableOpacity
-            onPress={() => toggleProperties('displayCloseSession')}
-          >
-            <Text style={styles.link}>Cerrar Sesión</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 

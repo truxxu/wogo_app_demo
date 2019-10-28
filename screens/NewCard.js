@@ -13,6 +13,7 @@ import {
 import { useStoreState, useStoreActions } from 'easy-peasy';
 import axios from 'axios';
 import luhn from 'fast-luhn';
+import SafeAreaView from 'react-native-safe-area-view';
 
 import BackBarTitle from '../components/BackBarTitle';
 import CardLogo2 from '../components/CardLogo2';
@@ -104,111 +105,112 @@ const NewCard = ({navigation}) => {
     newCardName('');
     newCardCvv('');
     newCardPristine(true);
-  }
-
+  };
 
   return (
-    <View style={{flex: 1, backgroundColor: colors.gray}}>
-      <BackBarTitle navigation={navigation} title={'Mis tarjetas'} route={'PaymentMethods'} />
-      <View style={styles.container}>
-        <View>
-          <Text style={styles.text}>Número de tarjeta</Text>
-          <View style={styles.codeBox}>
-            {
-              <CardLogo2 card={newCard.number}/>
-            }
-            <TextInput
-              autoCompleteType={"off"}
-              autoCorrect={false}
-              style={styles.input}
-              keyboardType='numeric'
-              maxLength={16}
-              onChangeText={(number) => newCardNumber(number)}
-              value={newCard.number.toString()}
-            />
-          </View>
-          <View style={styles.codeBox}>
-            <View style={{maxWidth: '30%'}}>
-              <Text style={styles.text}>AAAA</Text>
-              <TextInput
-                autoCompleteType={'off'}
-                autoCorrect={false}
-                style={styles.inputSmall}
-                keyboardType='numeric'
-                maxLength={4}
-                onChangeText={(year) => newCardYear(year)}
-                value={newCard.year.toString()}
-              />
-            </View>
-            <View style={{maxWidth: '30%'}}>
-              <Text style={styles.text}>MM</Text>
-              <TextInput
-                autoCompleteType={'off'}
-                autoCorrect={false}
-                style={styles.inputSmall}
-                keyboardType='numeric'
-                maxLength={2}
-                onChangeText={(month) => newCardMonth(month)}
-                value={newCard.month.toString()}
-              />
-            </View>
-            <View style={{maxWidth: '30%'}}>
-              <Text style={styles.text}>CVV</Text>
-              <TextInput
-                autoCompleteType={'off'}
-                autoCorrect={false}
-                style={styles.inputSmall}
-                keyboardType='numeric'
-                maxLength={4}
-                onChangeText={(cvv) => newCardCvv(cvv)}
-                value={newCard.cvv.toString()}
-              />
-            </View>
-          </View>
-          <View style={styles.codeBox}>
-            <View style={{maxWidth: '47.5%'}}>
-              <Text style={styles.text}>Nombre</Text>
-              <TextInput
-                autoCompleteType={'off'}
-                autoCorrect={false}
-                style={styles.input2}
-                maxLength={150}
-                onChangeText={(name) => newCardName(name)}
-                value={newCard.name}
-              />
-            </View>
-          </View>
-        </View>
-        {!newCard.isValid && !newCard.isPristine &&
-          <Text style={styles.error}>{newCard.error}</Text>
-        }
-        {newCard.isValid && 
+    <SafeAreaView style={{ flex: 1, backgroundColor: colors.gray }}>
+      <View style={{flex: 1, backgroundColor: colors.gray}}>
+        <BackBarTitle navigation={navigation} title={'Mis tarjetas'} route={'PaymentMethods'} />
+        <View style={styles.container}>
           <View>
-          {!isLoading &&
-          <TouchableOpacity
-            onPress={() => this.onSubmit()}
-            style={styles.button}
-          >            
-            <Text style={styles.buttonText}>Guardar</Text>
-          </TouchableOpacity>
+            <Text style={styles.text}>Número de tarjeta</Text>
+            <View style={styles.codeBox}>
+              {
+                <CardLogo2 card={newCard.number}/>
+              }
+              <TextInput
+                autoCompleteType={"off"}
+                autoCorrect={false}
+                style={styles.input}
+                keyboardType='numeric'
+                maxLength={16}
+                onChangeText={(number) => newCardNumber(number)}
+                value={newCard.number.toString()}
+              />
+            </View>
+            <View style={styles.codeBox}>
+              <View style={{maxWidth: '30%'}}>
+                <Text style={styles.text}>AAAA</Text>
+                <TextInput
+                  autoCompleteType={'off'}
+                  autoCorrect={false}
+                  style={styles.inputSmall}
+                  keyboardType='numeric'
+                  maxLength={4}
+                  onChangeText={(year) => newCardYear(year)}
+                  value={newCard.year.toString()}
+                />
+              </View>
+              <View style={{maxWidth: '30%'}}>
+                <Text style={styles.text}>MM</Text>
+                <TextInput
+                  autoCompleteType={'off'}
+                  autoCorrect={false}
+                  style={styles.inputSmall}
+                  keyboardType='numeric'
+                  maxLength={2}
+                  onChangeText={(month) => newCardMonth(month)}
+                  value={newCard.month.toString()}
+                />
+              </View>
+              <View style={{maxWidth: '30%'}}>
+                <Text style={styles.text}>CVV</Text>
+                <TextInput
+                  autoCompleteType={'off'}
+                  autoCorrect={false}
+                  style={styles.inputSmall}
+                  keyboardType='numeric'
+                  maxLength={4}
+                  onChangeText={(cvv) => newCardCvv(cvv)}
+                  value={newCard.cvv.toString()}
+                />
+              </View>
+            </View>
+            <View style={styles.codeBox}>
+              <View style={{maxWidth: '47.5%'}}>
+                <Text style={styles.text}>Nombre</Text>
+                <TextInput
+                  autoCompleteType={'off'}
+                  autoCorrect={false}
+                  style={styles.input2}
+                  maxLength={150}
+                  onChangeText={(name) => newCardName(name)}
+                  value={newCard.name}
+                />
+              </View>
+            </View>
+          </View>
+          {!newCard.isValid && !newCard.isPristine &&
+            <Text style={styles.error}>{newCard.error}</Text>
           }
-          {isLoading &&
-            <TouchableOpacity
-              style={styles.button2}
-              disabled={true}
-           >
-            <Text style={styles.buttonText2}>Guardar</Text>
-           </TouchableOpacity>
+          {newCard.isValid &&
+            <View>
+              {!isLoading &&
+                <TouchableOpacity
+                 onPress={() => this.onSubmit()}
+                 style={styles.button}
+                >
+                  <Text style={styles.buttonText}>Guardar</Text>
+                </TouchableOpacity>
+              }
+              {isLoading &&
+                <TouchableOpacity
+                  style={styles.button2}
+                  disabled={true}
+                >
+                  <Text style={styles.buttonText2}>Guardar</Text>
+                </TouchableOpacity>
+              } 
+            </View>
           }
+          <Text style={styles.disclaimerText}>
+            *Por tu seguridad, vamos a proceder a realizar una transacción de prueba
+            por un valor aleatorio de máximo $300, los cuales te serán retornados
+            luego de esta validación.
+          </Text>
         </View>
-        }            
-        <Text style={styles.disclaimerText}>
-          *Por tu seguridad, vamos a proceder a realizar una transacción de prueba
-          por un valor aleatorio de máximo $300, los cuales te serán retornados
-          luego de esta validación.
-        </Text>
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 
