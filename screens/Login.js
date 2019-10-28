@@ -121,13 +121,10 @@ const Login = ({navigation}) => {
             }
             {auth.waitingForApi &&
               <TouchableOpacity
-                style={styles.button}
+                style={styles.button2}
                 disabled={true}
               >
-                <Image
-                    source={require('../assets/gifs/spinner.gif')}
-                    style={styles.stretch}
-                />
+                <Text style={styles.buttonText2}>Registrarse</Text>
               </TouchableOpacity>
             }
            <TouchableOpacity

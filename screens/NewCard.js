@@ -194,13 +194,10 @@ const NewCard = ({navigation}) => {
           }
           {isLoading &&
             <TouchableOpacity
-              style={styles.button}
+              style={styles.button2}
               disabled={true}
            >
-           <Image
-             source={require('../assets/gifs/spinner.gif')}
-             style={styles.stretch}
-           />
+            <Text style={styles.buttonText2}>Guardar</Text>
            </TouchableOpacity>
           }
         </View>
@@ -261,11 +258,37 @@ const styles = StyleSheet.create({
     shadowRadius: 1.41,
     elevation: 2,
   },
+  button2: {
+    borderColor: 'gray',
+    borderWidth: 1,
+    borderRadius: 10,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 20,
+    width: 211,
+    height: 51,
+    backgroundColor: 'gray',
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.20,
+    shadowRadius: 1.41,
+    elevation: 2,
+  },
   buttonText: {
     fontSize: 16,
     textAlign: 'center',
     fontFamily: 'Montserrat-SemiBold',
     color: 'black'
+  },
+  buttonText2: {
+    fontSize: 16,
+    textAlign: 'center',
+    fontFamily: 'Montserrat-SemiBold',
+    color: colors.white,
   },
   input: {
     borderColor: 'gray',
