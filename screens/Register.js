@@ -102,13 +102,10 @@ const Register = ({navigation}) => {
             }
             {auth.waitingForApi &&
               <TouchableOpacity
-                 style={styles.button}
+                style={styles.buttonDis}
                 disabled={true}
               >
-              <Image
-                source={require('../assets/gifs/spinner.gif')}
-                style={styles.stretch}
-              />
+              <Text style={styles.buttonText2}>Enviar</Text>            
               </TouchableOpacity>
             }
           </View>
@@ -120,7 +117,6 @@ const Register = ({navigation}) => {
 
 const styles = StyleSheet.create({
     container: {
-    backgroundColor: colors.gray,
     marginTop: 230,
     flex: 1,
     alignItems: 'center',
@@ -189,6 +185,32 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.20,
     shadowRadius: 1.41,
     elevation: 2,
+  },
+  buttonDis: {
+    position: 'absolute',
+    bottom: 20,
+    borderColor: 'gray',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 211,
+    height: 51,
+    borderWidth: 1,
+    borderRadius: 10,
+    backgroundColor: 'gray',
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.20,
+    shadowRadius: 1.41,
+    elevation: 2,
+  },
+  buttonText2: {
+    fontSize: 16,
+    textAlign: 'center',
+    fontFamily: 'Montserrat-SemiBold',
+    color: colors.white,
   },
   buttonText: {
     fontSize: 18,

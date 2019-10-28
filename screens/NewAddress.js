@@ -132,7 +132,8 @@ const NewAddress = ({navigation}) => {
                     />
                   </RadioButton>
                 )
-              })}
+              })
+              }
             </RadioForm>
           </View>
           <TouchableOpacity
@@ -147,17 +148,18 @@ const NewAddress = ({navigation}) => {
             }
             style={styles.button}
           >
-            {!isLoading &&
               <Text style={styles.buttonText}>Guardar</Text>
-            }
-            {isLoading &&
-              <Image
-                source={require('../assets/gifs/spinner.gif')}
-                style={styles.stretch}
-              />
-            }
+            
           </TouchableOpacity>
-        </View>
+        }            
+        {isLoading &&
+          <TouchableOpacity
+            disabled={true}
+            style={styles.button2}
+          >
+            <Text style={styles.buttonText2}>Guardar</Text>
+          </TouchableOpacity>
+        }
       </View>
     </SafeAreaView>
   );
@@ -229,6 +231,30 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontFamily: 'Montserrat-SemiBold',
     color: colors.black,
+    padding: 12,
+  },
+  button2: {
+    borderColor: 'gray',
+    backgroundColor: 'gray',
+    borderWidth: 1,
+    borderRadius: 10,
+    width: 250,
+    marginTop: 20,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.20,
+    shadowRadius: 1.41,
+    elevation: 2,
+    alignItems: 'center',
+  },
+  buttonText2: {
+    fontSize: 18,
+    textAlign: 'center',
+    fontFamily: 'Montserrat-SemiBold',
+    color: colors.white,
     padding: 12,
   },
   stretch: {

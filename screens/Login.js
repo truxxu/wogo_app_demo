@@ -108,36 +108,33 @@ const Login = ({navigation}) => {
               />
               <Text style={styles.placeholder}>_ _ _ _ _ _</Text>
             </View>
-              {!auth.waitingForApi &&
-                <TouchableOpacity
-                  onPress={() => {
-                    if (auth.checked === true && auth.verificationCode !== null && auth.verificationCode !== '') {
-                      this.onSubmit()
-                    } else {
-                      Alert.alert('Error','Acepta las condiciones e introduce el código de verificación');            }}
-                  }
-                  style={styles.button}
-                >
-                  <Text style={styles.buttonText}>Registrarse</Text>
-                </TouchableOpacity>
-              }
-              {auth.waitingForApi &&
-                <TouchableOpacity
-                  style={styles.button}
-                  disabled={true}
-                >
-                  <Image
-                      source={require('../assets/gifs/spinner.gif')}
-                      style={styles.stretch}
-                  />
-                </TouchableOpacity>
-              }
-             <TouchableOpacity
-                style={styles.button2}
-                onPress={() => resendCode()}
+            {!auth.waitingForApi &&
+              <TouchableOpacity
+                onPress={() => {
+                  if (auth.checked === true && auth.verificationCode !== null && auth.verificationCode !== '') {
+                    this.onSubmit()
+                  } else {
+                    Alert.alert('Error','Acepta las condiciones e introduce el código de verificación');            }}
+                }
+                style={styles.button}
               >
-                <Text style={styles.buttonText2}>Reenviar Código</Text>
+                <Text style={styles.buttonText}>Registrarse</Text>
               </TouchableOpacity>
+            }
+            {auth.waitingForApi &&
+              <TouchableOpacity
+                style={styles.button2}
+                disabled={true}
+              >
+                <Text style={styles.buttonText2}>Registrarse</Text>
+              </TouchableOpacity>
+            }
+            <TouchableOpacity
+              style={styles.button2}
+              onPress={() => resendCode()}
+            >
+              <Text style={styles.buttonText2}>Reenviar Código</Text>
+            </TouchableOpacity>
             <View style={styles.switchcontainer}>
               <Switch
                 value = {auth.checked}

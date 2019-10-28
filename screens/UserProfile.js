@@ -201,10 +201,12 @@ const UserProfile = ({navigation}) => {
           </View>
           <View>
             {user.waitingForApi &&
-              <Image
-                source={require('../assets/gifs/spinner.gif')}
-                style={styles.stretch}
-              />
+              <TouchableOpacity
+                style={styles.buttonDis}
+                disabled={true}
+              >
+                <Text style={styles.buttonText2}>Guardar</Text>
+              </TouchableOpacity>
             }
             {!user.waitingForApi &&
               <TouchableOpacity
@@ -298,6 +300,26 @@ const styles = StyleSheet.create({
     shadowRadius: 1.41,
     elevation: 2,
   },
+  buttonDis: {
+    borderColor: 'gray',
+    backgroundColor: 'gray',
+    borderWidth: 1,
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 211,
+    height: 51,
+    marginTop: 20,
+    marginBottom: 20,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.20,
+    shadowRadius: 1.41,
+    elevation: 2,
+  },
   button2: {
     borderColor: colors.purple,
     borderRadius: 15,
@@ -315,6 +337,12 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontFamily: 'Montserrat-SemiBold',
     color: colors.black,
+  },
+  buttonText2: {
+    fontSize: 16,
+    textAlign: 'center',
+    fontFamily: 'Montserrat-SemiBold',
+    color: colors.white,
   },
   link: {
     fontFamily: 'Montserrat-Regular',
