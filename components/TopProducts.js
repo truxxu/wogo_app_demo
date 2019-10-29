@@ -8,8 +8,10 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { useStoreState, useStoreActions } from 'easy-peasy';
+import Swiper from 'react-native-swiper'
 
 import HomeProductCard from './HomeProductCard';
+import { colors } from '../envStyles';
 
 const TopProducts = ({navigation, type}) => {
 
@@ -33,15 +35,24 @@ const TopProducts = ({navigation, type}) => {
   }
   else if (isLoadingTop === false && products !== null) {
     return(
-      <View>
-        {
-          products.map(product => {
-            return(
-              <HomeProductCard key={product.id} navigation={navigation} product={product} />
-            )
-          })
-        }
-      </View>
+      <Swiper
+        style={styles.wrapper}
+        showsButtons={false}
+        loop={true}
+        autoplay={true}
+        autoplayTimeout={5}
+        dot={<View style={{backgroundColor: 'rgba(94,33,226,.3)', width: 8, height: 8, borderRadius: 4, marginLeft: 3, marginRight: 3}} />}
+        activeDot={<View style={{backgroundColor: colors.purple, width: 8, height: 8, borderRadius: 4, marginLeft: 3, marginRight: 3}} />}>
+          {
+            products.map(product => {
+              return(
+                <View key={product.id}>
+                  <HomeProductCard navigation={navigation} product={product} />
+                </View>
+              )
+            })
+          }
+      </Swiper>
     )
   }
   else {
@@ -50,6 +61,9 @@ const TopProducts = ({navigation, type}) => {
 }
 
 const styles = StyleSheet.create({
+  wrapper: {
+    height: 160
+  },
   gifContainer: {
     flexDirection: 'column',
     justifyContent: 'center',
