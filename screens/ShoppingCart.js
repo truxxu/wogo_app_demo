@@ -242,24 +242,26 @@ const ShoppingCart = ({navigation}) => {
             </View>
           </View>
           <View>
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() =>
-                {
-                  onSubmit(payload);
+            {!properties.loadingOrders &&            
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() =>
+                  {
+                    onSubmit(payload);
+                  }
                 }
-              }
-            >
-              {!properties.loadingOrders &&
-                <Text style={styles.buttonText}>Confirmar pedido</Text>
-              }
-              {properties.loadingOrders &&
-                <Image
-                source={require('../assets/gifs/spinner.gif')}
-                style={styles.stretch}
-                />
-              }
-            </TouchableOpacity>
+              >
+                <Text style={styles.buttonText}>Confirmar pedido</Text>                
+              </TouchableOpacity>
+            }
+            {properties.loadingOrders &&
+              <TouchableOpacity
+                disabled={true}
+                style={styles.button}
+              >
+                <Text style={styles.buttonText}>Confirmar pedido</Text>                
+              </TouchableOpacity>
+            }
             <TouchableOpacity
               onPress={() => toggleProperties('displayClearCart')}
             >
@@ -276,7 +278,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.gray,
-    flexDirection: 'column',
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: 20,
@@ -299,11 +300,10 @@ const styles = StyleSheet.create({
     borderColor: colors.yellow,
     borderWidth: 1,
     borderRadius: 10,
-    flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    width: 200,
-    height: 45,
+    width: 211,
+    height: 51,
     marginTop: 20,
     marginBottom: 10,
     backgroundColor: colors.yellow,
@@ -321,6 +321,32 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontFamily: 'Montserrat-SemiBold',
     color: colors.black,
+  },
+  button2: {
+    borderColor: 'gray',
+    backgroundColor: 'gray',
+    borderWidth: 1,
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 211,
+    height: 51,
+    marginTop: 20,
+    marginBottom: 10,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.20,
+    shadowRadius: 1.41,
+    elevation: 2,
+  },
+  buttonText2: {
+    fontSize: 16,
+    textAlign: 'center',
+    fontFamily: 'Montserrat-SemiBold',
+    color: colors.white,
   },
   boldText: {
     fontSize: 14,
@@ -355,7 +381,6 @@ const styles = StyleSheet.create({
   },
   modalContainer: {
     backgroundColor: 'transparent',
-    flexDirection: 'column',
     justifyContent: 'space-around',
     alignItems: 'center',
     padding: 20,
@@ -363,7 +388,6 @@ const styles = StyleSheet.create({
   },
   innercontainer: {
     backgroundColor: colors.white,
-    flexDirection: 'column',
     justifyContent: 'space-around',
     alignItems: 'center',
     borderRadius: 10,
@@ -384,7 +408,6 @@ const styles = StyleSheet.create({
     borderColor: colors.yellow,
     borderWidth: 1,
     borderRadius: 10,
-    flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
     width: 200,
@@ -417,7 +440,6 @@ const styles = StyleSheet.create({
     padding: 0,
     borderColor: 'transparent',
     backgroundColor: 'white',
-    flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
   },
