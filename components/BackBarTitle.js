@@ -11,6 +11,9 @@ import { colors } from '../envStyles';
 
 const BackBarTitle = ({navigation, title, route}) => {
 
+  //States
+  const auth = useStoreState(state => state.auth);
+  //Actions
   const newCardNumber = useStoreActions(actions => actions.newCardNumber);
   const newCardName = useStoreActions(actions => actions.newCardName);
   const newCardYear = useStoreActions(actions => actions.newCardYear);
@@ -20,9 +23,15 @@ const BackBarTitle = ({navigation, title, route}) => {
 
   onBack = (route) => {
     if (route == 'PaymentMethods') {
-      this.clearFields();
+      clearFields();
+      navigation.navigate(route);
     }
-    navigation.navigate(route);
+    else if (auth.token === null) {
+      navigation.replace('Login');
+    }
+    else {
+      navigation.navigate(route);
+    }
   }
 
   clearFields = () => {

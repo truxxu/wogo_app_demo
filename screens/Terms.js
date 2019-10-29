@@ -12,15 +12,14 @@ import {
 import SafeAreaView from 'react-native-safe-area-view';
 
 import { colors } from '../envStyles';
+import BackBarTitle from '../components/BackBarTitle';
 
 const Terms = ({navigation}) => {
   return(
     <SafeAreaView style={{ flex: 1, backgroundColor: colors.gray }}>
+      <BackBarTitle navigation={navigation} title={' Términos y Condiciones'} route={'Home'}/>
       <View style={styles.container}>
         <ScrollView>
-          <Text style={styles.title}>
-            Términos y Condiciones de Uso De Plataforma WOGO
-          </Text>
           <Text style={styles.text}>
             El contenido del presente documento proyecta los ‘‘Términos y Condiciones de Uso’’ mediante los cuales se crea el escenario adecuado para la interacción de los USUARIOS (CLIENTES FINALES) con la plataforma web y la aplicación móvil. Teniendo en cuenta que la PLATAFORMA funge como canal digital de tercerización entre los puntos de venta ALIADOS u oferentes, es fundamental aclarar que desde la plataforma los usuarios pueden pedir el servicio, producto o productos de acuerdo al catálogo ofertado por el establecimiento ALIADO u oferentes, pero en ningún caso WOGO S.A.S. podrá ser responsable por la calidad, cantidad u otras calidades de los productos ofrecidos por el ALIADO u oferentes salvo por causas imputables a WOGO S.A.S.
           </Text>

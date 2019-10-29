@@ -57,6 +57,7 @@ const Login = ({navigation}) => {
         writeAuthState({name: 'waitingForApi', value: false})
         // store token in local storage
         storeToken(token);
+        writeAuthState({name: 'token', value: `Token ${token}`})
         writePropertyState({name: 'displayToastB', value: true})
       })
       .catch(error => {
@@ -146,10 +147,17 @@ const Login = ({navigation}) => {
                 ios_backgroundColor="#fbfbfb"
                 onValueChange={() => toggleProperties('auth.checked')}
               />
-              <View style={{width: 250, paddingLeft: 5}}>
+              <View style={styles.textBlock}>
                 <Text style={styles.switchtext}>
-                  Mediante el registro acepto los términos y condiciones de uso.
+                  Mediante el registro acepto los
                 </Text>
+                <TouchableOpacity
+                  onPress={() => navigation.navigate('Terms')}
+                >
+                  <Text style={styles.link}>
+                    Términos y Condiciones de uso.
+                  </Text>
+                </TouchableOpacity>
               </View>
             </View>
           </View>
@@ -165,6 +173,10 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     padding: 40,
+  },
+  textBlock: {
+    width: 250,
+    paddingLeft: 10,
   },
   boldText: {
     textAlign: 'center',
@@ -285,6 +297,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Montserrat-Regular',
     color: colors.purple,
     fontSize: 16,
+    textAlign: 'justify'
   },
   switchcontainer: {
     flexDirection: 'row',
@@ -296,6 +309,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Montserrat-Regular',
     color: colors.black,
     fontSize: 15,
+    textAlign: 'justify'
   },
   stretch: {
     height: 50,
