@@ -107,7 +107,7 @@ const storeModel = {
     isLocating: false,
     displayModal: false,
     activeServiceTab: '',
-    isLoadingOurSelection: false,
+    isLoadingBestSeller: false,
     isLoadingTop: false,
     displayCardDeleteModal: false,
     displayCloseSession: false,
@@ -243,12 +243,12 @@ const storeModel = {
 
   getProducts: thunk(async (actions, payload) => {
     actions.writePropertyState({name: 'isLoadingTop', value: true});
-    actions.writePropertyState({name: 'isLoadingOurSelection', value: true});
+    actions.writePropertyState({name: 'isLoadingBestSeller', value: true});
     axios.get(`${env.apiServer}/products/?list=${payload}`)
       .then(response => {
-        if (payload === 'our_selection') {
+        if (payload === 'best_seller') {
           actions.writeProducts({value: response.data, name: 'our_selection'});
-          actions.writePropertyState({name: 'isLoadingOurSelection', value: false});
+          actions.writePropertyState({name: 'isLoadingBestSeller', value: false});
         }
         else if (payload === 'top') {
           actions.writeProducts({value: response.data, name: 'top'});
