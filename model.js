@@ -121,6 +121,7 @@ const storeModel = {
     displayToast: false,
     displayToastB: false,
     toastData: null,
+    sendTimer: 45000,
   },
 
   // Actions
@@ -467,6 +468,17 @@ const storeModel = {
     const newArray = _.remove(state.shoppingCart, function(n) {
       return payload.product === n.product;
     })
+  }),
+
+  // Timer
+  decreaseTimer: action((state, payload) => {
+    state.properties.sendTimer -= 1000
+  }),
+  resetTimer: action((state, payload) => {
+    state.properties.sendTimer = 45000
+  }),
+  stopTimer: action((state, payload) => {
+    state.properties.sendTimer = 0
   }),
 
 };

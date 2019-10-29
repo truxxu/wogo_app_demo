@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   StyleSheet,
   ScrollView,
@@ -26,10 +26,42 @@ const Login = ({navigation}) => {
   //States
   const auth = useStoreState(state => state.auth);
   const properties = useStoreState(state => state.properties);
+  const sendTimer = useStoreState(state => state.properties.sendTimer);
   //Actions
   const writeAuthState = useStoreActions(actions => actions.writeAuthState);
   const writePropertyState = useStoreActions(actions => actions.writePropertyState);
   const toggleProperties = useStoreActions(actions => actions.toggleProperties);
+  const decreaseTimer = useStoreActions(actions => actions.decreaseTimer);
+  const stopTimer = useStoreActions(actions => actions.stopTimer);
+  const resetTimer = useStoreActions(actions => actions.resetTimer);
+
+  useEffect(() => {
+    resetTimer();
+  }, []);
+
+  useEffect(() => {
+    while (sendTimer > 0) {
+      const timer = setTimeout(() => {
+        decreaseTimer()
+      }, 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [sendTimer]);
+
+  renderTimer = () => {
+    if (sendTimer >= 0) { return (sendTimer / 1000 )}
+    else {
+      return '0'
+    }
+  };
+
+  renderTimertext = () => {
+    if (sendTimer > 0) {
+      return(
+        <Text style={styles.buttonText3}>en {renderTimer()} segundos</Text>
+      )
+    }
+  }
 
   storeToken = async (token) => {
     try {
@@ -79,6 +111,7 @@ const Login = ({navigation}) => {
         writePropertyState({name: 'displayToast', value: true});
       })
       .catch(error => {
+        Alert.alert('Error', 'No se pudo enviar el código');
       });
   };
 
@@ -130,12 +163,28 @@ const Login = ({navigation}) => {
                 <Text style={styles.buttonText2}>Registrarse</Text>
               </TouchableOpacity>
             }
-            <TouchableOpacity
-              style={styles.button2}
-              onPress={() => resendCode()}
-            >
-              <Text style={styles.buttonText2}>Reenviar Código</Text>
-            </TouchableOpacity>
+            {sendTimer <= 0 &&
+              <TouchableOpacity
+                onPress={() => {
+                  resendCode();
+                  resetTimer();
+                }}
+                style={styles.button3}
+              >
+                <Text style={styles.buttonText2}>Reenviar Código</Text>
+              </TouchableOpacity>
+            }
+            {sendTimer > 0 &&
+              <TouchableOpacity
+                style={styles.button2}
+                disabled={true}
+              >
+                <Text style={styles.buttonText2}>Reenviar Código</Text>
+                {
+                  renderTimertext()
+                }
+              </TouchableOpacity>
+            }
             <View style={styles.switchcontainer}>
               <Switch
                 value = {auth.checked}
