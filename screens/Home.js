@@ -51,10 +51,10 @@ const Home = ({navigation}) => {
             <Carousel navigation={navigation} />
             <Text style={styles.title}>¿Qué Necesitas?</Text>
             <ServiceSlider navigation={navigation}/>
-            <Text style={styles.title}>Productos Más Vendidos</Text>
+            <Text style={styles.title}>Productos Top</Text>
             <TopProducts navigation={navigation} type={'top'}/>
-            <Text style={styles.title}>Nuestra Selección Para Ti</Text>
-            <SelectedProducts navigation={navigation} type={'our_selection'}/>
+            <Text style={styles.title}>Productos más vendidos</Text>
+            <SelectedProducts navigation={navigation} type={'best_seller'}/>
           </View>
         </ScrollView>
         <CartBar navigation={navigation} />

@@ -17,13 +17,13 @@ const SelectedProducts = ({navigation, type}) => {
 
   const products = useStoreState(state => state.products.our_selection);
   const getProducts = useStoreActions(actions => actions.getProducts);
-  const isLoadingTop = useStoreState(state => state.properties.isLoadingOurSelection);
+  const isLoadingBestSeller = useStoreState(state => state.properties.isLoadingBestSeller);
 
   useEffect(() => {
     getProducts(type);
   }, []);
 
-  if (isLoadingTop === true) {
+  if (isLoadingBestSeller === true) {
     return(
       <View style={styles.gifContainer}>
           <Image
@@ -33,27 +33,17 @@ const SelectedProducts = ({navigation, type}) => {
       </View>
     )
   }
-  else if (isLoadingTop === false && products !== null) {
+  else if (isLoadingBestSeller === false && products !== null) {
     return(
-      <Swiper
-        style={styles.wrapper}
-        showsButtons={false}
-        loop={true}
-        autoplay={true}
-        autoplayTimeout={5}
-        index={1}
-        dot={<View style={{backgroundColor: 'rgba(94,33,226,.3)', width: 8, height: 8, borderRadius: 4, marginLeft: 3, marginRight: 3}} />}
-        activeDot={<View style={{backgroundColor: colors.purple, width: 8, height: 8, borderRadius: 4, marginLeft: 3, marginRight: 3}} />}>
-          {
-            products.map(product => {
-              return(
-                <View key={product.id}>
-                  <HomeProductCard navigation={navigation} product={product} />
-                </View>
-              )
-            })
-          }
-      </Swiper>
+      <View>
+        {
+          products.map(product => {
+            return(
+              <HomeProductCard key={product.id} navigation={navigation} product={product} />
+            )
+          })
+        }
+      </View>
     )
   }
   else {
