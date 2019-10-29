@@ -69,6 +69,8 @@ const storeModel = {
 
   shoppingCart: [],
 
+  banners: [],
+
   products: {
     our_selection: null,
     top: null,
@@ -129,6 +131,7 @@ const storeModel = {
     displayToastB: false,
     toastData: null,
     sendTimer: 45000,
+    isLoadingBanners: false
   },
 
   // Actions
@@ -161,6 +164,10 @@ const storeModel = {
     state.activeAddress = payload
   }),
 
+  writeBanners: action((state, payload) => {
+    state.banners = payload
+  }),
+
   writeNewAddressState: action((state, payload) => {
     state.newAddress[payload.name] = payload.value
   }),
@@ -186,6 +193,19 @@ const storeModel = {
       })
       .catch(error => {
         actions.writePropertyState({name: 'isLoading', value: false});
+        Alert.alert('Se ha presentado un error');
+      });
+  }),
+
+  getBanners: thunk(async actions => {
+    actions.writePropertyState({name: 'isLoadingBanners', value: true});
+    axios.get(env.apiServer + '/banners/')
+      .then(response => {
+        actions.writeBanners(response.data);
+        actions.writePropertyState({name: 'isLoadingBanners', value: false});
+      })
+      .catch(error => {
+        actions.writePropertyState({name: 'isLoadingBanners', value: false});
         Alert.alert('Se ha presentado un error');
       });
   }),

@@ -1,155 +1,87 @@
-import * as React from "react";
-import { StyleSheet, View, ScrollView, Dimensions, Image, TouchableOpacity, Text } from "react-native";
-import axios from 'axios';
-import { env } from '../keys';
+import React, { useEffect } from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  Button,
+  TouchableOpacity,
+  Dimensions
+} from 'react-native';
+import { useStoreState, useStoreActions } from 'easy-peasy';
+import Swiper from 'react-native-swiper';
 
-const DEVICE_WIDTH = Dimensions.get("window").width;
+import { colors } from '../envStyles';
 
-class Carousel extends React.Component {
 
-  constructor(props) {
-    super(props);
+const Carousel = ({navigation}) => {
+  const banners = useStoreState(state => state.banners);
+  const getBanners = useStoreActions(actions => actions.getBanners);
+  const isLoadingBanners = useStoreState(state => state.properties.isLoadingBanners);
 
-    this.state = {
-      selectedIndex: 0,
-      isLoading: null,
-      banners: [],
-    };
-    this.carouselInterval = {};
-    this.scrollRef = React.createRef();
-  };
+  useEffect(() => {
+    getBanners();
+  }, []);
 
-  componentDidMount = () => {
-    this.setState({isLoading: true});
-    axios.get(env.apiServer + '/banners/')
-      .then(response => {
-        this.setState({banners: response.data});
-        this.carouselInterval = setInterval(() => {
-          this.setState(
-            prev => ({
-              selectedIndex:
-                prev.selectedIndex === this.state.banners.length - 1
-                  ? 0
-                  : prev.selectedIndex + 1
-            }),
-            () => {
-              this.scrollRef.current.scrollTo({
-                animated: true,
-                x: (DEVICE_WIDTH - 40) * this.state.selectedIndex,
-                y: 0
-              });
-            }
-          );
-        }, 3000);
-        this.setState({isLoading: false});
-      }).catch((error) => this.setState({banners: []}));
-  };
-
-  componentWillUnmount = () => {
-    clearInterval(this.carouselInterval);
-  };
-
-  setSelectedIndex = event => {
-    const contentOffset = event.nativeEvent.contentOffset;
-    const viewSize = event.nativeEvent.layoutMeasurement;
-
-    // Divide the horizontal offset by the width of the view to see which page is visible
-    const selectedIndex = Math.floor(contentOffset.x / viewSize.width);
-    this.setState({ selectedIndex });
-  };
-
-  render() {
-    const { selectedIndex, isLoading, banners } = this.state;
-    if (isLoading === true) {
-      return(
-        <View style={styles.gifContainer}>
+  if (isLoadingBanners === true) {
+    return(
+      <View style={styles.gifContainer}>
           <Image
             source={require('../assets/gifs/spinner.gif')}
-            style={{height: 180, width: 180}}
+            style={{height: 200, width: 200}}
           />
-        </View>
-      )
-    }
-    else if (isLoading === false && banners.length !== 0) {
-      return (
-        <View>
-          <ScrollView
-            showsHorizontalScrollIndicator={false}
-            horizontal
-            pagingEnabled
-            onMomentumScrollEnd={this.setSelectedIndex}
-            ref={this.scrollRef}
-          >
-            {this.state.banners.map(banner => (
-              <TouchableOpacity
-                 onPress={() => {
-                   if(banner.product != null) {
-                     this.props.navigation.navigate('Product',
-                     {
-                       product: banner.product,
-                     })
-                   }
-                 }}
-                key={banner.id}
-              >
-                <Image
-                  style={styles.backgroundImage}
-                  source={{ uri: banner.image }}
-                />
-              </TouchableOpacity>
-            ))}
-          </ScrollView>
-          <View style={styles.circleDiv}>
-            {this.state.banners.map((banner, i) => (
-              <View
-                style={[
-                  styles.whiteCircle,
-                  { opacity: i === selectedIndex ? 0.5 : 1 }
-                ]}
-                key={banner.id}
-                active={i === selectedIndex}
-              />
-            ))}
-          </View>
-        </View>
-      );
-    }
-    else {
-      return (
-        <View style={styles.message}>
-          <Text style={styles.messageText}>
-            Banners Promocionales
-          </Text>
-        </View>
-      )
-    }
+      </View>
+    )
+  }
+  else if (isLoadingBanners === false && banners !== null) {
+    return(
+      <Swiper
+        style={styles.wrapper}
+        showsButtons={false}
+        loop={true}
+        autoplay={true}
+        autoplayTimeout={5}
+        dot={<View style={{backgroundColor: 'rgba(94,33,226,.3)', width: 8, height: 8, borderRadius: 4, marginLeft: 3, marginRight: 3}} />}
+        activeDot={<View style={{backgroundColor: colors.purple, width: 8, height: 8, borderRadius: 4, marginLeft: 3, marginRight: 3}} />}>
+          {
+            banners.map(banner => {
+              return(
+                <TouchableOpacity
+                   onPress={() => {
+                     if(banner.product != null) {
+                       navigation.navigate('Product',
+                       {
+                         product: banner.product,
+                       })
+                     }
+                   }}
+                  key={banner.id}
+                >
+                  <Image
+                    style={styles.image}
+                    source={{uri: banner.image}}
+                  />
+                </TouchableOpacity>
+              )
+            })
+          }
+      </Swiper>
+    )
+  }
+  else {
+    return(null)
   }
 }
 
 const styles = StyleSheet.create({
-  backgroundImage: {
-    height: 180,
+  wrapper: {
+    height: 200
+  },
+  image: {
+    height: 160,
     width: Dimensions.get("window").width - 40,
     borderRadius: 5,
-    resizeMode: 'contain',
-
-  },
-  circleDiv: {
-    position: "absolute",
-    bottom: 15,
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    width: "100%",
-    height: 10
-  },
-  whiteCircle: {
-    width: 6,
-    height: 6,
-    borderRadius: 3,
-    margin: 5,
-    backgroundColor: "#fff"
+    resizeMode: 'stretch',
   },
   gifContainer: {
     flexDirection: 'column',
