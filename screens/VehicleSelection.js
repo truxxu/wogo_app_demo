@@ -1,27 +1,21 @@
 import React from 'react';
 import {
   StyleSheet,
-  ScrollView,
   View,
   Text,
   Image,
-  TextInput,
   TouchableOpacity,
   Alert,
 } from 'react-native';
 import { useStoreState, useStoreActions } from 'easy-peasy';
-import axios from 'axios';
 import AsyncStorage from '@react-native-community/async-storage';
 import SafeAreaView from 'react-native-safe-area-view';
 
 import { colors } from '../envStyles';
-import { env } from '../keys';
 
 const VehicleSelection = ({navigation}) => {
 
-  const properties = useStoreState(state => state.properties);
   const writePropertyState = useStoreActions(actions => actions.writePropertyState);
-  const getServices = useStoreActions(actions => actions.getServices);
 
   storeVehicle = async (vehicle) => {
     try {
@@ -35,8 +29,8 @@ const VehicleSelection = ({navigation}) => {
   return(
     <SafeAreaView style={{ flex: 1, backgroundColor: colors.gray }}>
       <View style={{flex: 1, backgroundColor: colors.gray}}>
-        <Text style={styles.boldText}>Escoge tu Vehículo</Text>
         <View style={styles.container}>
+          <Text style={styles.boldText}>Escoge tu Vehículo</Text>
           <View style={styles.iconContainer}>
             <TouchableOpacity
               style={styles.button}
@@ -79,13 +73,13 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.gray,
     flex: 1,
-    justifyContent: 'center',
     alignItems: 'center',
+    justifyContent: 'center',
     padding: 20,
   },
   boldText: {
-    textAlign: 'left',
-    marginTop: 140,
+    alignSelf: 'flex-start',
+    marginBottom: 20,
     marginLeft: 40,
     fontSize: 21,
     fontFamily: 'Montserrat-Bold',
@@ -97,9 +91,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontFamily: 'Montserrat-Bold',
     color: colors.black,
-  },
-  iconContainer: {
-    marginTop: -80,
   },
   button: {
     borderColor: colors.white,
