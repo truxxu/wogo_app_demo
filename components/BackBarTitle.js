@@ -7,6 +7,8 @@ import {
   Image,
 } from 'react-native';
 import { useStoreState, useStoreActions } from 'easy-peasy';
+import AsyncStorage from '@react-native-community/async-storage';
+
 import { colors } from '../envStyles';
 
 const BackBarTitle = ({navigation, title, route}) => {
@@ -21,12 +23,23 @@ const BackBarTitle = ({navigation, title, route}) => {
   const newCardCvv = useStoreActions(actions => actions.newCardCvv);
   const newCardPristine = useStoreActions(actions => actions.newCardPristine);
 
+  getToken = async () => {
+    try {
+      const token = await AsyncStorage.getItem('authToken');
+      return token;
+    } catch(e) {
+      Alert.alert('Error leyendo authToken')
+    }
+  };
+
+  getToken();
+
   onBack = (route) => {
     if (route == 'PaymentMethods') {
       clearFields();
       navigation.navigate(route);
     }
-    else if (auth.token === null) {
+    else if (getToken() === undefined) {
       navigation.replace('Login');
     }
     else {
