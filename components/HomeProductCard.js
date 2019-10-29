@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
     alignItems: 'stretch',
     padding: 5,
-    width: Dimensions.get('window').width - 30,
+    width: Dimensions.get('window').width - 40,
     borderRadius: 3,
     marginTop: 5,
     marginBottom: 5,

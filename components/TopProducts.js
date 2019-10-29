@@ -40,7 +40,7 @@ const TopProducts = ({navigation, type}) => {
         showsButtons={false}
         loop={true}
         autoplay={true}
-        autoplayTimeout={3}
+        autoplayTimeout={5}
         dot={<View style={{backgroundColor: 'rgba(94,33,226,.3)', width: 8, height: 8, borderRadius: 4, marginLeft: 3, marginRight: 3}} />}
         activeDot={<View style={{backgroundColor: colors.purple, width: 8, height: 8, borderRadius: 4, marginLeft: 3, marginRight: 3}} />}>
           {
