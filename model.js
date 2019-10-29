@@ -74,6 +74,13 @@ const storeModel = {
     top: null,
   },
 
+  businessesSelection: {
+    most_searched: [],
+    recommended: [],
+    isLoadingMost: false,
+    isLoadingRecommended: false,
+  },
+
   cards: [],
 
   newCard: {
@@ -190,6 +197,10 @@ const storeModel = {
     state.products[payload.name] = payload.value
   }),
 
+  writeBusinessesSelection: action((state, payload) => {
+    state.businessesSelection[payload.name] = payload.value
+  }),
+
   writeActivePaymentMethod: action((state, payload) => {
     state.activePaymentMethod = payload
   }),
@@ -253,6 +264,25 @@ const storeModel = {
         else if (payload === 'top') {
           actions.writeProducts({value: response.data, name: 'top'});
           actions.writePropertyState({name: 'isLoadingTop', value: false});
+        }
+      })
+      .catch(error => {
+         Alert.alert('Se ha presentado un error');
+      });
+  }),
+
+  getBusinessesSelection: thunk(async (actions, payload) => {
+    actions.writeBusinessesSelection({name: 'isLoadingMost', value: true});
+    actions.writeBusinessesSelection({name: 'isLoadingRecommended', value: true});
+    axios.get(`${env.apiServer}/business/?list=${payload}`)
+      .then(response => {
+        if (payload === 'most_searched') {
+          actions.writeBusinessesSelection({value: response.data, name: 'most_searched'});
+          actions.writeBusinessesSelection({name: 'isLoadingMost', value: false});
+        }
+        else if (payload === 'recommended') {
+          actions.writeBusinessesSelection({value: response.data, name: 'recommended'});
+          actions.writeBusinessesSelection({name: 'isLoadingRecommended', value: false});
         }
       })
       .catch(error => {

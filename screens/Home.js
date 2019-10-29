@@ -21,6 +21,8 @@ import Carousel from '../components/Carousel';
 import TopProducts from '../components/TopProducts';
 import SelectedProducts from '../components/SelectedProducts';
 import CartBar from '../components/CartBar';
+import MostSearched from '../components/MostSearched';
+import Recommended from '../components/Recommended';
 
 const Home = ({navigation}) => {
 
@@ -50,11 +52,15 @@ const Home = ({navigation}) => {
           <View style={styles.container}>
             <Carousel navigation={navigation} />
             <Text style={styles.title}>¿Qué Necesitas?</Text>
-            <ServiceSlider navigation={navigation}/>
+            <ServiceSlider navigation={navigation} />
+            <Text style={styles.title}>Negocios Recomendados</Text>
+            <Recommended navigation={navigation} type={'recommended'} />
+            <Text style={styles.title}>Negocios Más Buscados</Text>
+            <MostSearched navigation={navigation} type={'most_searched'} />
             <Text style={styles.title}>Productos Top</Text>
             <TopProducts navigation={navigation} type={'top'}/>
             <Text style={styles.title}>Productos más vendidos</Text>
-            <SelectedProducts navigation={navigation} type={'best_seller'}/>
+            <SelectedProducts navigation={navigation} type={'best_seller'} />
           </View>
         </ScrollView>
         <CartBar navigation={navigation} />
