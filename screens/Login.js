@@ -30,7 +30,6 @@ const Login = ({navigation}) => {
   //Actions
   const writeAuthState = useStoreActions(actions => actions.writeAuthState);
   const writePropertyState = useStoreActions(actions => actions.writePropertyState);
-  const toggleProperties = useStoreActions(actions => actions.toggleProperties);
   const decreaseTimer = useStoreActions(actions => actions.decreaseTimer);
   const stopTimer = useStoreActions(actions => actions.stopTimer);
   const resetTimer = useStoreActions(actions => actions.resetTimer);
@@ -191,7 +190,7 @@ const Login = ({navigation}) => {
                 trackColor={{ true: colors.purple, false: Platform.OS==='android'?'#d3d3d3':'#fbfbfb'  }}
                 thumbColor={[Platform.OS==='ios'?'#FFFFFF': (auth.checked ? colors.purple :'#ffffff')]}
                 ios_backgroundColor="#fbfbfb"
-                onValueChange={() => toggleProperties('auth.checked')}
+                onValueChange={() => writeAuthState({ name: 'checked', value: !auth.checked })}
               />
               <View style={styles.textBlock}>
                 <Text style={styles.switchtext}>
