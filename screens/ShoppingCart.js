@@ -91,24 +91,36 @@ const ShoppingCart = ({navigation}) => {
   };
 
   onSubmit = (payload) => {
-    writePropertyState({name: 'loadingOrders', value: true})
-    if (properties.installmentsNumber > 0 && activePaymentMethod !== null) {
+    if (properties.installmentsNumber > 0 && activePaymentMethod.token_id !== "") {
+      writePropertyState({name: 'loadingOrders', value: true})
       payload.forEach(order => {
         axios.post(`${env.apiServer}/orders/`, order)
           .then(response => {
             getOrders();
             navigation.navigate('OrderHistory');
             clearCart();
-      writePropertyState({name: 'loadingOrders', value: false});
+            writePropertyState({name: 'loadingOrders', value: false});
           })
           .catch(error => {
             Alert.alert('No se pudo realizar tu pedido');
+            writePropertyState({name: 'loadingOrders', value: false});
           });
       })
     }
-    else {
-      Alert.alert('Completa la información del pago');
+    else if ( (properties.installmentsNumber  > 0 && activePaymentMethod.token_id == "") ||
+              (properties.installmentsNumber  > 0 && activePaymentMethod.token_id !== "") ||
+              (properties.installmentsNumber  == "" && activePaymentMethod.token_id !== "") ) {      
+      if (activePaymentMethod.token_id == "") {
+        Alert.alert('Datos incompletos', 'Completa el método de pago del pedido');  
+      }
+      else if (properties.installmentsNumber  == 0 || properties.installmentsNumber  == "") {
+          Alert.alert('Datos incompletos', 'Ingresa número de pagos del pedido');
+        }               
     }
+    else if ( (properties.installmentsNumber  == 0 && activePaymentMethod.token_id == "") || 
+              (properties.installmentsNumber == "" && activePaymentMethod.token_id == "") ) {
+      Alert.alert('Datos incompletos','No se pudo realizar tu pedido, completa método de pago y número de pagos');
+   } 
   };
 
   const data = [];
@@ -257,9 +269,9 @@ const ShoppingCart = ({navigation}) => {
             {properties.loadingOrders &&
               <TouchableOpacity
                 disabled={true}
-                style={styles.button}
+                style={styles.button2}
               >
-                <Text style={styles.buttonText}>Confirmar pedido</Text>                
+                <Text style={styles.buttonText2}>Confirmar pedido</Text>                
               </TouchableOpacity>
             }
             <TouchableOpacity
