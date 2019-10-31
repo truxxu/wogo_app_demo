@@ -123,7 +123,7 @@ const storeModel = {
     quantity: 1,
     activeBusiness: null,
     activeType: 'Todo',
-    installmentsNumber: null,
+    installmentsNumber: "",
     displayClearCart: false,
     loadingOrders: false,
     newAddressRadioIndex: null,
@@ -501,7 +501,8 @@ const storeModel = {
   }),
 
   clearCart: action(state => {
-    state.shoppingCart = []
+    state.shoppingCart = [];
+    state.properties.installmentsNumber = "";
   }),
 
   minusCart: action((state, payload) => {
