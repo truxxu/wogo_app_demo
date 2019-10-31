@@ -21,7 +21,7 @@ const VehicleSelection = ({navigation}) => {
     try {
       await AsyncStorage.setItem('activeVehicle', vehicle);
     } catch (e) {
-      Alert('Error', 'No fue posible realizar la operación');home
+      Alert('Error', 'No fue posible realizar la operación');
       navigation.replace('VehicleSelection');
     }
   };
@@ -37,7 +37,7 @@ const VehicleSelection = ({navigation}) => {
               onPress={() => {
                 storeVehicle('carro');
                 writePropertyState({name: 'currentVehicle', value: 'carro'});
-                navigation.replace('DrawerNavigator');
+                navigation.navigate('DrawerNavigator');
               }}
             >
               <Image
@@ -50,9 +50,9 @@ const VehicleSelection = ({navigation}) => {
             <TouchableOpacity
               style={styles.button}
               onPress={() => {
-                writePropertyState({name: 'currentVehicle', value: 'moto'});
                 storeVehicle('moto');
-                navigation.replace('DrawerNavigator');
+                writePropertyState({name: 'currentVehicle', value: 'moto'});
+                navigation.navigate('DrawerNavigator');
               }}
             >
               <Image
