@@ -267,6 +267,7 @@ const storeModel = {
         actions.writeUser({name: 'photo', value: response.data.photo});
         actions.writeUser({name: 'email', value: response.data.email});
         actions.writeUser({name: 'birth_date', value: response.data.birth_date});
+        // actions.writeUser({name: 'gender', value: response.data.gender});
         actions.writeUser({name: 'waitingForApi', value: false});
       })
       .catch(error => {

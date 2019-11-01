@@ -45,6 +45,7 @@ const UserProfile = ({navigation}) => {
     }
     payload.append('email', user.email);
     payload.append('birth_date', user.birth_date);
+    // payload.append('gender', user.gender);
 
     axios({
         method: 'patch',
@@ -252,8 +253,8 @@ const UserProfile = ({navigation}) => {
             {!user.waitingForApi &&
               <TouchableOpacity
                 onPress={() => {
-                  if (!emailValidation()) {
-                    Alert.alert('Error', 'Introduce unb email válido');
+                  if (user.email !== null && !emailValidation()) {
+                    Alert.alert('Error', 'Introduce un email válido');
                   }
                   else if (user.name !== null &&
                       user.gender !== null &&
