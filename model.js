@@ -26,6 +26,7 @@ const storeModel = {
   user: {
     waitingForApi: false,
     name: '',
+    gender: null,
     photo: null,
     phone: null,
     avatar_uri: null,
