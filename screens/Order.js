@@ -6,6 +6,7 @@ import {
   Dimensions,
   ScrollView,
   Image,
+  TouchableOpacity
 } from 'react-native';
 import { colors } from '../envStyles';
 import { useStoreState } from 'easy-peasy';
@@ -31,7 +32,7 @@ const Order = ({navigation}) => {
   render = (product) => {
     return (
       <View style={styles.content} key={product.product}>
-        <Text style={styles.boldText}>{product.product_name}               x{product.quantity}</Text>
+        <Text style={styles.boldText}>{product.product_name} x{product.quantity}</Text>
         <Text style={styles.price}>${priceStr(product.price)}</Text>
         <Text style={styles.text}>{product.product_service}</Text>
       </View>
@@ -49,7 +50,6 @@ const Order = ({navigation}) => {
             <View style={styles.content}>
               <Text style={styles.boldText}>{order.business_address}</Text>
               <Text style={styles.text}>{order.business_name}</Text>
-              <Text style={styles.text}>Tiempo estimado</Text>
             </View>
             {
               order.ordered_products.map(product => render(product))
@@ -62,6 +62,16 @@ const Order = ({navigation}) => {
           </View>
         </View>
         <View style={styles.mapcontainer}>
+          <View style={styles.barcontainer}>
+            <TouchableOpacity
+              // onPress={() => navigation.navigate('Mapa', {data: category, types: types})}
+            >
+              <Image
+                source={require('../assets/icons/Compartir.png')}
+                style={{height: 35, width: 35, marginLeft: 12}}
+              />
+            </TouchableOpacity>
+          </View>
           <MapView
            provider={PROVIDER_GOOGLE} // remove if not using Google Maps
            style={styles.map}
@@ -106,8 +116,19 @@ const styles = StyleSheet.create({
     borderBottomWidth: 0.5,
     borderColor: 'gray',
     paddingBottom: 10,
-    marginTop: 10,
     marginBottom: 10,
+  },
+  barcontainer: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    backgroundColor: 'transparent',
+    position: 'absolute',
+    top: 0,
+    zIndex: 2,
+    width: Dimensions.get('window').width,
+    paddingLeft: 15,
+    paddingRight: 5,
   },
   contentC: {
     flexDirection: 'row',
@@ -138,13 +159,16 @@ const styles = StyleSheet.create({
   },
   price: {
     marginTop: -5,
-    fontSize: 22,
+    fontSize: 18,
     color: colors.purple,
     fontFamily: 'Montserrat-Bold',
   },
   mapcontainer: {
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').width - 116,
+    zIndex: 1,
+    flexDirection: 'column',
+    alignItems: 'center',
   },
   map: {
     ...StyleSheet.absoluteFillObject,

@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   boldText: {
-    fontSize: 25,
+    fontSize: 20,
     marginBottom: 5,
     fontFamily: 'Montserrat-Bold',
     color: colors.purple,
