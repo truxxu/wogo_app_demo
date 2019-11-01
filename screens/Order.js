@@ -9,10 +9,11 @@ import {
   TouchableOpacity
 } from 'react-native';
 import { colors } from '../envStyles';
-import { useStoreState } from 'easy-peasy';
+import { useStoreState, useStoreActions } from 'easy-peasy';
 import SafeAreaView from 'react-native-safe-area-view';
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
-import { showLocation } from 'react-native-map-link'
+// import { showLocation } from 'react-native-map-link';
+import { Popup } from 'react-native-map-link';
 
 import BackBarTitle from '../components/BackBarTitle';
 import StatusCard from '../components/StatusCard';
@@ -20,6 +21,10 @@ import CardLogo from '../components/CardLogo';
 import PaymentState from '../components/PaymentState';
 
 const Order = ({navigation}) => {
+
+  const properties = useStoreState(state => state.properties);
+
+  const toggleProperties = useStoreActions(actions => actions.toggleProperties);
 
   const order = navigation.getParam('data');
 
@@ -42,6 +47,26 @@ const Order = ({navigation}) => {
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: colors.gray }}>
+      <Popup
+          isVisible={properties.displayShareModal}
+          onCancelPressed={() => toggleProperties('displayShareModal')}
+          onAppPressed={() => toggleProperties('displayShareModal')}
+          onBackButtonPressed={() => toggleProperties('displayShareModal')}
+          modalProps={{ // you can put all react-native-modal props inside.
+              animationIn: 'slideInUp'
+          }}
+          appsWhiteList={[]}
+          options={{
+            latitude: order.business_latitude,
+            longitude: order.business_longitude,
+            title: order.business_name,  // optional
+            googleForceLatLon: true,  // optionally force GoogleMaps to use the latlon for the query instead of the title
+            alwaysIncludeGoogle: true, // optional, true will always add Google Maps to iOS and open in Safari, even if app is not installed (default: false)
+            dialogTitle: 'Compartir ubicación', // optional (default: 'Open in Maps')
+            dialogMessage: 'Compartir con:', // optional (default: 'What app would you like to use?')
+            cancelText: 'Cancelar', // optional (default: 'Cancel')
+          }}
+      />
       <ScrollView>
         <BackBarTitle navigation={navigation} title={`Pedido ${order.id}`} route={'OrderHistory'} />
         <View style={styles.container}>
@@ -65,18 +90,7 @@ const Order = ({navigation}) => {
         <View style={styles.mapcontainer}>
           <View style={styles.barcontainer}>
             <TouchableOpacity
-              onPress={() =>
-                showLocation({
-                    latitude: order.business_latitude,
-                    longitude: order.business_longitude,
-                    title: order.business_name,  // optional
-                    googleForceLatLon: true,  // optionally force GoogleMaps to use the latlon for the query instead of the title
-                    alwaysIncludeGoogle: true, // optional, true will always add Google Maps to iOS and open in Safari, even if app is not installed (default: false)
-                    dialogTitle: 'Compartir ubicación', // optional (default: 'Open in Maps')
-                    dialogMessage: 'Compartir con:', // optional (default: 'What app would you like to use?')
-                    cancelText: 'Cancelar', // optional (default: 'Cancel')
-                })
-              }
+              onPress={() => toggleProperties('displayShareModal')}
             >
               <Image
                 source={require('../assets/icons/Compartir.png')}
