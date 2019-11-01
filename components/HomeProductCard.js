@@ -25,6 +25,14 @@ const HomeProductCard = ({navigation, product}) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity
+        onPress={() => navigation.navigate(
+            'Product',
+            {
+              product: product,
+              business: { id: product.business, name: product.business_name, address: product.business_address }
+            }
+          )
+        }
         style={styles.imagecontainer}
         // onPress={}
       >
