@@ -12,6 +12,7 @@ import { colors } from '../envStyles';
 import { useStoreState } from 'easy-peasy';
 import SafeAreaView from 'react-native-safe-area-view';
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
+import { showLocation } from 'react-native-map-link'
 
 import BackBarTitle from '../components/BackBarTitle';
 import StatusCard from '../components/StatusCard';
@@ -64,7 +65,18 @@ const Order = ({navigation}) => {
         <View style={styles.mapcontainer}>
           <View style={styles.barcontainer}>
             <TouchableOpacity
-              // onPress={() => navigation.navigate('Mapa', {data: category, types: types})}
+              onPress={() =>
+                showLocation({
+                    latitude: order.business_latitude,
+                    longitude: order.business_longitude,
+                    title: order.business_name,  // optional
+                    googleForceLatLon: true,  // optionally force GoogleMaps to use the latlon for the query instead of the title
+                    alwaysIncludeGoogle: true, // optional, true will always add Google Maps to iOS and open in Safari, even if app is not installed (default: false)
+                    dialogTitle: 'Compartir ubicación', // optional (default: 'Open in Maps')
+                    dialogMessage: 'Compartir con:', // optional (default: 'What app would you like to use?')
+                    cancelText: 'Cancelar', // optional (default: 'Cancel')
+                })
+              }
             >
               <Image
                 source={require('../assets/icons/Compartir.png')}
@@ -127,8 +139,7 @@ const styles = StyleSheet.create({
     top: 0,
     zIndex: 2,
     width: Dimensions.get('window').width,
-    paddingLeft: 15,
-    paddingRight: 5,
+    paddingRight: 15,
   },
   contentC: {
     flexDirection: 'row',
