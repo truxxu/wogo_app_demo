@@ -16,6 +16,7 @@ import { colors } from '../envStyles';
 const VehicleSelection = ({navigation}) => {
 
   const writePropertyState = useStoreActions(actions => actions.writePropertyState);
+  const getServices = useStoreActions(actions => actions.getServices);
 
   storeVehicle = async (vehicle) => {
     try {
@@ -37,6 +38,7 @@ const VehicleSelection = ({navigation}) => {
               onPress={() => {
                 storeVehicle('carro');
                 writePropertyState({name: 'currentVehicle', value: 'carro'});
+                getServices('carro');
                 navigation.navigate('DrawerNavigator');
               }}
             >
@@ -52,6 +54,7 @@ const VehicleSelection = ({navigation}) => {
               onPress={() => {
                 storeVehicle('moto');
                 writePropertyState({name: 'currentVehicle', value: 'moto'});
+                getServices('moto');
                 navigation.navigate('DrawerNavigator');
               }}
             >
