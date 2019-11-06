@@ -134,6 +134,8 @@ const storeModel = {
     sendTimer: 45000,
     isLoadingBanners: false,
     displayShareModal: false,
+    businessOrder: 'distance',
+    businessFilter: [],
   },
 
   // Actions
@@ -234,6 +236,19 @@ const storeModel = {
 
   writeBusiness: action((state, payload) => {
     state.businesses = payload
+  }),
+
+  writeBusinessFilter: action((state, payload) => {
+    const filter = state.properties.businessFilter.find(filter => filter === payload);
+    if (filter === undefined) {
+      state.properties.businessFilter.push(payload)
+    };
+  }),
+
+  removeBusinessFilter: action((state, payload) => {
+    const newArray = _.remove(state.properties.businessFilter, function(n) {
+      return payload === n;
+    })
   }),
 
   getServices: thunk(async (actions, payload) => {

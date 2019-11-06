@@ -15,6 +15,7 @@ import { createStackNavigator } from 'react-navigation-stack';
 import { createDrawerNavigator } from 'react-navigation-drawer';
 import AsyncStorage from '@react-native-community/async-storage';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { MenuProvider } from 'react-native-popup-menu';
 
 import storeModel from './model';
 import MenuDrawer from './components/MenuDrawer';
@@ -92,7 +93,9 @@ const App: () => React$Node = () => {
   return (
     <StoreProvider store={store}>
       <SafeAreaProvider>
-        <AppContainer />
+        <MenuProvider>
+          <AppContainer />
+        </MenuProvider>
       </SafeAreaProvider>
     </StoreProvider>
   );
