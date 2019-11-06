@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   StyleSheet,
@@ -29,7 +29,6 @@ const NewCard = ({navigation}) => {
   const newCardMonth = useStoreActions(actions => actions.newCardMonth);
   const newCardCvv = useStoreActions(actions => actions.newCardCvv);
   const newCardPristine = useStoreActions(actions => actions.newCardPristine);
-  const getCards = useStoreActions(actions => actions.getCards);
   const writePropertyState = useStoreActions(actions => actions.writePropertyState);
   const writeActivePaymentMethod = useStoreActions(actions => actions.writeActivePaymentMethod);
 
@@ -37,6 +36,12 @@ const NewCard = ({navigation}) => {
   const newCard = useStoreState(state => state.newCard);
   const activeAddress = useStoreState(state => state.activeAddress);
   const isLoading = useStoreState(state => state.properties.isLoading);
+
+  const [origin, setOrigin] = useState('');
+
+  useEffect(() => {
+    setOrigin(navigation.getParam('origin', 'PaymentMethods'))
+  }, []);
 
   useEffect(() => {
     this.clearFields();
@@ -83,7 +88,7 @@ const NewCard = ({navigation}) => {
         .then(response => {
           this.clearFields();
           writeActivePaymentMethod(response.data);
-          navigation.navigate('PaymentMethods');
+          navigation.navigate(origin);
           writePropertyState({name: 'isLoading', value: false});
         })
         .catch(error => {
@@ -110,7 +115,7 @@ const NewCard = ({navigation}) => {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: colors.gray }}>
       <View style={{flex: 1, backgroundColor: colors.gray}}>
-        <BackBarTitle navigation={navigation} title={'Mis tarjetas'} route={'PaymentMethods'} />
+        <BackBarTitle navigation={navigation} title={'Mis tarjetas'} route={'PaymentMethods'} origin={origin} />
         <View style={styles.container}>
           <View>
             <Text style={styles.text}>Número de tarjeta</Text>

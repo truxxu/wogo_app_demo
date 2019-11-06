@@ -153,7 +153,7 @@ const ShoppingCart = ({navigation}) => {
     if (cards.length === 0) {
       return(
         <TouchableOpacity
-          onPress={() => navigation.navigate('PaymentMethods')}
+          onPress={() => navigation.navigate('NewCard', {origin: 'ShoppingCart'})}
         >
           <Text style={styles.boldText}>Agregar</Text>
         </TouchableOpacity>
