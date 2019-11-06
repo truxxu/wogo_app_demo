@@ -45,7 +45,7 @@ const UserProfile = ({navigation}) => {
     }
     payload.append('email', user.email);
     payload.append('birth_date', user.birth_date);
-    // payload.append('gender', user.gender);
+    payload.append('gender', user.gender);
 
     axios({
         method: 'patch',
