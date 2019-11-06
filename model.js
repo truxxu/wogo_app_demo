@@ -26,6 +26,7 @@ const storeModel = {
   user: {
     waitingForApi: false,
     name: '',
+    gender: null,
     photo: null,
     phone: null,
     avatar_uri: null,
@@ -263,9 +264,10 @@ const storeModel = {
       .then(response => {
         actions.writeUser({name: 'phone', value: response.data.username});
         actions.writeUser({name: 'name', value: response.data.name});
-        actions.writeUser({name: 'photo', value: response.data.photo});
+        actions.writeUser({name: 'photo', value: response.data.image});
         actions.writeUser({name: 'email', value: response.data.email});
         actions.writeUser({name: 'birth_date', value: response.data.birth_date});
+        actions.writeUser({name: 'gender', value: response.data.gender});
         actions.writeUser({name: 'waitingForApi', value: false});
       })
       .catch(error => {

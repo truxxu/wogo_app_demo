@@ -45,6 +45,7 @@ const UserProfile = ({navigation}) => {
     }
     payload.append('email', user.email);
     payload.append('birth_date', user.birth_date);
+    payload.append('gender', user.gender);
 
     axios({
         method: 'patch',
@@ -88,11 +89,20 @@ const UserProfile = ({navigation}) => {
     axios.post(env.apiServer + '/auth/logout')
     .then(response => {
       toggleProperties('displayCloseSession');
-      this.deleteToken();
+      deleteToken();
       navigation.replace('Splash');
     })
     .catch(error => {
     });
+  };
+
+  emailValidation = () => {
+    if (user.email.match(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
+      return true
+    }
+    else {
+      return false
+    }
   };
 
   return (
@@ -114,7 +124,7 @@ const UserProfile = ({navigation}) => {
               </View>
               <TouchableOpacity
                 style={styles.modalbutton}
-                onPress={() => this.logOut() }
+                onPress={() => logOut() }
               >
                 <Text style={styles.modalButtonText}>Si, estoy seguro</Text>
               </TouchableOpacity>
@@ -195,6 +205,38 @@ const UserProfile = ({navigation}) => {
               onDateChange={(birth_date) => writeUser({name: 'birth_date', value: birth_date})}
             />
           </View>
+          <View style={{ width: Dimensions.get("window").width - 40 }}>
+            <View style={styles.genderContainer}>
+              <TouchableOpacity
+                onPress={() => writeUser({name: 'gender', value: 'Hombre'})}
+              >
+                <View style={styles.icon}>
+                  <View style={user.gender == 'Hombre' ? styles.active : null} />
+                </View>
+              </TouchableOpacity>
+              <Text style={styles.text3}>Hombre</Text>
+            </View>
+            <View style={styles.genderContainer}>
+              <TouchableOpacity
+                onPress={() => writeUser({name: 'gender', value: 'Mujer'})}
+              >
+                <View style={styles.icon}>
+                  <View style={user.gender == 'Mujer' ? styles.active : null} />
+                </View>
+              </TouchableOpacity>
+              <Text style={styles.text3}>Mujer</Text>
+            </View>
+            <View style={styles.genderContainer}>
+              <TouchableOpacity
+                onPress={() => writeUser({name: 'gender', value: 'Otro'})}
+              >
+                <View style={styles.icon}>
+                  <View style={user.gender == 'Otro' ? styles.active : null} />
+                </View>
+              </TouchableOpacity>
+              <Text style={styles.text3}>Otro</Text>
+            </View>
+          </View>
           <View>
             <Text style={styles.text}>Celular</Text>
             <Text style={styles.text2}>{user.phone}</Text>
@@ -211,9 +253,16 @@ const UserProfile = ({navigation}) => {
             {!user.waitingForApi &&
               <TouchableOpacity
                 onPress={() => {
-                  if (user.name !== null && user.email !== null && user.birth_date !== null) {
+                  if (user.email !== null && !emailValidation()) {
+                    Alert.alert('Error', 'Introduce un email válido');
+                  }
+                  else if (user.name !== null &&
+                      user.gender !== null &&
+                      user.email !== null &&
+                      user.birth_date !== null) {
                     onSubmitProfile()
-                  } else {
+                  }
+                  else {
                     Alert.alert('Error', 'Completa tus datos');
                   }}
                 }
@@ -243,6 +292,27 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
     paddingRight: 20,
   },
+  genderContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 5,
+  },
+  icon: {
+    height: 18,
+    width: 18,
+    borderWidth: 0.5,
+    borderColor: 'gray',
+    borderRadius: 5,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  active: {
+    height: 10,
+    width: 10,
+    backgroundColor: colors.purple,
+    borderRadius: 2,
+  },
   input: {
     borderColor: 'gray',
     borderWidth: 0.5,
@@ -271,6 +341,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
     textAlign: 'left',
     marginTop: 5,
+  },
+  text3: {
+    fontFamily: 'Montserrat-Regular',
+    color: colors.black,
+    fontSize: 16,
+    marginLeft: 10
   },
   boldText: {
     textAlign: 'left',
