@@ -137,6 +137,24 @@ const storeModel = {
   },
 
   // Actions
+  deleteSession: action((state, payload) => {
+    state.auth.token = null,
+    state.auth.areaCode = '+57',
+    state.auth.telephone = null,
+    state.auth.checked = true,
+    state.auth.waitingForApi = false,
+    state.auth.verificationCode = null,
+    state.user.waitingForApi = false,
+    state.user.name = '',
+    state.user.gender = null,
+    state.user.photo = null,
+    state.user.phone = null,
+    state.user.avatar_uri = null,
+    state.user.avatar_fileName = null,
+    state.user.email = null,
+    state.user.birth_date = null
+  }),
+
   writeAuthState: action((state, payload) => {
     state.auth[payload.name] = payload.value
   }),
