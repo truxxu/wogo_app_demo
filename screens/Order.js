@@ -94,7 +94,7 @@ const Order = ({navigation}) => {
             >
               <Image
                 source={require('../assets/icons/Compartir.png')}
-                style={{height: 35, width: 35, marginLeft: 12}}
+                style={styles.shareLocationButton}
               />
             </TouchableOpacity>
           </View>
@@ -146,11 +146,11 @@ const styles = StyleSheet.create({
   },
   barcontainer: {
     flexDirection: 'row',
-    justifyContent: 'flex-end',
+    justifyContent: 'flex-start',
     alignItems: 'center',
     backgroundColor: 'transparent',
     position: 'absolute',
-    top: 0,
+    bottom: 0,
     zIndex: 2,
     width: Dimensions.get('window').width,
     paddingRight: 15,
@@ -197,6 +197,22 @@ const styles = StyleSheet.create({
   },
   map: {
     ...StyleSheet.absoluteFillObject,
+  },
+  shareLocationButton: {
+    height: 35,
+    width: 35,
+    marginLeft: 12,
+    marginBottom: 12,
+    backgroundColor: colors.gray,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.20,
+    shadowRadius: 1.41,
+    elevation: 2,
+    borderRadius: 2,
   },
 });
 
