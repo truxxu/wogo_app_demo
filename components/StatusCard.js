@@ -20,7 +20,7 @@ const StatusCard = (props) => {
       <View style={styles.container}>
         <Image
           source={require('../assets/icons/Hecho.png')}
-          style={{height: 150, width: 150,}}
+          style={{height: 100, width: 100,}}
         />
         <View style={{maxWidth: '60%'}}>
           <Text style={styles.boldText}>Pedido confirmado</Text>
@@ -37,7 +37,7 @@ const StatusCard = (props) => {
       <View style={styles.container}>
         <Image
           source={require('../assets/icons/vencido.png')}
-          style={{height: 150, width: 150}}
+          style={{height: 100, width: 100}}
         />
         <View style={{maxWidth: '60%'}}>
           <Text style={styles.boldText}>Pedido vencido</Text>
@@ -50,7 +50,7 @@ const StatusCard = (props) => {
       <View style={styles.container}>
         <Image
           source={require('../assets/icons/cancelado.png')}
-          style={{height: 150, width: 150}}
+          style={{height: 100, width: 100}}
         />
         <View style={{maxWidth: '60%'}}>
           <Text style={styles.boldText}>Pedido cancelado</Text>
@@ -63,7 +63,7 @@ const StatusCard = (props) => {
       <View style={styles.container}>
         <Image
           source={require('../assets/icons/realizado.png')}
-          style={{height: 150, width: 150}}
+          style={{height: 100, width: 100}}
         />
         <View style={{maxWidth: '60%'}}>
           <Text style={styles.boldText}>Pedido utilizado</Text>
@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   boldText: {
-    fontSize: 25,
+    fontSize: 20,
     marginBottom: 5,
     fontFamily: 'Montserrat-Bold',
     color: colors.purple,

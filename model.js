@@ -26,6 +26,7 @@ const storeModel = {
   user: {
     waitingForApi: false,
     name: '',
+    gender: null,
     photo: null,
     phone: null,
     avatar_uri: null,
@@ -131,10 +132,29 @@ const storeModel = {
     displayToastB: false,
     toastData: null,
     sendTimer: 45000,
-    isLoadingBanners: false
+    isLoadingBanners: false,
+    displayShareModal: false,
   },
 
   // Actions
+  deleteSession: action((state, payload) => {
+    state.auth.token = null,
+    state.auth.areaCode = '+57',
+    state.auth.telephone = null,
+    state.auth.checked = true,
+    state.auth.waitingForApi = false,
+    state.auth.verificationCode = null,
+    state.user.waitingForApi = false,
+    state.user.name = '',
+    state.user.gender = null,
+    state.user.photo = null,
+    state.user.phone = null,
+    state.user.avatar_uri = null,
+    state.user.avatar_fileName = null,
+    state.user.email = null,
+    state.user.birth_date = null
+  }),
+
   writeAuthState: action((state, payload) => {
     state.auth[payload.name] = payload.value
   }),
@@ -263,9 +283,10 @@ const storeModel = {
       .then(response => {
         actions.writeUser({name: 'phone', value: response.data.username});
         actions.writeUser({name: 'name', value: response.data.name});
-        actions.writeUser({name: 'photo', value: response.data.photo});
+        actions.writeUser({name: 'photo', value: response.data.image});
         actions.writeUser({name: 'email', value: response.data.email});
         actions.writeUser({name: 'birth_date', value: response.data.birth_date});
+        actions.writeUser({name: 'gender', value: response.data.gender});
         actions.writeUser({name: 'waitingForApi', value: false});
       })
       .catch(error => {
