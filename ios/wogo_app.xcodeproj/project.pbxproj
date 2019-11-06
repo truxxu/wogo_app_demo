@@ -680,7 +680,7 @@
 				DEVELOPMENT_TEAM = P48TWFJHFB;
 				INFOPLIST_FILE = wogo_app/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 0.0.21;
+				MARKETING_VERSION = 0.0.23;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -704,7 +704,7 @@
 				DEVELOPMENT_TEAM = P48TWFJHFB;
 				INFOPLIST_FILE = wogo_app/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 0.0.21;
+				MARKETING_VERSION = 0.0.23;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
