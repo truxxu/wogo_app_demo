@@ -132,7 +132,8 @@ const storeModel = {
     displayToastB: false,
     toastData: null,
     sendTimer: 45000,
-    isLoadingBanners: false
+    isLoadingBanners: false,
+    displayShareModal: false,
   },
 
   // Actions

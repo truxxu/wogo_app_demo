@@ -5338,6 +5338,14 @@ react-native-image-picker@^1.1.0:
   resolved "https://registry.yarnpkg.com/react-native-image-picker/-/react-native-image-picker-1.1.0.tgz#c2a0523886edb4cf2cdc008ad0a71433142a4d53"
   integrity sha512-/KjHf4NNAjl6XM7FQuqvGDz1wB9sRdLf86+2yksLW/QTRR7CitX4TLCM8ZF9CX6Y0MsCTndkZia3zWE+nt/GiA==
 
+react-native-map-link@^2.5.2:
+  version "2.5.2"
+  resolved "https://registry.yarnpkg.com/react-native-map-link/-/react-native-map-link-2.5.2.tgz#769130eed4b4e389d14119328aba9ead2bfd4699"
+  integrity sha512-mt+zgB3UhMOm1Lfz+uBavjrN8ye92YWGB3cd98CttVv4tqVpVees9dTjGnXyiCKvXrSQ/kxBHRVEVd0z6mM/VA==
+  dependencies:
+    prop-types "^15.7.2"
+    react-native-modal "^10.0.0"
+
 react-native-maps@0.26.1:
   version "0.26.1"
   resolved "https://registry.yarnpkg.com/react-native-maps/-/react-native-maps-0.26.1.tgz#6ec316259b38d259c8974448d894bd7a23101da4"
@@ -5349,6 +5357,14 @@ react-native-modal-selector@^1.1.1:
   integrity sha512-LHFvEsoUUSFrpU3vZIYO/0wjizaGC5vSbkypKsf8qmVGoXvOtUVvJrvyf12YFkr0S1FkYYjRFb0t/H1PNdDRRQ==
   dependencies:
     prop-types "^15.5.10"
+
+react-native-modal@^10.0.0:
+  version "10.0.0"
+  resolved "https://registry.yarnpkg.com/react-native-modal/-/react-native-modal-10.0.0.tgz#1b0b15cc6cda9584f122cced106a9f9f37befc08"
+  integrity sha512-f0paVkkbQ/zNYnzEfqpJ+Xyqda/2mTzg1CL4ECpvRxlMOgTRezJabfEVJKTl+rZZELaaKyjB8FNoB8feC0E9pA==
+  dependencies:
+    prop-types "^15.6.2"
+    react-native-animatable "^1.3.1"
 
 react-native-modal@^11.4.0:
   version "11.4.0"
