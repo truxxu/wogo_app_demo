@@ -10,7 +10,7 @@ import { useStoreState, useStoreActions } from 'easy-peasy';
 
 import { colors } from '../envStyles';
 
-const BackBarTitle = ({navigation, title, route}) => {
+const BackBarTitle = ({navigation, title, route, origin}) => {
 
   //States
   const services = useStoreState(state => state.services);
@@ -23,7 +23,10 @@ const BackBarTitle = ({navigation, title, route}) => {
   const newCardPristine = useStoreActions(actions => actions.newCardPristine);
 
   onBack = (route) => {
-    if (route == 'PaymentMethods') {
+    if (origin != undefined) {
+      navigation.navigate(origin);
+    }
+    else if (route == 'PaymentMethods') {
       clearFields();
       navigation.navigate(route);
     }
