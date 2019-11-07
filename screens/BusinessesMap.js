@@ -15,11 +15,14 @@ import SafeAreaView from 'react-native-safe-area-view';
 
 import { colors } from '../envStyles';
 import FooterBar from '../components/FooterBar';
+import BusinessFilters from '../components/BusinessFilters';
+import * as _ from 'lodash';
 
 const BusinessesMap = ({navigation}) => {
 
   const activeAddress = useStoreState(state => state.activeAddress);
   const businesses = useStoreState(state => state.businesses);
+  const properties = useStoreState(state => state.properties);
 
   const region = {
     latitude: parseFloat(activeAddress.latitude),
@@ -27,6 +30,25 @@ const BusinessesMap = ({navigation}) => {
     latitudeDelta: 0.13,
     longitudeDelta: 0.13,
   };
+
+  filterList = (list) => {
+    if (properties.businessFilter.length !== 0) {
+      array = [];
+      list.map(business => {
+        business.products.map(product => {
+          if (properties.businessFilter.includes(product.service_type_name)) {
+            array.push(business)
+          }
+        })
+      });
+      return _.uniqBy(array, 'id')
+    }
+    else {
+      return list
+    }
+  };
+
+  const filteredList = filterList(businesses);
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: colors.gray }}>
@@ -42,14 +64,7 @@ const BusinessesMap = ({navigation}) => {
               <Text style={styles.text}>X</Text>
             </TouchableOpacity>
             <View style={styles.iconcontainer}>
-              <TouchableOpacity
-                // onPress={() => navigation.navigate('Mapa', {data: category, types: types})}
-              >
-                <Image
-                  source={require('../assets/icons/settings.png')}
-                  style={{height: 35, width: 35, marginLeft: 12}}
-                />
-              </TouchableOpacity>
+              <BusinessFilters parent={'map'} />
               <TouchableOpacity
                 onPress={() => _mapView.animateToRegion(region, 1000)}
               >
@@ -68,7 +83,7 @@ const BusinessesMap = ({navigation}) => {
            showsUserLocation={true}
            showsMyLocationButton={false}
          >
-          {businesses.map(marker => (
+          {filteredList.map(marker => (
             <Marker
               key={marker.id}
               title={marker.name}

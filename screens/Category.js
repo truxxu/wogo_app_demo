@@ -53,7 +53,7 @@ const Category = ({navigation}) => {
             <View style={styles.barcontainer}>
               <Text style={styles.title}>{properties.activeServiceTab.name}</Text>
               <View style={styles.iconcontainer}>
-                <BusinessFilters />
+                <BusinessFilters parent={'category'} />
                 <TouchableOpacity
                   onPress={() => navigation.navigate('BusinessesMap')}
                 >

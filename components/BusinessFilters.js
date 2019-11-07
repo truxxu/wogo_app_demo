@@ -67,6 +67,69 @@ const BusinessFilters = (props) => {
     }
   };
 
+  renderOptions = (origin) => {
+    if (origin !== 'map') {
+      return(
+        <View>
+          <MenuOption>
+            <View style={styles.container}>
+              <TouchableOpacity
+                onPress={() => writePropertyState({name: 'businessOrder', value: 'distance'})}
+                style={styles.option}
+              >
+                <Image
+                  source={require('../assets/icons/distancia.png')}
+                  style={{height: 35, width: 35}}
+                />
+                <Text
+                  style={properties.businessOrder == 'distance' ? styles.selected : styles.text}
+                >
+                  Distancia
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => writePropertyState({name: 'businessOrder', value: ''})}
+              >
+                <Text
+                  style={properties.businessOrder == 'distance' ? styles.text : styles.notselected}
+                >
+                  X
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </MenuOption>
+          <MenuOption>
+            <View style={styles.container}>
+              <TouchableOpacity
+                onPress={() => writePropertyState({name: 'businessOrder', value: 'popularity'})}
+                style={styles.option}
+              >
+                <Image
+                  source={require('../assets/icons/popular.png')}
+                  style={{height: 35, width: 35}}
+                />
+                <Text
+                  style={properties.businessOrder == 'popularity' ? styles.selected : styles.text}
+                >
+                  Popularidad
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={{padding: 5}}
+                onPress={() => writePropertyState({name: 'businessOrder', value: ''})}
+              >
+                <Text
+                  style={properties.businessOrder == 'popularity' ? styles.text : styles.notselected}
+                >
+                  X
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </MenuOption>
+        </View>
+      )
+    }
+  };
   return(
     <Menu>
       <MenuTrigger
@@ -78,61 +141,9 @@ const BusinessFilters = (props) => {
         }
       />
       <MenuOptions customStyles={optionsStyles}>
-        <MenuOption>
-          <View style={styles.container}>
-            <TouchableOpacity
-              onPress={() => writePropertyState({name: 'businessOrder', value: 'distance'})}
-              style={styles.option}
-            >
-              <Image
-                source={require('../assets/icons/distancia.png')}
-                style={{height: 35, width: 35}}
-              />
-              <Text
-                style={properties.businessOrder == 'distance' ? styles.selected : styles.text}
-              >
-                Distancia
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => writePropertyState({name: 'businessOrder', value: ''})}
-            >
-              <Text
-                style={properties.businessOrder == 'distance' ? styles.text : styles.notselected}
-              >
-                X
-              </Text>
-            </TouchableOpacity>
-          </View>
-        </MenuOption>
-        <MenuOption>
-          <View style={styles.container}>
-            <TouchableOpacity
-              onPress={() => writePropertyState({name: 'businessOrder', value: 'popularity'})}
-              style={styles.option}
-            >
-              <Image
-                source={require('../assets/icons/popular.png')}
-                style={{height: 35, width: 35}}
-              />
-              <Text
-                style={properties.businessOrder == 'popularity' ? styles.selected : styles.text}
-              >
-                Popularidad
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={{padding: 5}}
-              onPress={() => writePropertyState({name: 'businessOrder', value: ''})}
-            >
-              <Text
-                style={properties.businessOrder == 'popularity' ? styles.text : styles.notselected}
-              >
-                X
-              </Text>
-            </TouchableOpacity>
-          </View>
-        </MenuOption>
+        {
+         renderOptions(props.parent)
+        }
         <View style={{padding: 5}}>
           <View style={styles.container}>
             <View style={styles.option}>
