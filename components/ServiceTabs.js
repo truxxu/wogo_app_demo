@@ -22,6 +22,7 @@ const ServiceTabs = ({navigation}) => {
   // Actions
   const writePropertyState = useStoreActions(actions => actions.writePropertyState);
   const getBusinesses = useStoreActions(actions => actions.getBusinesses);
+  const clearBusinessFilter = useStoreActions(actions => actions.clearBusinessFilter);
 
   const servicesArray = services.map(item =>
     {
@@ -46,6 +47,7 @@ const ServiceTabs = ({navigation}) => {
               writePropertyState({name: 'activeServiceTab', value: item.item});
               getBusinesses(item.key);
               navigation.navigate('Category');
+              clearBusinessFilter();
             }}
           >
             <View style={properties.activeServiceTab.name === item.key ? styles.itemContainerA : null}>

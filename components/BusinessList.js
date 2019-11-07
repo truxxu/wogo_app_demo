@@ -49,7 +49,6 @@ const BusinessList = ({navigation}) => {
   };
 
   const filteredList = filterList(businesses);
-  console.log(filteredList);
   const sortedList = sortBusinessList(filteredList);
 
   timeStr = (time) => {

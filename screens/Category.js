@@ -27,6 +27,11 @@ const Category = ({navigation}) => {
   const properties = useStoreState(state => state.properties);
   //Actions
   const getBusinesses = useStoreActions(actions => actions.getBusinesses);
+  const clearBusinessFilter = useStoreActions(actions => actions.clearBusinessFilter);
+
+  useEffect(() => {
+    clearBusinessFilter()
+  }, []);
 
   useEffect(() => {
     getBusinesses(properties.activeServiceTab.name);
