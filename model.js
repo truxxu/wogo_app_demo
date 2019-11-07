@@ -112,13 +112,14 @@ const storeModel = {
   },
 
   properties: {
-    currentVehicle: null,
     isLoading: false,
+    isLoadingBestSeller: false,
+    isLoadingTop: false,
+    isLoadingBanners: false,
+    currentVehicle: null,
     isLocating: false,
     displayModal: false,
     activeServiceTab: '',
-    isLoadingBestSeller: false,
-    isLoadingTop: false,
     displayCardDeleteModal: false,
     displayCloseSession: false,
     quantity: 1,
@@ -132,13 +133,30 @@ const storeModel = {
     displayToastB: false,
     toastData: null,
     sendTimer: 45000,
-    isLoadingBanners: false,
     displayShareModal: false,
     businessOrder: 'distance',
     businessFilter: [],
   },
 
   // Actions
+  deleteSession: action((state, payload) => {
+    state.auth.token = null,
+    state.auth.areaCode = '+57',
+    state.auth.telephone = null,
+    state.auth.checked = true,
+    state.auth.waitingForApi = false,
+    state.auth.verificationCode = null,
+    state.user.waitingForApi = false,
+    state.user.name = '',
+    state.user.gender = null,
+    state.user.photo = null,
+    state.user.phone = null,
+    state.user.avatar_uri = null,
+    state.user.avatar_fileName = null,
+    state.user.email = null,
+    state.user.birth_date = null
+  }),
+
   writeAuthState: action((state, payload) => {
     state.auth[payload.name] = payload.value
   }),
@@ -461,17 +479,18 @@ const storeModel = {
   }),
 
   getBusinesses: thunk(async (actions, payload, { getStoreState }) => {
-    actions.writePropertyState({name: 'isLoadingTop', value: true});
+    actions.writePropertyState({name: 'isLoading', value: true});
     const state = getStoreState();
     const activeAddress = state.activeAddress;
     const currentVehicle = state.properties.currentVehicle;
     axios.get(`${env.apiServer}/business/?service=${payload}&latitude=${activeAddress.latitude}&longitude=${activeAddress.longitude}&distance=30&vehicle=${currentVehicle}`)
       .then(response => {
         actions.writeBusiness(response.data);
-        actions.writePropertyState({name: 'isLoadingTop', value: false});
+        actions.writePropertyState({name: 'isLoading', value: false});
       })
       .catch(error => {
         Alert.alert('Se ha presentado un error');
+        actions.writePropertyState({name: 'isLoading', value: false});
       });
   }),
 

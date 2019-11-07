@@ -14,7 +14,7 @@ import { useStoreState, useStoreActions } from 'easy-peasy';
 
 import { colors } from '../envStyles';
 
-const ServiceTabs = ({navigation}) => {
+const ServiceTabs = ({navigation, parent}) => {
 
   // States
   const services = useStoreState(state => state.services);
@@ -46,8 +46,12 @@ const ServiceTabs = ({navigation}) => {
             onPress={() => {
               writePropertyState({name: 'activeServiceTab', value: item.item});
               getBusinesses(item.key);
-              navigation.navigate('Category');
               clearBusinessFilter();
+              if (parent != undefined) {
+                navigation.navigate(parent);
+              } else {
+                navigation.navigate('Category');
+              }
             }}
           >
             <View style={properties.activeServiceTab.name === item.key ? styles.itemContainerA : null}>

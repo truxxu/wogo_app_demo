@@ -31,6 +31,7 @@ const UserProfile = ({navigation}) => {
   const getUserInfo = useStoreActions(actions => actions.getUserInfo);
   const writeUser = useStoreActions(actions => actions.writeUser);
   const toggleProperties = useStoreActions(actions => actions.toggleProperties);
+  const deleteSession = useStoreActions(actions => actions.deleteSession);
 
   useEffect(() => {
     getUserInfo();
@@ -81,7 +82,7 @@ const UserProfile = ({navigation}) => {
       await AsyncStorage.removeItem('authToken');
     } catch (error) {
       // Error retrieving data
-      console.log(error.message);
+      Alert.alert('Error','No pudimos cerrar sesión');
     }
   }
 
@@ -90,6 +91,8 @@ const UserProfile = ({navigation}) => {
     .then(response => {
       toggleProperties('displayCloseSession');
       deleteToken();
+      deleteSession();
+      axios.defaults.headers.common.Authorization = null;
       navigation.replace('Splash');
     })
     .catch(error => {

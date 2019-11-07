@@ -24,7 +24,7 @@ const StatusCard = (props) => {
         />
         <View style={{maxWidth: '60%'}}>
           <Text style={styles.boldText}>Pedido confirmado</Text>
-          <Text style={styles.text}>Dirigete al punto de venta</Text>
+          <Text style={styles.text}>Dirígete al punto de venta</Text>
           <Text style={styles.text2}>
             Horario: {props.open} - {props.close}
           </Text>
