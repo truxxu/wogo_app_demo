@@ -34,30 +34,28 @@ const BusinessFilters = (props) => {
       return(
         types.map(type => {
           return(
-            <MenuOption key={type.id} style={{padding: 0}}>
-              <View style={styles.containerB}>
-                <TouchableOpacity
-                  onPress={() => writeBusinessFilter(type.name)}
-                  style={styles.optionB}
+            <View key={type.id} style={styles.containerB}>
+              <TouchableOpacity
+                onPress={() => writeBusinessFilter(type.name)}
+                style={styles.optionB}
+              >
+                <Text
+                  style={properties.businessFilter.find(filter => filter === type.name) ? styles.selected : styles.text}
                 >
-                  <Text
-                    style={properties.businessFilter.find(filter => filter === type.name) ? styles.selected : styles.text}
-                  >
-                    {type.name}
-                  </Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={{padding: 5}}
-                  onPress={() => removeBusinessFilter(type.name)}
+                  {type.name}
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={{padding: 5}}
+                onPress={() => removeBusinessFilter(type.name)}
+              >
+                <Text
+                  style={properties.businessFilter.find(filter => filter === type.name) ? styles.text : styles.notselected}
                 >
-                  <Text
-                    style={properties.businessFilter.find(filter => filter === type.name) ? styles.text : styles.notselected}
-                  >
-                    X
-                  </Text>
-                </TouchableOpacity>
-              </View>
-            </MenuOption>
+                  X
+                </Text>
+              </TouchableOpacity>
+            </View>
           )
         })
       )
@@ -71,7 +69,7 @@ const BusinessFilters = (props) => {
     if (origin !== 'map') {
       return(
         <View>
-          <MenuOption>
+          <View style={{padding: 5}}>
             <View style={styles.container}>
               <TouchableOpacity
                 onPress={() => writePropertyState({name: 'businessOrder', value: 'distance'})}
@@ -97,8 +95,8 @@ const BusinessFilters = (props) => {
                 </Text>
               </TouchableOpacity>
             </View>
-          </MenuOption>
-          <MenuOption>
+          </View>
+          <View style={{padding: 5}}>
             <View style={styles.container}>
               <TouchableOpacity
                 onPress={() => writePropertyState({name: 'businessOrder', value: 'popularity'})}
@@ -125,11 +123,12 @@ const BusinessFilters = (props) => {
                 </Text>
               </TouchableOpacity>
             </View>
-          </MenuOption>
+          </View>
         </View>
       )
     }
   };
+
   return(
     <Menu>
       <MenuTrigger
@@ -168,6 +167,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',
+    width: '75%',
   },
   optionB: {
     flexDirection: 'row',
@@ -175,6 +175,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderLeftColor: 'gray',
     borderLeftWidth: 1,
+    width: '85%',
   },
   container: {
     flexDirection: 'row',
@@ -188,7 +189,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    height: 20,
+    height: 22.5,
     paddingLeft: 50,
   },
   text: {
