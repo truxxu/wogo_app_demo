@@ -116,12 +116,22 @@ const BusinessList = ({navigation}) => {
         />
       );
     }
-  else
+  else if (businesses.length == 0 && properties.isLoading === false)
     {
       return (
         <View style={styles.message}>
           <Text style={styles.messageText}>
             Lo sentimos, no existen negocios en esta área
+          </Text>
+        </View>
+      )
+    }
+  else
+    {
+      return (
+        <View style={styles.message}>
+          <Text style={styles.messageText}>
+            Lo sentimos, algo ha salido mal :(
           </Text>
         </View>
       )

@@ -112,13 +112,14 @@ const storeModel = {
   },
 
   properties: {
-    currentVehicle: null,
     isLoading: false,
+    isLoadingBestSeller: false,
+    isLoadingTop: false,
+    isLoadingBanners: false,
+    currentVehicle: null,
     isLocating: false,
     displayModal: false,
     activeServiceTab: '',
-    isLoadingBestSeller: false,
-    isLoadingTop: false,
     displayCardDeleteModal: false,
     displayCloseSession: false,
     quantity: 1,
@@ -132,7 +133,6 @@ const storeModel = {
     displayToastB: false,
     toastData: null,
     sendTimer: 45000,
-    isLoadingBanners: false,
     displayShareModal: false,
   },
 
@@ -460,17 +460,18 @@ const storeModel = {
   }),
 
   getBusinesses: thunk(async (actions, payload, { getStoreState }) => {
-    actions.writePropertyState({name: 'isLoadingTop', value: true});
+    actions.writePropertyState({name: 'isLoading', value: true});
     const state = getStoreState();
     const activeAddress = state.activeAddress;
     const currentVehicle = state.properties.currentVehicle;
     axios.get(`${env.apiServer}/business/?service=${payload}&latitude=${activeAddress.latitude}&longitude=${activeAddress.longitude}&distance=30&vehicle=${currentVehicle}`)
       .then(response => {
         actions.writeBusiness(response.data);
-        actions.writePropertyState({name: 'isLoadingTop', value: false});
+        actions.writePropertyState({name: 'isLoading', value: false});
       })
       .catch(error => {
         Alert.alert('Se ha presentado un error');
+        actions.writePropertyState({name: 'isLoading', value: false});
       });
   }),
 
