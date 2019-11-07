@@ -91,7 +91,7 @@ const BusinessFilters = (props) => {
               <Text
                 style={properties.businessOrder == 'distance' ? styles.selected : styles.text}
               >
-                Popularidad
+                Distancia
               </Text>
             </TouchableOpacity>
             <TouchableOpacity

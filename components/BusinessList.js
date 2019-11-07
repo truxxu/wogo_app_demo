@@ -23,7 +23,38 @@ const BusinessList = ({navigation}) => {
 
   const writePropertyState = useStoreActions(actions => actions.writePropertyState);
 
-  const sortedBusinessList = _.orderBy(businesses, ['distance'], ['asc']);
+  sortBusinessList = () => {
+    if (properties.businessOrder === 'distance') {
+     return  _.orderBy(businesses, ['distance'], ['asc'])
+    }
+    else {
+     return  _.orderBy(businesses, ['score'], ['desc'])
+    }
+  };
+
+  filterList = (list) => {
+    if (properties.businessFilter.length !== 0) {
+      array = [];
+      properties.businessFilter.map(filter => {
+        list.map(business => {
+          const match = _.find(business.products, function(products) {
+            return business.products.service_type_name === filter
+          });
+          if (match !== undefined) { array.push(match) }
+        })
+      })
+      return array;
+    }
+    else {
+      return list
+    }
+  };
+
+
+  const sortedList = sortBusinessList();
+  const filteredList = filterList(sortedList);
+  console.log(filteredList);
+  // console.log(sortedList);
 
   timeStr = (time) => {
     return time.slice(0, -3)
@@ -55,7 +86,7 @@ const BusinessList = ({navigation}) => {
         <FlatList
           horizontal={false}
           data={
-            sortedBusinessList.map(business =>
+            sortedList.map(business =>
               {
                 const store = {};
                 store.key = business.name;
