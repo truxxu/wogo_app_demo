@@ -1,5 +1,4 @@
-import React from 'react';
-
+import React, { useEffect } from 'react';
 import {
   View,
   Text,
@@ -23,38 +22,35 @@ const BusinessList = ({navigation}) => {
 
   const writePropertyState = useStoreActions(actions => actions.writePropertyState);
 
-  sortBusinessList = () => {
-    if (properties.businessOrder === 'distance') {
-     return  _.orderBy(businesses, ['distance'], ['asc'])
-    }
-    else {
-     return  _.orderBy(businesses, ['score'], ['desc'])
-    }
-  };
-
   filterList = (list) => {
     if (properties.businessFilter.length !== 0) {
       array = [];
-      properties.businessFilter.map(filter => {
-        list.map(business => {
-          const match = _.find(business.products, function(products) {
-            return business.products.service_type_name === filter
-          });
-          if (match !== undefined) { array.push(match) }
+      list.map(business => {
+        business.products.map(product => {
+          if (properties.businessFilter.includes(product.service_type_name)) {
+            array.push(business)
+          }
         })
-      })
-      return array;
+      });
+      return _.uniqBy(array, 'id')
     }
     else {
       return list
     }
   };
 
+  sortBusinessList = (list) => {
+    if (properties.businessOrder === 'distance') {
+     return  _.orderBy(list, ['distance'], ['asc'])
+    }
+    else {
+     return  _.orderBy(list, ['score'], ['desc'])
+    }
+  };
 
-  const sortedList = sortBusinessList();
-  const filteredList = filterList(sortedList);
+  const filteredList = filterList(businesses);
   console.log(filteredList);
-  // console.log(sortedList);
+  const sortedList = sortBusinessList(filteredList);
 
   timeStr = (time) => {
     return time.slice(0, -3)

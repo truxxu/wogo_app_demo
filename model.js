@@ -251,6 +251,10 @@ const storeModel = {
     })
   }),
 
+  clearBusinessFilter: action((state, payload) => {
+    state.properties.businessFilter = []
+  }),
+
   getServices: thunk(async (actions, payload) => {
     actions.writePropertyState({name: 'isLoading', value: true});
     axios.get(`${env.apiServer}/services/?vehicle_type=${payload}`)
