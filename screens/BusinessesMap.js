@@ -32,7 +32,7 @@ const BusinessesMap = ({navigation}) => {
     <SafeAreaView style={{ flex: 1, backgroundColor: colors.gray }}>
       <View>
         <MenuBar navigation={navigation} />
-        <ServiceTabs navigation={navigation}/>
+        <ServiceTabs navigation={navigation} parent='BusinessesMap'/>
         <View style={styles.mapcontainer}>
           <View style={styles.barcontainer}>
             <TouchableOpacity
