@@ -22,6 +22,7 @@ const ServiceTabs = ({navigation, parent}) => {
   // Actions
   const writePropertyState = useStoreActions(actions => actions.writePropertyState);
   const getBusinesses = useStoreActions(actions => actions.getBusinesses);
+  const clearBusinessFilter = useStoreActions(actions => actions.clearBusinessFilter);
 
   const servicesArray = services.map(item =>
     {
@@ -45,6 +46,7 @@ const ServiceTabs = ({navigation, parent}) => {
             onPress={() => {
               writePropertyState({name: 'activeServiceTab', value: item.item});
               getBusinesses(item.key);
+              clearBusinessFilter();
               if (parent != undefined) {
                 navigation.navigate(parent);
               } else {

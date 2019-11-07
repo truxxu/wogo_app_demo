@@ -18,6 +18,7 @@ import FooterBar from '../components/FooterBar';
 import Carousel from '../components/Carousel';
 import BusinessList from '../components/BusinessList';
 import CartBar from '../components/CartBar';
+import BusinessFilters from '../components/BusinessFilters';
 
 const Category = ({navigation}) => {
 
@@ -26,6 +27,11 @@ const Category = ({navigation}) => {
   const properties = useStoreState(state => state.properties);
   //Actions
   const getBusinesses = useStoreActions(actions => actions.getBusinesses);
+  const clearBusinessFilter = useStoreActions(actions => actions.clearBusinessFilter);
+
+  useEffect(() => {
+    clearBusinessFilter()
+  }, []);
 
   useEffect(() => {
     getBusinesses(properties.activeServiceTab.name);
@@ -47,14 +53,7 @@ const Category = ({navigation}) => {
             <View style={styles.barcontainer}>
               <Text style={styles.title}>{properties.activeServiceTab.name}</Text>
               <View style={styles.iconcontainer}>
-                <TouchableOpacity
-                  // onPress={() => navigation.navigate('Mapa', {data: category, types: types})}
-                >
-                  <Image
-                    source={require('../assets/icons/settings.png')}
-                    style={{height: 35, width: 35, marginLeft: 12}}
-                  />
-                </TouchableOpacity>
+                <BusinessFilters parent={'category'} />
                 <TouchableOpacity
                   onPress={() => navigation.navigate('BusinessesMap')}
                 >
