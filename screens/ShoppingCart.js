@@ -90,37 +90,52 @@ const ShoppingCart = ({navigation}) => {
     )
   };
 
+  clearAndGoToOrders = () => {
+    getOrders();
+    clearCart();
+    navigation.navigate('OrderHistory');
+    writePropertyState({name: 'loadingOrders', value: false});
+  };
+
   onSubmit = (payload) => {
     if (properties.installmentsNumber > 0 && activePaymentMethod.token_id !== "") {
       writePropertyState({name: 'loadingOrders', value: true})
       payload.forEach(order => {
         axios.post(`${env.apiServer}/orders/`, order)
           .then(response => {
-            getOrders();
-            navigation.navigate('OrderHistory');
-            clearCart();
-            writePropertyState({name: 'loadingOrders', value: false});
+            if(response.data.payment_error == "Fondos Insuficientes") {
+              Alert.alert(
+                'Fondos insuficientes',
+                'Tu pago fue rechazado. Intenta con otro método de pago',
+                [
+                  {text: 'OK', onPress: () => clearAndGoToOrders()},
+                ],
+                {cancelable: false},
+              );
+            } else {
+              clearAndGoToOrders()
+            }
           })
           .catch(error => {
-            Alert.alert('No se pudo realizar tu pedido');
+            Alert.alert('Error', 'No se pudo realizar tu pedido');
             writePropertyState({name: 'loadingOrders', value: false});
           });
       })
     }
     else if ( (properties.installmentsNumber  > 0 && activePaymentMethod.token_id == "") ||
               (properties.installmentsNumber  > 0 && activePaymentMethod.token_id !== "") ||
-              (properties.installmentsNumber  == "" && activePaymentMethod.token_id !== "") ) {      
+              (properties.installmentsNumber  == "" && activePaymentMethod.token_id !== "") ) {
       if (activePaymentMethod.token_id == "") {
-        Alert.alert('Datos incompletos', 'Completa el método de pago del pedido');  
+        Alert.alert('Datos incompletos', 'Completa el método de pago del pedido');
       }
       else if (properties.installmentsNumber  == 0 || properties.installmentsNumber  == "") {
           Alert.alert('Datos incompletos', 'Ingresa número de pagos del pedido');
-        }               
+        }
     }
-    else if ( (properties.installmentsNumber  == 0 && activePaymentMethod.token_id == "") || 
+    else if ( (properties.installmentsNumber  == 0 && activePaymentMethod.token_id == "") ||
               (properties.installmentsNumber == "" && activePaymentMethod.token_id == "") ) {
       Alert.alert('Datos incompletos','No se pudo realizar tu pedido, completa método de pago y número de pagos');
-   } 
+    }
   };
 
   const data = [];
