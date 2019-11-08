@@ -41,6 +41,8 @@ const Business = ({navigation}) => {
       typesArray.push(key)
     }
   };
+  console.log(grouped_products);
+  console.log(typesArray);
 
   timeStr = (time) => {
     return time.slice(0, -3)
@@ -108,8 +110,8 @@ const Business = ({navigation}) => {
             </View>
           </View>
         </View>
-        <ProductsScroll />
-        <CartBar navigation={navigation} />
+        <ProductsScroll types={typesArray} products={grouped_products}/>
+        <CartBar navigation={navigation}/>
         <FooterBar navigation={navigation} />
       </View>
     </SafeAreaView>

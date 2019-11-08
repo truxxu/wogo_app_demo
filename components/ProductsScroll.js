@@ -5,24 +5,43 @@ import {
   Text,
   Button,
   ScrollView,
-  StatusBar
+  StatusBar,
+  FlatList,
+  TouchableOpacity
 } from 'react-native';
+import * as _ from 'lodash';
+
+import { colors } from '../envStyles';
 
 const Item = props => (
   <View
     style={{ minHeight: 500 }}
     onLayout={e => props.onItemLayout(e, props.index)}>
-    <Text>{`Item ${props.index}`}</Text>
+    <Text style={styles.title}>{props.index}</Text>
   </View>
 );
 
 class ProductsScroll extends Component {
 
-  constructor() {
+  constructor(props) {
     super();
+    const serviceTypeArray = props.types.map(type =>
+      {
+        for (const [key, value] of Object.entries(props.products)) {
+          if (type == key) {
+            const store = {};
+            store.key = type;
+            store.products = value;
+            return store;
+          }
+        }
+      }
+    );
+    const sortedArray = _.orderBy(serviceTypeArray, ['key'], ['asc']);
+
     this.state = {
-      sections: [1, 2, 3],
-      currentSection: 1
+      sections: sortedArray,
+      currentSection: sortedArray[0].key
     };
   }
 
@@ -41,24 +60,33 @@ class ProductsScroll extends Component {
     // loop sections to calculate which section scrollview is on
     this.state.sections.forEach((section) => {
       // adding 15 to calculate Text's height
-      if((y + 15) > this.state[section]) _currentSection = section
+      if((y + 30) > this.state[section.key]) _currentSection = section.key
     })
     // settint the currentSection to the calculated current section
     this.setState({ currentSection: _currentSection })
-  }
+  };
 
   render() {
+    console.log(this.state.sections)
     return (
       <View style={styles.container}>
         <View style={styles.buttonContainer}>
-          {this.state.sections.map(section => (
-            <Button
-              key={section}
-              title={`Section ${section}`}
-              color={this.state.currentSection === section ? 'red' : 'blue'}
-              onPress={() => this.moveToSetion(section)}
-            />
-          ))}
+          <FlatList
+            horizontal={true}
+            showsHorizontalScrollIndicator={false}
+            data={this.state.sections}
+            renderItem={({item}) =>
+              <TouchableOpacity
+                onPress={() => this.moveToSetion(item.key)}
+              >
+                <View style={this.state.currentSection === item.key ? styles.itemContainerA : null}>
+                  <Text style={styles.item}>
+                    {item.key}
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            }
+          />
         </View>
         <ScrollView
           style={styles.scrollView}
@@ -67,8 +95,8 @@ class ProductsScroll extends Component {
           onScroll={this.onScroll}>
           {this.state.sections.map(section => (
             <Item
-              key={section}
-              index={section}
+              key={section.key}
+              index={section.key}
               onItemLayout={this.onItemLayout}
             />
           ))}
@@ -79,20 +107,55 @@ class ProductsScroll extends Component {
 }
 
 const styles = StyleSheet.create({
+  title: {
+    fontSize: 16,
+    fontFamily: 'Montserrat-Bold',
+    color: colors.black,
+  },
   container: {
     flex: 1,
-    paddingTop: StatusBar.currentHeight,
+    // paddingTop: StatusBar.currentHeight,
     backgroundColor: '#ecf0f1',
   },
   buttonContainer: {
     flexDirection: 'row',
-    justifyContent: 'center',
-    // position: 'absolute',
+    // justifyContent: 'center',
   },
   scrollView: {
     paddingLeft: 15,
     paddingRight: 15
-  }
+  },
+  item: {
+    padding: 5,
+    paddingBottom: 2,
+    fontSize: 14,
+    height: 30,
+    fontFamily: 'Montserrat-Regular',
+    color: colors.black,
+  },
+  container: {
+    borderColor: 'gray',
+    borderBottomWidth: 0.5,
+    // marginBottom: 15,
+    backgroundColor: colors.white,
+  },
+  itemContainerA: {
+    borderColor: colors.purple,
+    borderBottomWidth: 5,
+  },
+  message: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  messageText: {
+    marginTop: 40,
+    fontSize: 18,
+    fontFamily: 'Montserrat-Bold',
+    color: 'gray',
+    maxWidth: '70%',
+    textAlign: 'center'
+  },
 });
 
 
