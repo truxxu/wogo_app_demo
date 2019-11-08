@@ -7,17 +7,25 @@ import {
   ScrollView,
   StatusBar,
   FlatList,
-  TouchableOpacity
+  TouchableOpacity,
+  Dimensions
 } from 'react-native';
 import * as _ from 'lodash';
 
 import { colors } from '../envStyles';
+import ProductCard from '../components/ProductCard';
 
 const Item = props => (
   <View
-    style={{ minHeight: 500 }}
     onLayout={e => props.onItemLayout(e, props.index)}>
     <Text style={styles.title}>{props.index}</Text>
+    {
+      props.products.map(product => {
+        return(
+          <ProductCard navigation={props.navigation} product={product} key={product.id}/>
+        )
+      })
+    }
   </View>
 );
 
@@ -25,23 +33,9 @@ class ProductsScroll extends Component {
 
   constructor(props) {
     super();
-    const serviceTypeArray = props.types.map(type =>
-      {
-        for (const [key, value] of Object.entries(props.products)) {
-          if (type == key) {
-            const store = {};
-            store.key = type;
-            store.products = value;
-            return store;
-          }
-        }
-      }
-    );
-    const sortedArray = _.orderBy(serviceTypeArray, ['key'], ['asc']);
-
     this.state = {
-      sections: sortedArray,
-      currentSection: sortedArray[0].key
+      sections: props.types,
+      currentSection: props.types[0].key
     };
   }
 
@@ -67,7 +61,6 @@ class ProductsScroll extends Component {
   };
 
   render() {
-    console.log(this.state.sections)
     return (
       <View style={styles.container}>
         <View style={styles.buttonContainer}>
@@ -97,6 +90,8 @@ class ProductsScroll extends Component {
             <Item
               key={section.key}
               index={section.key}
+              products={section.products}
+              navigation={this.props.navigation}
               onItemLayout={this.onItemLayout}
             />
           ))}
@@ -123,7 +118,8 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     paddingLeft: 15,
-    paddingRight: 15
+    paddingRight: 15,
+    maxHeight: Dimensions.get('window').height/2 - 70,
   },
   item: {
     padding: 5,

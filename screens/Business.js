@@ -38,11 +38,9 @@ const Business = ({navigation}) => {
   const typesArray = [];
   for (const [key, value] of Object.entries(grouped_products)) {
     if (value.length > 0) {
-      typesArray.push(key)
+      typesArray.push({key: key, products: value})
     }
   };
-  console.log(grouped_products);
-  console.log(typesArray);
 
   timeStr = (time) => {
     return time.slice(0, -3)
@@ -55,19 +53,6 @@ const Business = ({navigation}) => {
     }
     else {
       return `${parseFloat(distance).toFixed(1)} km`
-    }
-  };
-
-  renderProducts = () => {
-    if (properties.activeType === 'Todo') {
-      return(
-        <AllProducts navigation={navigation} types={typesArray} />
-      )
-    }
-    else {
-      return(
-        <ProductType navigation={navigation} />
-      )
     }
   };
 
@@ -110,7 +95,7 @@ const Business = ({navigation}) => {
             </View>
           </View>
         </View>
-        <ProductsScroll types={typesArray} products={grouped_products}/>
+        <ProductsScroll navigation={navigation} types={typesArray}/>
         <CartBar navigation={navigation}/>
         <FooterBar navigation={navigation} />
       </View>
