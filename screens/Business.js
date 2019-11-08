@@ -19,6 +19,7 @@ import TypesSlider from '../components/TypesSlider';
 import ProductType from '../components/ProductType';
 import AllProducts from '../components/AllProducts';
 import CartBar from '../components/CartBar';
+import ProductsScroll from '../components/ProductsScroll';
 
 const WIDTH = Dimensions.get('window').width;
 
@@ -37,7 +38,7 @@ const Business = ({navigation}) => {
   const typesArray = [];
   for (const [key, value] of Object.entries(grouped_products)) {
     if (value.length > 0) {
-      typesArray.push(key)
+      typesArray.push({key: key, products: value})
     }
   };
 
@@ -55,26 +56,13 @@ const Business = ({navigation}) => {
     }
   };
 
-  renderProducts = () => {
-    if (properties.activeType === 'Todo') {
-      return(
-        <AllProducts navigation={navigation} types={typesArray} />
-      )
-    }
-    else {
-      return(
-        <ProductType navigation={navigation} />
-      )
-    }
-  };
-
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: colors.gray }}>
       <View style={{flex: 1}}>
         <MenuBar navigation={navigation} />
         <ServiceTabs navigation={navigation} />
-        <ScrollView
-          stickyHeaderIndices={[1]}
+        <View
+          // stickyHeaderIndices={[1]}
           showsVerticalScrollIndicator={false}
           >
           <Image
@@ -105,15 +93,10 @@ const Business = ({navigation}) => {
                 <Text style={styles.text}>{distanceStr(business.distance)}</Text>
               </View>
             </View>
-            <TypesSlider data={typesArray}/>
           </View>
-          <View style={styles.cardContainer}>
-            {
-              renderProducts()
-            }
-          </View>
-        </ScrollView>
-        <CartBar navigation={navigation} />
+        </View>
+        <ProductsScroll navigation={navigation} types={typesArray}/>
+        <CartBar navigation={navigation}/>
         <FooterBar navigation={navigation} />
       </View>
     </SafeAreaView>
