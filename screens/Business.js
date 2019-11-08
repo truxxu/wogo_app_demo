@@ -19,6 +19,7 @@ import TypesSlider from '../components/TypesSlider';
 import ProductType from '../components/ProductType';
 import AllProducts from '../components/AllProducts';
 import CartBar from '../components/CartBar';
+import ProductsScroll from '../components/ProductsScroll';
 
 const WIDTH = Dimensions.get('window').width;
 
@@ -73,8 +74,8 @@ const Business = ({navigation}) => {
       <View style={{flex: 1}}>
         <MenuBar navigation={navigation} />
         <ServiceTabs navigation={navigation} />
-        <ScrollView
-          stickyHeaderIndices={[1]}
+        <View
+          // stickyHeaderIndices={[1]}
           showsVerticalScrollIndicator={false}
           >
           <Image
@@ -105,14 +106,9 @@ const Business = ({navigation}) => {
                 <Text style={styles.text}>{distanceStr(business.distance)}</Text>
               </View>
             </View>
-            <TypesSlider data={typesArray}/>
           </View>
-          <View style={styles.cardContainer}>
-            {
-              renderProducts()
-            }
-          </View>
-        </ScrollView>
+        </View>
+        <ProductsScroll />
         <CartBar navigation={navigation} />
         <FooterBar navigation={navigation} />
       </View>
