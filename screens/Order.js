@@ -85,6 +85,7 @@ const Order = ({navigation}) => {
               <Text style={styles.price}>${totalPrice(order.order_total)}</Text>
             </View>
             <PaymentState state={order.payment_state} />
+            {order.payment_error && <Text style={styles.text}>{order.payment_error}</Text>}
           </View>
         </View>
         <View style={styles.mapcontainer}>
