@@ -66,7 +66,7 @@ const Splash = ({navigation}) => {
   geocodingNotSuccessful = () => {
     Alert.alert(
       'WOGO',
-      'No fue posible determinar tu dirección a partir de tu ubicación. Intenta de nuevo.',
+      'No fue posible determinar tu dirección a partir de tu ubicación. Verifica tu conexión a internet e intenta de nuevo.',
       [
         { text: 'OK', onPress: () => navigation.replace('Splash') },
       ],
