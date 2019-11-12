@@ -84,7 +84,7 @@ const UserProfile = ({navigation}) => {
       // Error retrieving data
       Alert.alert('Error','No pudimos cerrar sesión');
     }
-  }
+  };
 
   logOut = () => {
     axios.post(env.apiServer + '/auth/logout')
