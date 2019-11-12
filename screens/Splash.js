@@ -16,7 +16,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import SafeAreaView from 'react-native-safe-area-view';
 
 import { colors } from '../envStyles';
-
+import { env } from '../keys';
 
 const Splash = ({navigation}) => {
 
@@ -26,6 +26,7 @@ const Splash = ({navigation}) => {
   // Actions
   const writeActiveAddress = useStoreActions(actions => actions.writeActiveAddress);
   const writePropertyState = useStoreActions(actions => actions.writePropertyState);
+  const deleteSession = useStoreActions(actions => actions.deleteSession);
 
   useEffect(() => {
     if(Platform.OS === 'ios') {
@@ -121,7 +122,16 @@ const Splash = ({navigation}) => {
       // error reading value
       navigation.replace('VehicleSelection');
     }
-  }
+  };
+
+  deleteToken = async () => {
+    try {
+      await AsyncStorage.removeItem('authToken');
+    } catch (error) {
+      // Error retrieving data
+      Alert.alert('Error','No pudimos cerrar sesión');
+    }
+  };
 
   getToken = async () => {
     try {
@@ -130,10 +140,19 @@ const Splash = ({navigation}) => {
         // validate token
         axios.defaults.headers.common.Authorization = authToken;
         // if valid -> get stored activeVehicle
-        getActiveVehicle();
-        // if valid -> goto drawer navigator
-        //navigation.replac;e('DrawerNavigator')
-        // if not -> goto register
+        axios.get(env.apiServer + '/auth/user')
+          .then(response => {
+            getActiveVehicle();
+            // if valid -> goto drawer navigator
+            //navigation.replac;e('DrawerNavigator')
+            // if not -> goto register
+          })
+          .catch(error => {
+            deleteToken();
+            deleteSession();
+            axios.defaults.headers.common.Authorization = null;
+            navigation.replace('Welcome')
+          });
       }
       else {
         const timer = setTimeout(() => {
@@ -152,6 +171,7 @@ const Splash = ({navigation}) => {
     Geocoder.from(position.coords.latitude, position.coords.longitude).then(json => {
       setActiveAddress(json, position);
       getToken();
+
     }).catch(error => {
       geocodingNotSuccessful();
     });
