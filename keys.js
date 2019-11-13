@@ -1,5 +1,5 @@
 export const env = {
-  apiServer: 'http://192.168.0.14:8000'
+  apiServer: 'http://192.168.0.21:8000'
 };
 
 export const geocoding = {
