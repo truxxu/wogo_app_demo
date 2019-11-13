@@ -44,7 +44,7 @@ const Recommended = ({navigation, type}) => {
       </View>
     )
   }
-  else if (businesses.isLoadingRecommended === false && businesses.recommended !== null) {
+  else if (businesses.isLoadingRecommended === false && businesses.recommended.length !== 0) {
     return(
       <FlatList
         showsHorizontalScrollIndicator={false}
