@@ -97,9 +97,9 @@ const Business = ({navigation}) => {
           <Text style={styles.message}>
             No existen productos en esta categoria
           </Text>}
-        <CartBar navigation={navigation}/>
-        <FooterBar navigation={navigation} />
       </View>
+      <CartBar navigation={navigation}/>
+      <FooterBar navigation={navigation} />
     </SafeAreaView>
   );
 }
@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
-    margin: 10
+    margin: 5
   },
   title: {
     fontSize: 16,

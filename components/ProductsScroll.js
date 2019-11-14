@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
   scrollView: {
     paddingLeft: 15,
     paddingRight: 15,
-    maxHeight: Dimensions.get('window').height/2 - 70,
+    maxHeight: Dimensions.get('window').height/2 - 10,
   },
   item: {
     padding: 5,
