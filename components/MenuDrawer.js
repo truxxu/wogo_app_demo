@@ -10,11 +10,13 @@ import {
   ScrollView,
   Linking,
 } from 'react-native';
-import { colors } from '../envStyles';
 import { customerService } from '../keys';
 import Modal from "react-native-modal";
 import { useStoreState, useStoreActions } from 'easy-peasy';
 import SafeAreaView from 'react-native-safe-area-view';
+
+import { colors } from  '../envStyles';
+import { version } from '../keys';
 
 const MenuDrawer = ({navigation}) => {
 
@@ -41,7 +43,7 @@ const MenuDrawer = ({navigation}) => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: colors.gray }}>
+    <SafeAreaView style={styles.parentContainer}>
       <ScrollView
         keyboardShouldPersistTaps={'never'}
         style={styles.container}>
@@ -203,14 +205,24 @@ const MenuDrawer = ({navigation}) => {
           </TouchableOpacity>
         </View>
       </ScrollView>
+      <View style={styles.container}>
+        <Text style={styles.verText}>
+          Wogo App {version.verNum}
+        </Text>
+      </View>
     </SafeAreaView>
   );
 };
 
 
 const styles = StyleSheet.create({
-  container: {
+  parentContainer: {
     flex: 1,
+    backgroundColor: colors.gray,
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+  },
+  container: {
     backgroundColor: colors.white,
   },
   bottomLinks: {
@@ -270,6 +282,14 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     fontFamily: 'Montserrat-Regular',
     color: colors.black,
+  },
+  verText: {
+    fontSize: 14,
+    padding: 6,
+    textAlign: 'left',
+    fontFamily: 'Montserrat-Regular',
+    color: 'gray',
+    textAlign: 'center'
   },
   boldText: {
     flex: 1,
