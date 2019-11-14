@@ -44,7 +44,7 @@ const MostSearched = ({navigation, type}) => {
       </View>
     )
   }
-  else if (businesses.isLoadingMost === false && businesses.most_searched !== null) {
+  else if (businesses.isLoadingMost === false && businesses.most_searched.length !== 0) {
     return(
       <FlatList
         showsHorizontalScrollIndicator={false}

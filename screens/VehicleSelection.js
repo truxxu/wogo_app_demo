@@ -39,7 +39,7 @@ const VehicleSelection = ({navigation}) => {
                 storeVehicle('carro');
                 writePropertyState({name: 'currentVehicle', value: 'carro'});
                 getServices('carro');
-                navigation.navigate('DrawerNavigator');
+                navigation.navigate('Home');
               }}
             >
               <Image
@@ -55,7 +55,7 @@ const VehicleSelection = ({navigation}) => {
                 storeVehicle('moto');
                 writePropertyState({name: 'currentVehicle', value: 'moto'});
                 getServices('moto');
-                navigation.navigate('DrawerNavigator');
+                navigation.navigate('Home');
               }}
             >
               <Image

@@ -37,7 +37,7 @@ const Business = ({navigation}) => {
   const grouped_products = _.groupBy(business.products, product => product.service_type_name);
   const typesArray = [];
   for (const [key, value] of Object.entries(grouped_products)) {
-    if (value.length > 0) {
+    if (!_.isEmpty(grouped_products)) {
       typesArray.push({key: key, products: value})
     }
   };
@@ -61,10 +61,7 @@ const Business = ({navigation}) => {
       <View style={{flex: 1}}>
         <MenuBar navigation={navigation} />
         <ServiceTabs navigation={navigation} />
-        <View
-          // stickyHeaderIndices={[1]}
-          showsVerticalScrollIndicator={false}
-          >
+        <View>
           <Image
             style={styles.image}
             source={{uri: business.image}}
@@ -95,12 +92,14 @@ const Business = ({navigation}) => {
             </View>
           </View>
         </View>
-        <ProductsScroll navigation={navigation} types={typesArray}/>
+        {!_.isEmpty(grouped_products) ?
+          <ProductsScroll navigation={navigation} types={typesArray}/> :
+          <Text style={styles.message}>
+            No existen productos en esta categoria
+          </Text>}
       </View>
-      <View style={{alignItems: 'stretch', bottom: 0, }}>
-        <CartBar navigation={navigation}/>
-        <FooterBar navigation={navigation} />
-      </View>
+      <CartBar navigation={navigation}/>
+      <FooterBar navigation={navigation} />
     </SafeAreaView>
   );
 }
@@ -109,6 +108,14 @@ const styles = StyleSheet.create({
   image: {
     width: WIDTH,
     height: 150,
+  },
+  message: {
+    fontSize: 16,
+    fontFamily: 'Montserrat-Bold',
+    color: 'gray',
+    flex: 1,
+    backgroundColor: colors.gray,
+    textAlign: 'center',
   },
   description: {
     flexDirection: 'row',
