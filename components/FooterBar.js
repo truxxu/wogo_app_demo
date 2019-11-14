@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
   footer: {
     backgroundColor: colors.white,
     width: Dimensions.get('window').width,
-    height: 60,
+    height: 50,
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
