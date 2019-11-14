@@ -96,6 +96,8 @@ const Business = ({navigation}) => {
           </View>
         </View>
         <ProductsScroll navigation={navigation} types={typesArray}/>
+      </View>
+      <View style={{alignItems: 'stretch', bottom: 0, }}>
         <CartBar navigation={navigation}/>
         <FooterBar navigation={navigation} />
       </View>
@@ -112,7 +114,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
-    margin: 10
+    margin: 5
   },
   title: {
     fontSize: 16,
