@@ -108,7 +108,6 @@ const styles = StyleSheet.create({
     color: colors.black,
   },
   container: {
-    // paddingTop: StatusBar.currentHeight,
     backgroundColor: '#ecf0f1',
   },
   buttonContainer: {
@@ -116,9 +115,6 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     paddingLeft: 18,
-    backgroundColor: colors.purple,
-
-    // height: Dimensions.get('screen').height,
   },
   item: {
     padding: 5,
