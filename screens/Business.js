@@ -57,7 +57,7 @@ const Business = ({navigation}) => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: colors.gray }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: colors.gray, }}>
       <View style={{flex: 1}}>
         <MenuBar navigation={navigation} />
         <ServiceTabs navigation={navigation} />
@@ -92,14 +92,17 @@ const Business = ({navigation}) => {
             </View>
           </View>
         </View>
-        {!_.isEmpty(grouped_products) ?
-          <ProductsScroll navigation={navigation} types={typesArray}/> :
-          <Text style={styles.message}>
-            No existen productos en esta categoria
-          </Text>}
+        <View style={{flex: 1, paddingBottom: 20}}>
+          {!_.isEmpty(grouped_products) ?
+            <ProductsScroll navigation={navigation} types={typesArray}/> :
+            <Text style={styles.message}>
+              No existen productos en esta categoria
+            </Text>
+          }
+        </View>
+        <CartBar navigation={navigation}/>
+        <FooterBar navigation={navigation} />
       </View>
-      <CartBar navigation={navigation}/>
-      <FooterBar navigation={navigation} />
     </SafeAreaView>
   );
 }
