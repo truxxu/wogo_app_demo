@@ -16,7 +16,7 @@ import { colors } from '../envStyles';
 import ProductCard from '../components/ProductCard';
 
 const Item = props => (
-  <View
+  <View 
     onLayout={e => props.onItemLayout(e, props.index)}>
     <Text style={styles.title}>{props.index}</Text>
     {
@@ -108,18 +108,13 @@ const styles = StyleSheet.create({
     color: colors.black,
   },
   container: {
-    flex: 1,
-    // paddingTop: StatusBar.currentHeight,
     backgroundColor: '#ecf0f1',
   },
   buttonContainer: {
     flexDirection: 'row',
-    // justifyContent: 'center',
   },
   scrollView: {
-    paddingLeft: 15,
-    paddingRight: 15,
-    maxHeight: Dimensions.get('window').height/2 - 10,
+    paddingLeft: 18,
   },
   item: {
     padding: 5,
@@ -132,7 +127,7 @@ const styles = StyleSheet.create({
   container: {
     borderColor: 'gray',
     borderBottomWidth: 0.5,
-    // marginBottom: 15,
+    marginBottom: 15,
     backgroundColor: colors.white,
   },
   itemContainerA: {

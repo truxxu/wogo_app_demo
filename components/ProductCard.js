@@ -62,7 +62,6 @@ const styles = StyleSheet.create({
     alignItems: 'stretch',
     width: Dimensions.get('window').width - 40,
     padding: 5,
-    // height: hp('12%'),
     borderRadius: 3,
     marginTop: 5,
     marginBottom: 5,
@@ -86,7 +85,7 @@ const styles = StyleSheet.create({
   },
   text: {
     textAlign: 'left',
-    fontSize: 12,
+    fontSize: 10,
     fontFamily: 'Montserrat-Regular',
   },
   image: {
