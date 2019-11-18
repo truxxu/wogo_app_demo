@@ -36,6 +36,7 @@ const ProductCard = ({navigation, product}) => {
           source={{uri: product.image}}
         />
       </TouchableOpacity>
+      <View style={styles.container2}>
       <TouchableOpacity
         onPress={() => navigation.navigate('Product', {product: product})}
         style={styles.textbox}
@@ -50,6 +51,7 @@ const ProductCard = ({navigation, product}) => {
       >
         <Text style={styles.buttonText}>Agregar</Text>
       </TouchableOpacity>
+      </View>
     </View>
   );
 }
@@ -58,8 +60,7 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.white,
     flexDirection: 'row',
-    justifyContent: 'space-evenly',
-    alignItems: 'stretch',
+    alignSelf: 'stretch',
     width: Dimensions.get('window').width - 40,
     padding: 5,
     borderRadius: 3,
@@ -73,6 +74,11 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.20,
     shadowRadius: 1.41,
     elevation: 2,
+  },
+  container2: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-evenly'
   },
   price: {
     fontSize: 15,
@@ -116,10 +122,11 @@ const styles = StyleSheet.create({
     color: colors.white,
   },
   textbox: {
+    flex: 1,
     paddingLeft: 5,
     paddingRight: 5,
     justifyContent: 'space-evenly',
-    maxWidth: '50%'
+    maxWidth: '50%',
   },
   heart: {
     position: 'absolute',
