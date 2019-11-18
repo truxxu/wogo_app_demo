@@ -70,8 +70,7 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.white,
     flexDirection: 'row',
-    justifyContent: 'space-evenly',
-    alignItems: 'stretch',
+    justifyContent: 'space-between',
     padding: 5,
     width: Dimensions.get('window').width - 40,
     borderRadius: 3,
@@ -123,7 +122,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     fontSize: 12,
-    textAlign: 'center',
+    textAlign: 'center',  
     fontFamily: 'Montserrat-Bold',
     color: colors.white,
   },
