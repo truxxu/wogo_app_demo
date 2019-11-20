@@ -4,7 +4,6 @@ import {
   Text,
   StyleSheet,
   Image,
-  TouchableOpacity,
   ScrollView,
   Dimensions
 } from 'react-native';
@@ -35,8 +34,8 @@ const BusinessFilters = (props) => {
         types.map(type => {
           return(
             <View key={type.id} style={styles.containerB}>
-              <TouchableOpacity
-                onPress={() => writeBusinessFilter(type.name)}
+              <MenuOption
+                onSelect={() => writeBusinessFilter(type.name)}
                 style={styles.optionB}
               >
                 <Text
@@ -44,17 +43,17 @@ const BusinessFilters = (props) => {
                 >
                   {type.name}
                 </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
+              </MenuOption>
+              <MenuOption
                 style={{padding: 5}}
-                onPress={() => removeBusinessFilter(type.name)}
+                onSelect={() => removeBusinessFilter(type.name)}
               >
                 <Text
                   style={properties.businessFilter.find(filter => filter === type.name) ? styles.text : styles.notselected}
                 >
                   X
                 </Text>
-              </TouchableOpacity>
+              </MenuOption>
             </View>
           )
         })
@@ -71,8 +70,8 @@ const BusinessFilters = (props) => {
         <View>
           <View style={{padding: 5}}>
             <View style={styles.container}>
-              <TouchableOpacity
-                onPress={() => writePropertyState({name: 'businessOrder', value: 'distance'})}
+              <MenuOption
+                onSelect={() => writePropertyState({name: 'businessOrder', value: 'distance'})}
                 style={styles.option}
               >
                 <Image
@@ -84,22 +83,22 @@ const BusinessFilters = (props) => {
                 >
                   Distancia
                 </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => writePropertyState({name: 'businessOrder', value: ''})}
+              </MenuOption>
+              <MenuOption
+                onSelect={() => writePropertyState({name: 'businessOrder', value: ''})}
               >
                 <Text
                   style={properties.businessOrder == 'distance' ? styles.text : styles.notselected}
                 >
                   X
                 </Text>
-              </TouchableOpacity>
+              </MenuOption>
             </View>
           </View>
           <View style={{padding: 5}}>
             <View style={styles.container}>
-              <TouchableOpacity
-                onPress={() => writePropertyState({name: 'businessOrder', value: 'popularity'})}
+              <MenuOption
+                onSelect={() => writePropertyState({name: 'businessOrder', value: 'popularity'})}
                 style={styles.option}
               >
                 <Image
@@ -111,17 +110,17 @@ const BusinessFilters = (props) => {
                 >
                   Popularidad
                 </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
+              </MenuOption>
+              <MenuOption
                 style={{padding: 5}}
-                onPress={() => writePropertyState({name: 'businessOrder', value: ''})}
+                onSelect={() => writePropertyState({name: 'businessOrder', value: ''})}
               >
                 <Text
                   style={properties.businessOrder == 'popularity' ? styles.text : styles.notselected}
                 >
                   X
                 </Text>
-              </TouchableOpacity>
+              </MenuOption>
             </View>
           </View>
         </View>
