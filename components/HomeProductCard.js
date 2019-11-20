@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.white,
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'space-evenly',
     padding: 5,
     width: Dimensions.get('window').width - 40,
     borderRadius: 3,
