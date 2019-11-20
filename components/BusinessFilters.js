@@ -174,7 +174,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderLeftColor: 'gray',
     borderLeftWidth: 1,
-    width: '85%',
+    padding: 2,
   },
   container: {
     flexDirection: 'row',
