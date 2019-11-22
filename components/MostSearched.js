@@ -9,9 +9,11 @@ import {
   FlatList
 } from 'react-native';
 import { useStoreState, useStoreActions } from 'easy-peasy';
-import Swiper from 'react-native-swiper'
+import Swiper from 'react-native-swiper';
+import axios from 'axios';
 
 import { colors } from '../envStyles';
+import { env } from '../keys';
 
 const MostSearched = ({navigation, type}) => {
 
@@ -19,10 +21,33 @@ const MostSearched = ({navigation, type}) => {
   const businesses = useStoreState(state => state.businessesSelection);
   //Actions
   const writePropertyState = useStoreActions(actions => actions.writePropertyState);
-  const getBusinessesSelection = useStoreActions(actions => actions.getBusinessesSelection);
+  const writeBusinessesSelection = useStoreActions(actions => actions.writeBusinessesSelection);
 
   useEffect(() => {
-    getBusinessesSelection(type);
+    writeBusinessesSelection({name: 'isLoadingMost', value: true});
+    const CancelToken = axios.CancelToken;
+    const source = CancelToken.source();
+
+    const getData = () => {
+      try {
+        axios.get(`${env.apiServer}/business/?list=${type}`)
+          .then(response => {
+            writeBusinessesSelection({value: response.data, name: 'most_searched'});
+            writeBusinessesSelection({name: 'isLoadingMost', value: false});
+        })
+      } catch(error) {
+        if (axios.isCancel(error)) {
+          console.log("cancelled");
+        } else {
+          throw error;
+        }
+      }
+    };
+
+    getData();
+    return () => {
+      source.cancel();
+    };
   }, []);
 
   const businessesArray = businesses.most_searched.map(item =>

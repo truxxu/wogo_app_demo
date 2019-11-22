@@ -11,8 +11,10 @@ import {
 } from 'react-native';
 import { useStoreState, useStoreActions } from 'easy-peasy';
 import SafeAreaView from 'react-native-safe-area-view';
+import axios from 'axios';
 
 import { colors } from '../envStyles';
+import { env } from '../keys';
 import MenuBar from '../components/MenuBar';
 import ServiceTabs from '../components/ServiceTabs';
 import FooterBar from '../components/FooterBar';
@@ -28,17 +30,71 @@ const Home = ({navigation}) => {
 
   // States
   const properties = useStoreState(state => state.properties);
+  const services = useStoreState(state => state.services);
+  const user = useStoreState(state => state.user);
 
   // Actions
-  const getServices = useStoreActions(actions => actions.getServices);
-  const getUserInfo = useStoreActions(actions => actions.getUserInfo);
+  const writePropertyState = useStoreActions(actions => actions.writePropertyState);
+  const writeServices = useStoreActions(actions => actions.writeServices);
+  const writeUser = useStoreActions(actions => actions.writeUser);
 
   useEffect(() => {
-    getServices(properties.currentVehicle);
+    writePropertyState({name: 'isLoading', value: true});
+    const CancelToken = axios.CancelToken;
+    const source = CancelToken.source();
+
+    const getData = () => {
+      try {
+        axios.get(`${env.apiServer}/services/?vehicle_type=${properties.currentVehicle}`, { cancelToken: source.token })
+          .then(response => {
+            writeServices(response.data);
+            writePropertyState({name: 'isLoading', value: false});
+          })
+      } catch(error) {
+        if (axios.isCancel(error)) {
+          console.log("cancelled");
+        } else {
+          throw error;
+        }
+      }
+    };
+
+    getData();
+    return () => {
+      source.cancel();
+    };
   }, []);
 
   useEffect(() => {
-    getUserInfo()
+    writeUser({name: 'waitingForApi', value: true})
+    const CancelToken = axios.CancelToken;
+    const source = CancelToken.source();
+
+    const getData = () => {
+      try {
+        axios.get(env.apiServer + '/profile')
+          .then(response => {
+            writeUser({name: 'phone', value: response.data.username});
+            writeUser({name: 'name', value: response.data.name});
+            writeUser({name: 'photo', value: response.data.image});
+            writeUser({name: 'email', value: response.data.email});
+            writeUser({name: 'birth_date', value: response.data.birth_date});
+            writeUser({name: 'gender', value: response.data.gender});
+            writeUser({name: 'waitingForApi', value: false});
+          })
+      } catch(error) {
+        if (axios.isCancel(error)) {
+          console.log("cancelled");
+        } else {
+          throw error;
+        }
+      }
+    };
+
+    getData();
+    return () => {
+      source.cancel();
+    };
   }, []);
 
   return(

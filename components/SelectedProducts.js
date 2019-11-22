@@ -9,18 +9,44 @@ import {
 } from 'react-native';
 import { useStoreState, useStoreActions } from 'easy-peasy';
 import Swiper from 'react-native-swiper'
+import axios from 'axios';
 
 import HomeProductCard from './HomeProductCard';
 import { colors } from '../envStyles';
+import { env } from '../keys';
 
 const SelectedProducts = ({navigation, type}) => {
 
   const products = useStoreState(state => state.products.our_selection);
-  const getProducts = useStoreActions(actions => actions.getProducts);
   const isLoadingBestSeller = useStoreState(state => state.properties.isLoadingBestSeller);
+  const writePropertyState = useStoreActions(actions => actions.writePropertyState);
+  const writeProducts = useStoreActions(actions => actions.writeProducts);
 
   useEffect(() => {
-    getProducts(type);
+    writePropertyState({name: 'isLoadingBestSeller', value: true});
+    const CancelToken = axios.CancelToken;
+    const source = CancelToken.source();
+
+    const getData = () => {
+      try {
+        axios.get(`${env.apiServer}/products/?list=${type}`)
+          .then(response => {
+            writeProducts({value: response.data, name: 'our_selection'});
+            writePropertyState({name: 'isLoadingBestSeller', value: false});
+          })
+      } catch(error) {
+        if (axios.isCancel(error)) {
+          console.log("cancelled");
+        } else {
+          throw error;
+        }
+      }
+    };
+
+    getData();
+    return () => {
+      source.cancel();
+    };
   }, []);
 
   if (isLoadingBestSeller === true) {
