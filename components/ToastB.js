@@ -48,7 +48,7 @@ const Toast2 = ({navigation}) => {
         onAnimationEnd={() => {
           writePropertyState({name: 'displayToastB', value: false});
           writeAuthState({name: 'waitingForApi', value: false})
-          navigation.replace('VehicleSelection');
+          navigation.navigate('VehicleSelection');
           }
         }
       >

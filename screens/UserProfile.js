@@ -93,7 +93,7 @@ const UserProfile = ({navigation}) => {
       deleteToken();
       deleteSession();
       axios.defaults.headers.common.Authorization = null;
-      navigation.replace('Splash');
+      navigation.navigate('Splash');
     })
     .catch(error => {
     });

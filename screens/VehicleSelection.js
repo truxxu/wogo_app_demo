@@ -23,7 +23,7 @@ const VehicleSelection = ({navigation}) => {
       await AsyncStorage.setItem('activeVehicle', vehicle);
     } catch (e) {
       Alert('Error', 'No fue posible realizar la operación');
-      navigation.replace('VehicleSelection');
+      navigation.navigate('VehicleSelection');
     }
   };
 

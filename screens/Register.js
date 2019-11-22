@@ -43,7 +43,7 @@ const Register = ({navigation}) => {
     };
     axios.post( env.apiServer + '/auth/register_customer', payload)
       .then(response => {
-        navigation.replace('Login');
+        navigation.navigate('Login');
         writeAuthState({name: 'waitingForApi', value: false});
       })
       .catch(error => {
@@ -105,7 +105,7 @@ const Register = ({navigation}) => {
                 style={styles.buttonDis}
                 disabled={true}
               >
-              <Text style={styles.buttonText2}>Enviar</Text>            
+              <Text style={styles.buttonText2}>Enviar</Text>
               </TouchableOpacity>
             }
           </View>

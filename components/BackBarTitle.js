@@ -31,7 +31,7 @@ const BackBarTitle = ({navigation, title, route, origin}) => {
       navigation.navigate(route);
     }
     else if (services.length === 0) {
-      navigation.replace('Login');
+      navigation.navigate('Login');
     }
     else {
       navigation.navigate(route);
