@@ -98,7 +98,7 @@ const Home = ({navigation}) => {
   }, []);
 
   return(
-    <SafeAreaView style={{ flex: 1, backgroundColor: colors.gray }}>
+    <SafeAreaView forceInset={{bottom: 'always'}} style={{ flex: 1, backgroundColor: colors.gray }}>
       <View style={{flex: 1, backgroundColor: colors.gray}}>
         <MenuBar navigation={navigation}/>
         <ServiceTabs navigation={navigation}/>
