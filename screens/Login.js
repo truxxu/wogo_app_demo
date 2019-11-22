@@ -67,7 +67,7 @@ const Login = ({navigation}) => {
       await AsyncStorage.setItem('authToken', `Token ${token}`);
     } catch (e) {
       Alert('Error', 'No fue posible iniciar sesión. Intenta de nuevo');
-      navigation.replace('Register')
+      navigation.navigate('Register')
     }
   }
 
@@ -127,7 +127,7 @@ const Login = ({navigation}) => {
             </Text>
             <Text style={styles.boldText}>{auth.areaCode+" "+ auth.telephone}</Text>
             <TouchableOpacity
-              onPress={() => navigation.replace('Register')}
+              onPress={() => navigation.navigate('Register')}
             >
               <Text style={styles.link}>¿Número incorrecto?</Text>
             </TouchableOpacity>

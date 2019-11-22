@@ -58,7 +58,7 @@ const Splash = ({navigation}) => {
       'WOGO',
       'Debes activar el servicio de ubicación de tu dispositivo y permitir que WOGO acceda a tu ubicación para poder mostrarte la oferta de productos y servicios cerca de tí.',
       [
-        { text: 'OK', onPress: () => navigation.replace('Splash') },
+        { text: 'OK', onPress: () => navigation.navigate('Splash') },
       ],
       {cancelable: false},
     );
@@ -69,7 +69,7 @@ const Splash = ({navigation}) => {
       'WOGO',
       'No fue posible determinar tu dirección a partir de tu ubicación. Verifica tu conexión a internet e intenta de nuevo.',
       [
-        { text: 'OK', onPress: () => navigation.replace('Splash') },
+        { text: 'OK', onPress: () => navigation.navigate('Splash') },
       ],
       {cancelable: false},
     );
@@ -113,14 +113,14 @@ const Splash = ({navigation}) => {
       const activeVehicle = await AsyncStorage.getItem('activeVehicle');
       if(activeVehicle !== null) {
         writePropertyState({name: 'currentVehicle', value: activeVehicle});
-        navigation.replace('DrawerNavigator');
+        navigation.navigate('DrawerNavigator');
       }
       else {
-        navigation.replace('VehicleSelection');
+        navigation.navigate('VehicleSelection');
       };
     } catch(e) {
       // error reading value
-      navigation.replace('VehicleSelection');
+      navigation.navigate('VehicleSelection');
     }
   };
 
@@ -151,18 +151,18 @@ const Splash = ({navigation}) => {
             deleteToken();
             deleteSession();
             axios.defaults.headers.common.Authorization = null;
-            navigation.replace('Welcome')
+            navigation.navigate('Welcome')
           });
       }
       else {
         const timer = setTimeout(() => {
-          navigation.replace('Welcome')
+          navigation.navigate('Welcome')
         }, 2000);
       };
     } catch(e) {
       // error reading value
       const timer = setTimeout(() => {
-        navigation.replace('Welcome')
+        navigation.navigate('Welcome')
       }, 2000);
     }
   }

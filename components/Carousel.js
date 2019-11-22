@@ -10,17 +10,42 @@ import {
 } from 'react-native';
 import { useStoreState, useStoreActions } from 'easy-peasy';
 import Swiper from 'react-native-swiper';
+import axios from 'axios';
 
 import { colors } from '../envStyles';
-
+import { env } from '../keys';
 
 const Carousel = ({navigation}) => {
   const banners = useStoreState(state => state.banners);
-  const getBanners = useStoreActions(actions => actions.getBanners);
   const isLoadingBanners = useStoreState(state => state.properties.isLoadingBanners);
+  const writePropertyState = useStoreActions(actions => actions.writePropertyState);
+  const writeBanners = useStoreActions(actions => actions.writeBanners);
 
   useEffect(() => {
-    getBanners();
+    writePropertyState({name: 'isLoadingBanners', value: true});
+    const CancelToken = axios.CancelToken;
+    const source = CancelToken.source();
+
+    const getData = () => {
+      try {
+        axios.get(env.apiServer + '/banners/')
+          .then(response => {
+            writeBanners(response.data);
+            writePropertyState({name: 'isLoadingBanners', value: false});
+          })
+      } catch(error) {
+        if (axios.isCancel(error)) {
+          console.log("cancelled");
+        } else {
+          throw error;
+        }
+      }
+    };
+
+    getData();
+    return () => {
+      source.cancel();
+    };
   }, []);
 
   if (isLoadingBanners === true) {
