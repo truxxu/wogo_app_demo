@@ -19,7 +19,6 @@ import TypesSlider from '../components/TypesSlider';
 import ProductType from '../components/ProductType';
 import AllProducts from '../components/AllProducts';
 import CartBar from '../components/CartBar';
-import ProductsScroll from '../components/ProductsScroll';
 
 const WIDTH = Dimensions.get('window').width;
 
@@ -38,8 +37,7 @@ const Business = ({navigation}) => {
   const typesArray = [];
   for (const [key, value] of Object.entries(grouped_products)) {
     if (!_.isEmpty(grouped_products)) {
-      typesArray.push({key: key, products: value})
-    }
+      typesArray.push(key)    }
   };
 
   timeStr = (time) => {
@@ -56,12 +54,27 @@ const Business = ({navigation}) => {
     }
   };
 
+  renderProducts = () => {
+    if (properties.activeType === 'Todo') {
+      return(
+        <AllProducts navigation={navigation} types={typesArray} />
+      )
+    }
+    else {
+      return(
+        <ProductType navigation={navigation} />
+      )
+    }
+  };
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: colors.gray, }}>
       <View style={{flex: 1}}>
         <MenuBar navigation={navigation} />
         <ServiceTabs navigation={navigation} />
-        <View>
+        <ScrollView
+          stickyHeaderIndices={[1]}
+          howsVerticalScrollIndicator={false}>
           <Image
             style={styles.image}
             source={{uri: business.image}}
@@ -90,17 +103,16 @@ const Business = ({navigation}) => {
                 <Text style={styles.text}>{distanceStr(business.distance)}</Text>
               </View>
             </View>
+            <TypesSlider data={typesArray}/>
           </View>
-        </View>
-        <View style={{flex: 1, paddingBottom: 20}}>
-          {!_.isEmpty(grouped_products) ?
-            <ProductsScroll navigation={navigation} types={typesArray}/> :
-            <Text style={styles.message}>
-              No existen productos en esta categoria
-            </Text>
-          }
-        </View>
+          <View style={styles.cardContainer}>
+            {
+              renderProducts()
+            }
+          </View>
         <CartBar navigation={navigation}/>
+        </ScrollView>
+        <CartBar navigation={navigation} />
         <FooterBar navigation={navigation} />
       </View>
     </SafeAreaView>
