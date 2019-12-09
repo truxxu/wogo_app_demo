@@ -51,8 +51,8 @@ const BusinessesMap = ({navigation}) => {
   const filteredList = filterList(businesses);
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: colors.gray }}>
-      <View>
+    <SafeAreaView forceInset={{bottom: 'always'}} style={{ flex: 1, backgroundColor: colors.gray }}>
+      <View style={{flex: 1, backgroundColor: colors.gray}}>
         <MenuBar navigation={navigation} />
         <ServiceTabs navigation={navigation} parent='BusinessesMap'/>
         <View style={styles.mapcontainer}>
@@ -102,8 +102,8 @@ const BusinessesMap = ({navigation}) => {
           ))}
          </MapView>
         </View>
-        <FooterBar navigation={navigation} />
       </View>
+        <FooterBar navigation={navigation} />
     </SafeAreaView>
   );
 }
@@ -111,11 +111,9 @@ const BusinessesMap = ({navigation}) => {
 const styles = StyleSheet.create({
 
   mapcontainer: {
-    width: Dimensions.get('window').width,
-    height: Dimensions.get('window').height - 180,
-    zIndex: 1,
-    flexDirection: 'column',
     alignItems: 'center',
+    flex: 1,
+
   },
   map: {
     ...StyleSheet.absoluteFillObject,
@@ -130,7 +128,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     backgroundColor: colors.gray,
-    position: 'absolute',
     top: 0,
     zIndex: 2,
     width: Dimensions.get('window').width,
@@ -140,7 +137,6 @@ const styles = StyleSheet.create({
   close: {
     width: 20,
     height: 20,
-    flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
   },
