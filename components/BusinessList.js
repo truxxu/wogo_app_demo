@@ -23,23 +23,6 @@ const BusinessList = ({navigation}) => {
   const writePropertyState = useStoreActions(actions => actions.writePropertyState);
   const getBusiness = useStoreActions(actions => actions.getBusiness);
 
-  filterList = (list) => {
-    if (properties.businessFilter.length !== 0) {
-      array = [];
-      list.map(business => {
-        business.products.map(product => {
-          if (properties.businessFilter.includes(product.service_type_name)) {
-            array.push(business)
-          }
-        })
-      });
-      return _.uniqBy(array, 'id')
-    }
-    else {
-      return list
-    }
-  };
-
   sortBusinessList = (list) => {
     if (properties.businessOrder === 'distance') {
      return  _.orderBy(list, ['distance'], ['asc'])
@@ -49,8 +32,7 @@ const BusinessList = ({navigation}) => {
     }
   };
 
-  const filteredList = filterList(businesses);
-  const sortedList = sortBusinessList(filteredList);
+  const sortedList = sortBusinessList(businesses);
 
   timeStr = (time) => {
     return time.slice(0, -3)
