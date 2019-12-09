@@ -21,6 +21,7 @@ const BusinessList = ({navigation}) => {
   const properties = useStoreState(state => state.properties);
 
   const writePropertyState = useStoreActions(actions => actions.writePropertyState);
+  const getBusiness = useStoreActions(actions => actions.getBusiness);
 
   filterList = (list) => {
     if (properties.businessFilter.length !== 0) {
@@ -95,7 +96,7 @@ const BusinessList = ({navigation}) => {
               <View style={styles.card}>
                 <TouchableOpacity
                   onPress={() => {
-                    writePropertyState({name: 'activeBusiness', value: item.business})
+                    getBusiness(item.business.id)
                     navigation.navigate('Business')
                   }}
                   style={styles.button}

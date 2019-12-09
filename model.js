@@ -123,7 +123,7 @@ const storeModel = {
     displayCardDeleteModal: false,
     displayCloseSession: false,
     quantity: 1,
-    activeBusiness: null,
+    activeBusiness: [{products: []}],
     activeType: 'Todo',
     installmentsNumber: "",
     displayClearCart: false,
@@ -486,6 +486,19 @@ const storeModel = {
     axios.get(`${env.apiServer}/business/?service=${payload}&latitude=${activeAddress.latitude}&longitude=${activeAddress.longitude}&distance=30&vehicle=${currentVehicle}`)
       .then(response => {
         actions.writeBusiness(response.data);
+        actions.writePropertyState({name: 'isLoading', value: false});
+      })
+      .catch(error => {
+        Alert.alert('Se ha presentado un error');
+        actions.writePropertyState({name: 'isLoading', value: false});
+      });
+  }),
+
+  getBusiness: thunk(async (actions, payload, { getStoreState }) => {
+    actions.writePropertyState({name: 'isLoading', value: true});
+    axios.get(`${env.apiServer}/business/${payload}/`)
+      .then(response => {
+        actions.writePropertyState({name: 'activeBusiness', value: response.data});
         actions.writePropertyState({name: 'isLoading', value: false});
       })
       .catch(error => {
