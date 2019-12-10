@@ -535,7 +535,10 @@ const storeModel = {
 
   getBusiness: thunk(async (actions, payload, { getStoreState }) => {
     actions.writePropertyState({name: 'isLoading', value: true});
-    axios.get(`${env.apiServer}/business/${payload}/`)
+    const state = getStoreState();
+    const activeAddress = state.activeAddress;
+    const currentVehicle = state.properties.currentVehicle;
+    axios.get(`${env.apiServer}/business/${payload}/?latitude=${activeAddress.latitude}&longitude=${activeAddress.longitude}&vehicle=${currentVehicle}`)
       .then(response => {
         actions.writePropertyState({name: 'activeBusiness', value: response.data});
         actions.writePropertyState({name: 'isLoading', value: false});
