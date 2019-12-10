@@ -21,23 +21,7 @@ const BusinessList = ({navigation}) => {
   const properties = useStoreState(state => state.properties);
 
   const writePropertyState = useStoreActions(actions => actions.writePropertyState);
-
-  filterList = (list) => {
-    if (properties.businessFilter.length !== 0) {
-      array = [];
-      list.map(business => {
-        business.products.map(product => {
-          if (properties.businessFilter.includes(product.service_type_name)) {
-            array.push(business)
-          }
-        })
-      });
-      return _.uniqBy(array, 'id')
-    }
-    else {
-      return list
-    }
-  };
+  const getBusiness = useStoreActions(actions => actions.getBusiness);
 
   sortBusinessList = (list) => {
     if (properties.businessOrder === 'distance') {
@@ -48,8 +32,7 @@ const BusinessList = ({navigation}) => {
     }
   };
 
-  const filteredList = filterList(businesses);
-  const sortedList = sortBusinessList(filteredList);
+  const sortedList = sortBusinessList(businesses);
 
   timeStr = (time) => {
     return time.slice(0, -3)
@@ -95,7 +78,7 @@ const BusinessList = ({navigation}) => {
               <View style={styles.card}>
                 <TouchableOpacity
                   onPress={() => {
-                    writePropertyState({name: 'activeBusiness', value: item.business})
+                    getBusiness(item.business.id)
                     navigation.navigate('Business')
                   }}
                   style={styles.button}

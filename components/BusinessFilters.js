@@ -15,13 +15,16 @@ import {
   renderers,
 } from 'react-native-popup-menu';
 import { useStoreState, useStoreActions } from 'easy-peasy';
+import axios from 'axios';
 
 import { colors } from '../envStyles';
+import { env } from '../keys';
 
 const BusinessFilters = (props) => {
 
   //States
   const properties = useStoreState(state => state.properties);
+  const activeAddress = useStoreState(state => state.activeAddress);
   const types = useStoreState(state => state.properties.activeServiceTab.types);
   //Actions
   const writePropertyState = useStoreActions(actions => actions.writePropertyState);
@@ -49,7 +52,7 @@ const BusinessFilters = (props) => {
                 onSelect={() => removeBusinessFilter(type.name)}
               >
                 <Text
-                  style={properties.businessFilter.find(filter => filter === type.name) ? styles.text : styles.notselected}
+                  style={properties.businessFilter.find(filter => filter === type.name) ? styles.closeText : styles.notselected}
                 >
                   X
                 </Text>
@@ -193,6 +196,13 @@ const styles = StyleSheet.create({
   },
   text: {
     marginLeft: 5,
+    fontFamily: 'Montserrat-Regular',
+    color: colors.black,
+    fontSize: 14,
+    textAlign: 'left',
+  },
+  closeText: {
+    marginRight: 20,
     fontFamily: 'Montserrat-Regular',
     color: colors.black,
     fontSize: 14,

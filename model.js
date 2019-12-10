@@ -123,7 +123,7 @@ const storeModel = {
     displayCardDeleteModal: false,
     displayCloseSession: false,
     quantity: 1,
-    activeBusiness: null,
+    activeBusiness: [{products: []}],
     activeType: 'Todo',
     installmentsNumber: "",
     displayClearCart: false,
@@ -256,17 +256,56 @@ const storeModel = {
     state.businesses = payload
   }),
 
-  writeBusinessFilter: action((state, payload) => {
+
+  applyFilters: thunk(async (actions, payload, { getStoreState }) => {
+    actions.writePropertyState({name: 'isLoading', value: true});
+
+    const state = getStoreState();
+    const properties = state.properties;
+    const activeAddress = state.activeAddress;
+
+    const url =
+      `${env.apiServer}/business/?service=${properties.activeServiceTab.name}&latitude=${activeAddress.latitude}&longitude=${activeAddress.longitude}&distance=30&vehicle=${properties.currentVehicle}`
+
+    const filterParams = () => {
+      let string = '';
+      if (properties.businessFilter !== 0) {
+        properties.businessFilter.map(param => {
+          string = string + `&service_type[]=${param}`
+        })
+        return url + string
+      } else {
+        return url
+      }
+    };
+
+    axios.get(filterParams())
+      .then(response => {
+        actions.writeBusiness(response.data);
+        actions.writePropertyState({name: 'isLoading', value: false});
+      })
+      .catch(error => {
+        Alert.alert('Se ha presentado un error');
+        actions.writePropertyState({name: 'isLoading', value: false});
+      });
+  }),
+
+  writeBusinessFilter: thunk(async (actions, payload, {getStoreState}) => {
+    const state = getStoreState();
     const filter = state.properties.businessFilter.find(filter => filter === payload);
     if (filter === undefined) {
       state.properties.businessFilter.push(payload)
     };
+    actions.applyFilters();
   }),
 
-  removeBusinessFilter: action((state, payload) => {
+  removeBusinessFilter: thunk(async (actions, payload, {getStoreState}) => {
+    const state = getStoreState();
     const newArray = _.remove(state.properties.businessFilter, function(n) {
       return payload === n;
-    })
+    });
+    actions.applyFilters();
+
   }),
 
   clearBusinessFilter: action((state, payload) => {
@@ -486,6 +525,19 @@ const storeModel = {
     axios.get(`${env.apiServer}/business/?service=${payload}&latitude=${activeAddress.latitude}&longitude=${activeAddress.longitude}&distance=30&vehicle=${currentVehicle}`)
       .then(response => {
         actions.writeBusiness(response.data);
+        actions.writePropertyState({name: 'isLoading', value: false});
+      })
+      .catch(error => {
+        Alert.alert('Se ha presentado un error');
+        actions.writePropertyState({name: 'isLoading', value: false});
+      });
+  }),
+
+  getBusiness: thunk(async (actions, payload, { getStoreState }) => {
+    actions.writePropertyState({name: 'isLoading', value: true});
+    axios.get(`${env.apiServer}/business/${payload}/`)
+      .then(response => {
+        actions.writePropertyState({name: 'activeBusiness', value: response.data});
         actions.writePropertyState({name: 'isLoading', value: false});
       })
       .catch(error => {

@@ -31,25 +31,6 @@ const BusinessesMap = ({navigation}) => {
     longitudeDelta: 0.13,
   };
 
-  filterList = (list) => {
-    if (properties.businessFilter.length !== 0) {
-      array = [];
-      list.map(business => {
-        business.products.map(product => {
-          if (properties.businessFilter.includes(product.service_type_name)) {
-            array.push(business)
-          }
-        })
-      });
-      return _.uniqBy(array, 'id')
-    }
-    else {
-      return list
-    }
-  };
-
-  const filteredList = filterList(businesses);
-
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: colors.gray }}>
       <View>
@@ -83,7 +64,7 @@ const BusinessesMap = ({navigation}) => {
            showsUserLocation={true}
            showsMyLocationButton={false}
          >
-          {filteredList.map(marker => (
+          {businesses.map(marker => (
             <Marker
               key={marker.id}
               title={marker.name}
