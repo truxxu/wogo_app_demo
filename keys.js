@@ -1,5 +1,5 @@
 export const env = {
-  apiServer: 'http://192.168.0.12:8000'
+  apiServer: 'https://appcarrosbackend.herokuapp.com'
 };
 
 export const geocoding = {
@@ -11,5 +11,5 @@ export const customerService = {
 }
 
 export const version = {
-  verNum: 'v1.0'
+  verNum: 'v1.0.1'
 }

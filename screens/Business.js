@@ -111,7 +111,6 @@ const Business = ({navigation}) => {
                 renderProducts()
               }
             </View>
-          <CartBar navigation={navigation}/>
           </ScrollView>
           <CartBar navigation={navigation} />
           <FooterBar navigation={navigation} />
@@ -120,7 +119,26 @@ const Business = ({navigation}) => {
     );
   }
   else {
-    return null
+    return (
+      <SafeAreaView style={{ flex: 1, backgroundColor: colors.gray, }}>
+        <View style={{flex: 1}}>
+          <MenuBar navigation={navigation} />
+          <ServiceTabs navigation={navigation} />
+          <ScrollView
+            stickyHeaderIndices={[1]}
+            howsVerticalScrollIndicator={false}>
+            <View style={styles.gifContainer}>
+                <Image
+                  source={require('../assets/gifs/spinner.gif')}
+                  style={{height: 200, width: 200}}
+                />
+            </View>
+          </ScrollView>
+          <CartBar navigation={navigation} />
+          <FooterBar navigation={navigation} />
+        </View>
+      </SafeAreaView>
+    )
   }
 }
 
@@ -161,7 +179,12 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 14,
     fontFamily: 'Montserrat-Regular',
-  }
+  },
+  gifContainer: {
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 });
 
 export default Business;
