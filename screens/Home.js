@@ -52,7 +52,7 @@ const Home = ({navigation}) => {
           })
       } catch(error) {
         if (axios.isCancel(error)) {
-          console.log("cancelled");
+          Alert.alert('Error','Fallo al leer servicios');
         } else {
           throw error;
         }
@@ -84,7 +84,7 @@ const Home = ({navigation}) => {
           })
       } catch(error) {
         if (axios.isCancel(error)) {
-          console.log("cancelled");
+          Alert.alert('Error','Fallo al leer usuario');
         } else {
           throw error;
         }

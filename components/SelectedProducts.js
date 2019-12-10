@@ -6,6 +6,7 @@ import {
   Image,
   Button,
   TouchableOpacity,
+  Alert,
 } from 'react-native';
 import { useStoreState, useStoreActions } from 'easy-peasy';
 import Swiper from 'react-native-swiper'
@@ -36,7 +37,7 @@ const SelectedProducts = ({navigation, type}) => {
           })
       } catch(error) {
         if (axios.isCancel(error)) {
-          console.log("cancelled");
+          Alert.alert('Error','Fallo al leer productos seleccionados');
         } else {
           throw error;
         }

@@ -6,7 +6,8 @@ import {
   Image,
   Button,
   TouchableOpacity,
-  Dimensions
+  Dimensions,
+  Alert
 } from 'react-native';
 import { useStoreState, useStoreActions } from 'easy-peasy';
 import Swiper from 'react-native-swiper';
@@ -35,7 +36,7 @@ const Carousel = ({navigation}) => {
           })
       } catch(error) {
         if (axios.isCancel(error)) {
-          console.log("cancelled");
+          Alert.alert('Error','Fallo al leer banners');
         } else {
           throw error;
         }
