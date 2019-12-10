@@ -22,6 +22,7 @@ const MostSearched = ({navigation, type}) => {
   //Actions
   const writePropertyState = useStoreActions(actions => actions.writePropertyState);
   const writeBusinessesSelection = useStoreActions(actions => actions.writeBusinessesSelection);
+  const getBusiness = useStoreActions(actions => actions.getBusiness);
 
   useEffect(() => {
     writeBusinessesSelection({name: 'isLoadingMost', value: true});
@@ -80,8 +81,9 @@ const MostSearched = ({navigation, type}) => {
             <TouchableOpacity
               style={styles.button}
               onPress={() => {
-                writePropertyState({name: 'activeBusiness', value: item.item})
-                navigation.navigate('Business')
+                writePropertyState({name: 'activeBusiness', value: item.item});
+                getBusiness(item.item.id);
+                navigation.navigate('Business');
               }}
             >
               <Image

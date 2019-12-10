@@ -123,7 +123,7 @@ const storeModel = {
     displayCardDeleteModal: false,
     displayCloseSession: false,
     quantity: 1,
-    activeBusiness: [{products: []}],
+    activeBusiness: [],
     activeType: 'Todo',
     installmentsNumber: "",
     displayClearCart: false,
